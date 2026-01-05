@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="greenthemelight">#D7F40A</color>
+    <color name="greenthemedark">#A7BE2E</color>
+    <color name="purplelight">#FB0160</color>
+    <color name="purplethemelight">#CD01A2</color>
+    <color name="purplethemedark">#891161</color>
+    <color name="transpar">#00000000</color>
+    <color name="transparent">#00000000</color>
+    <color name="greyblue">#566370</color>
+    <color name="janjabuttongreyblue">#29668B</color>
+
+    <color name="newblue">#276BF6</color>
+    <color name="newbluetrans">#33276BF6</color>
+    <color name="darkblue">#29668B</color>
+    <color name="mtn_teal">#006187</color>
+    <color name="black_over">#73566370</color>
+    <color name="bordertwo">#d1d9dd</color>
+    <color name="yellow">#ffcc01</color>
+
+    <color name="otpColorTheme">@color/yellowbac</color>
+    <color name="pinColorTheme">@color/yellowbac</color>
+    <style name="payBtnStyle" parent="TextAppearance.MaterialComponents.Button">
+        <!--<item name="android:background">@drawable/orange_button_curved</item>-->
+        <item name="android:textColor">@color/white</item>
+        <item name="android:radius">100dp</item>
+    </style>
+    <color name="ratingcolour">#efb949</color>
+    <color name="grey">#566370</color>
+    <color name="greythree">#d1d9dd</color>
+
+    <color name="greyborder">#D1D9DD</color>
+    <color name="greyaudience">#566370</color>
+    <color name="yellowbac">#ffcc01</color>
+    <color name="orangeDefualt">#FB6900</color>
+    <color name="orangeLight">#F78F22</color>
+    <color name="wayaRed">#E63C2F</color>
+    <color name="wayayellow">#FFB819</color>
+    <color name="wayaBlue">#1C75BC</color>
+    <color name="wayaDarkblue">#342964</color>
+
+    <color name="greytwo">#566370</color>
+    <color name="greytwotrans">#EFF3F5</color>
+    <color name="greytwotransi">#EBEAEB</color>
+    <color name="grey_bg_light">#fafafa</color>
+
+</resources>

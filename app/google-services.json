@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "82384523140",
+    "project_id": "sabaapp-12d0b",
+    "storage_bucket": "sabaapp-12d0b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:82384523140:android:a3e73a940df447c13417d1",
+        "android_client_info": {
+          "package_name": "com.sabapp.saba"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5_8-x-9MvpqUXe5H9aN1TVT5-rjZZQNc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

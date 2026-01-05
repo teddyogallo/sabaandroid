@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/sabamaindashboard">
+
+    <fragment
+        android:id="@+id/sabamaindashboard"
+        android:name="com.sabapp.saba.dashboardfragment"
+        android:label="@string/main_dashboardstring"
+        tools:layout="@layout/clientdashboardfragment" >
+
+    </fragment>
+
+   <!-- <fragment
+        android:id="@+id/nav_home"
+        android:name="com.wayawaya.wayaa.ui.main.ui.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" /> -->
+
+
+
+    <!-- <fragment
+         android:id="@+id/nav_chatslide"
+         android:name="com.wayawaya.wayaa.ui.main.ui.shop.messagestartactivity"
+         android:label="@string/menu_chatslide"
+         tools:layout="@layout/messagesmainlist" /> -->
+
+
+
+
+
+    <!-- <fragment
+          android:id="@+id/nav_wholechatslide"
+          android:name="com.wayawaya.wayaa.ui.main.ui.shop.paymentshistory_activity"
+          android:label="@string/menu_allchatslide"
+          tools:layout="@layout/payments_historylist" /> -->
+
+
+</navigation>

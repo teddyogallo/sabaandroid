@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:title="Home"
+        android:id="@+id/dashboard"
+        android:icon="@drawable/home"/>
+    <item
+        android:title="Events"
+        android:id="@+id/events"
+        android:icon="@drawable/addeventicon"/>
+    <item
+        android:title=""
+        android:id="@+id/requestpay"
+        android:icon="@android:color/transparent"/>
+    <item
+        android:id="@+id/messages"
+        android:icon="@drawable/janja_icons_conversation"
+        android:title="Messages" />
+    <item
+        android:title="Payments"
+        android:id="@+id/businesschatbot"
+        android:icon="@drawable/ic_card"/>
+
+</menu>

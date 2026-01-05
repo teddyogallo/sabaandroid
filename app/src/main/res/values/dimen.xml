@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="popup_width">400dp</dimen>
+    <dimen name="popup_height">400dp</dimen>
+    <dimen name="default_corner_radii">16dp</dimen>
+
+</resources>

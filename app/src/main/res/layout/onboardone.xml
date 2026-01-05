@@ -1,0 +1,209 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#FFFFFF"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ScrollView
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:id="@+id/rkwqw3jlznus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="#FFFFFF">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/r98i5yllvoo7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:orientation="vertical">
+                <RelativeLayout
+                    android:id="@+id/onboardlayout1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="34dp"
+                    android:layout_marginStart="1dp"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    >
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        >
+
+                        <ImageView
+                            android:id="@+id/row1topimage"
+                            android:layout_width="144dp"
+                            android:layout_height="275dp"
+                            android:layout_marginTop="0dp"
+                            android:layout_marginStart="1dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/tile1onboard1" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="4dp">
+
+                        </LinearLayout>
+
+                        <ImageView
+                            android:id="@+id/row1bottomimage"
+                            android:layout_width="144dp"
+                            android:layout_height="214dp"
+
+                            android:layout_marginStart="1dp"
+                            android:layout_marginBottom="0dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/tile2onboard1" />
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="5dp"
+                        android:layout_height="match_parent">
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        >
+
+                        <ImageView
+                            android:id="@+id/row2topimage"
+                            android:layout_width="144dp"
+                            android:layout_height="199dp"
+                            android:layout_marginStart="0dp"
+                            android:layout_marginTop="0dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/tile3onboard1" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="4dp">
+
+                        </LinearLayout>
+
+                        <ImageView
+                            android:id="@+id/row2bottomimage"
+                            android:layout_width="144dp"
+                            android:layout_height="289dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/tile4onboard1" />
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="5dp"
+                        android:layout_height="match_parent">
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="144dp"
+
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        >
+
+
+
+                        <ImageView
+                            android:id="@+id/row3topimage"
+                            android:layout_width="144dp"
+                            android:layout_height="245dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/tile4onboard1" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="4dp">
+
+                        </LinearLayout>
+
+                        <ImageView
+                            android:id="@+id/row3bottomimage"
+                            android:layout_width="144dp"
+                            android:layout_height="242dp"
+                            android:scaleType="fitXY"
+
+                            android:layout_marginStart="0dp"
+                            android:layout_marginEnd="0dp"
+
+                            android:src="@drawable/tile6onboard1" />
+
+                    </LinearLayout>
+
+
+                    </LinearLayout>
+
+
+
+
+                </RelativeLayout>
+                <TextView
+                    android:id="@+id/onboardtitle"
+                    android:textColor="#25131A"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginHorizontal="35dp"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Plan. Connect. Execute — even at the last minute."
+                    />
+                <TextView
+                    android:id="@+id/onboardtitlecontent"
+                    android:textColor="#8B8688"
+                    android:textSize="14sp"
+                    android:layout_marginBottom="13dp"
+                    android:layout_marginHorizontal="25dp"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="all-in-one event planning platform that helps you visualize your event, book trusted vendors, collaborate seamlessly, anticipate problems before they happen. and keep every detail aligned from inspiration to execution."
+                    />
+                <LinearLayout
+                    android:id="@+id/nextbutton_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:background="@drawable/cr10lr270cd01a2891161"
+                    android:paddingVertical="16dp"
+                    android:layout_marginBottom="44dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/rqr5f97252mn"
+                        android:textColor="#FFFFFF"
+                        android:textSize="16sp"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:text="Next"
+                        />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

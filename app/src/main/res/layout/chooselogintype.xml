@@ -1,0 +1,379 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#FFFFFF"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ScrollView
+        android:id="@+id/rtmyk6orv0gh"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#FFFFFF"
+        android:paddingBottom="4dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/ruggey7fj0bk"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:orientation="vertical">
+
+
+                <ImageView
+                    android:id="@+id/backarrowimage"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginStart="20dp"
+                    android:scaleType="fitXY"
+                    android:src="@color/transpar" />
+
+                <LinearLayout
+                    android:id="@+id/rw7l0julb6a"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/rrfklra49nms"
+                        android:textColor="#25131A"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="10dp"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:text="Choose account type"
+                        />
+                    <TextView
+                        android:id="@+id/rinla7ljd1u"
+                        android:textColor="#8B8688"
+                        android:textSize="14sp"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:text="Please continue below to"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/rbhdwobsz90n"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/s8b868833sw1cr10"
+                    android:paddingHorizontal="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/r9he5pczrmt"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginEnd="10dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/userplaceholder" />
+
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:id="@+id/businesstypespinner"
+
+                        android:layout_gravity="center"
+                        android:animateLayoutChanges="true"
+                        android:overScrollMode="never"
+                        android:soundEffectsEnabled="true"
+                        android:spinnerMode="dropdown"
+                        android:textColor="#25131A"
+                        android:textSize="14sp"
+                        android:layout_marginEnd="4dp"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingVertical="18dp"
+                        >
+
+                    </androidx.appcompat.widget.AppCompatSpinner>
+
+                </LinearLayout>
+
+                <com.wang.avi.AVLoadingIndicatorView
+                    android:id="@+id/signinprogress"
+
+                    style="@style/AVLoadingIndicatorView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="192dp"
+                    android:visibility="gone"
+                    android:layout_marginTop="4dp"
+                    android:gravity="center"
+                    app:indicatorColor="@color/purplethemelight"
+                    app:indicatorName="BallTrianglePathIndicator"
+
+                    />
+
+
+                <!-- start of business and planner only entry textfields -->
+                <LinearLayout
+                    android:id="@+id/businessoptionalfields"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#FFFFFF"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    >
+                    <LinearLayout
+                        android:id="@+id/r9v7myevvhr8"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:background="@drawable/s8b868833sw1cr10"
+
+                        android:paddingLeft="20dp"
+                        android:paddingRight="35dp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginHorizontal="20dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/rtlakdzx825h"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_marginEnd="10dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/userplaceholder" />
+
+                        <EditText
+                            android:id="@+id/businessnameEdit"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="4dp"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:hint="Please enter Business name"
+                            android:inputType="text"
+                            android:paddingVertical="18dp"
+                            android:textColor="#25131A"
+                            android:textSize="14sp" />
+
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/r9v7myevvhr81"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:background="@drawable/s8b868833sw1cr10"
+
+                        android:paddingLeft="20dp"
+                        android:paddingRight="35dp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginHorizontal="20dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/rtlakdzx825h1"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_marginEnd="10dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/userplaceholder" />
+
+                        <EditText
+                            android:id="@+id/businessdescriptionEdit"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="4dp"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:hint="Please enter Business description"
+                            android:inputType="text"
+                            android:paddingVertical="18dp"
+                            android:textColor="#25131A"
+                            android:textSize="14sp" />
+
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/r9v7myevvhr82"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:background="@drawable/s8b868833sw1cr10"
+
+                        android:paddingLeft="20dp"
+                        android:paddingRight="35dp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginHorizontal="20dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/rtlakdzx825h2"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_marginEnd="10dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/userplaceholder" />
+
+                        <EditText
+                            android:id="@+id/addressEdit"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="4dp"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:hint="Business Address"
+                            android:inputType="text"
+                            android:paddingVertical="18dp"
+                            android:textColor="#25131A"
+                            android:textSize="14sp" />
+
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/r9v7myevvhr83"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:background="@drawable/s8b868833sw1cr10"
+
+                        android:paddingLeft="20dp"
+                        android:paddingRight="35dp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginHorizontal="20dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/rtlakdzx825h3"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_marginEnd="10dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/userplaceholder" />
+
+                        <EditText
+                            android:id="@+id/cityEdit"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="4dp"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:hint="Address City"
+                            android:inputType="text"
+                            android:paddingVertical="18dp"
+                            android:textColor="#25131A"
+                            android:textSize="14sp" />
+
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/r9v7myevvhr85"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:background="@drawable/s8b868833sw1cr10"
+
+                        android:paddingLeft="20dp"
+                        android:paddingRight="35dp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginHorizontal="20dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/rtlakdzx825h5"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_marginEnd="10dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/userplaceholder" />
+
+                        <EditText
+                            android:id="@+id/stateEdit"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="4dp"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:hint="Enter State/County"
+                            android:inputType="text"
+                            android:paddingVertical="18dp"
+                            android:textColor="#25131A"
+                            android:textSize="14sp" />
+
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/r9v7myevvhr86"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:background="@drawable/s8b868833sw1cr10"
+
+                        android:paddingLeft="20dp"
+                        android:paddingRight="35dp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginHorizontal="20dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/rtlakdzx825h6"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_marginEnd="10dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/userplaceholder" />
+
+                        <EditText
+                            android:id="@+id/postalcodeEdit"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="4dp"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:hint="Postal/Zipcode"
+                            android:inputType="text"
+                            android:paddingVertical="18dp"
+                            android:textColor="#25131A"
+                            android:textSize="14sp" />
+
+
+                    </LinearLayout>
+
+
+
+                </LinearLayout>
+
+                <!-- end of temporary type textfields value entry -->
+
+                <LinearLayout
+                    android:id="@+id/loginaccountlayoutbutton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:background="@drawable/cr10lr270cd01a2891161"
+                    android:paddingVertical="16dp"
+                    android:layout_marginBottom="40dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/registerbuttontext"
+                        android:textColor="#FFFFFF"
+                        android:textSize="16sp"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:text="Continue"
+                        />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="cr10">
+        <item name="cornerSize">10dp</item>
+    </style>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/greenthemedark</item>
+        <item name="colorPrimaryDark">@color/greenthemelight</item>
+        <item name="colorAccent">@color/purplethemedark</item>
+    </style>
+
+    <style name="ToolbarTheme" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+        <!-- Customize color of navigation drawer icon and back arrow -->
+        <item name="colorControlNormal">@color/purplethemelight</item>
+    </style>
+
+    <style name="MineCustomTabTextTwo" parent="AppTheme">
+        <item name="android:textSize">14dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+
+    <style name="FontMedium">
+        <item name="android:fontFamily">@font/graphix_medium</item>
+        <item name="fontFamily">@font/graphix_medium</item>
+        <item name="android:textStyle">normal</item>
+
+    </style>
+
+    <style name="ToolbarTitleAppearancetwo" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">18dp</item>
+
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/graphik_semibold</item>
+        <!-- include other attributes you want to change: textColor, textStyle, etc -->
+    </style>
+</resources>
