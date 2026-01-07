@@ -97,8 +97,11 @@ public class chooselogintype extends AppCompatActivity {
         businessnamevalue = sharedPrefsXtreme.getData("business_name");
         String businessdescription = sharedPrefsXtreme.getData("business_description");
 
+        Log.d("BUSINESS NAME",businessnamevalue );
+
 
         progressindicator.setVisibility(View.GONE);
+
 
         setupupbutton = (LinearLayout) findViewById(R.id.loginaccountlayoutbutton);
         hiddenlayer = (LinearLayout) findViewById(R.id.businessoptionalfields);
@@ -116,10 +119,7 @@ public class chooselogintype extends AppCompatActivity {
         businessdescriptionText = (EditText)findViewById(R.id.businessdescriptionEdit);
 
 
-        if(businessnamevalue == null || businessnamevalue.isEmpty()){
 
-            hiddenlayer.setVisibility(View.VISIBLE);
-        }
 
         setuptypeList= new ArrayList<String>();
 
@@ -150,9 +150,16 @@ public class chooselogintype extends AppCompatActivity {
                         hiddenlayer.setVisibility(View.GONE);
                         accounttype = "standard";
 
-                    }else{
+                    }else {
 
-                        hiddenlayer.setVisibility(View.VISIBLE);
+                        if(businessnamevalue == null || businessnamevalue.isEmpty()|| businessnamevalue.equalsIgnoreCase("null")){
+
+                            hiddenlayer.setVisibility(View.VISIBLE);
+
+                        }
+
+
+
 
                         if(setupaccountype.equalsIgnoreCase("planner account setup")){
 
@@ -189,7 +196,8 @@ public class chooselogintype extends AppCompatActivity {
                      startActivity(new Intent(getApplicationContext(),
                              sabaDrawerActivity.class));
 
-                 }else if(businessnamevalue == null || businessnamevalue.isEmpty()){
+                 }
+                 else if(businessnamevalue == null || businessnamevalue.isEmpty() || businessnamevalue.equalsIgnoreCase("null")){
                      //continue here if account has not been setup
 
 
@@ -237,7 +245,8 @@ public class chooselogintype extends AppCompatActivity {
 
 
                   //end of continue if account has not been setup
-                 }else if(accounttype.equalsIgnoreCase("planner")){
+                 }
+                 else if(accounttype.equalsIgnoreCase("planner")){
                      //go  to planner dashboard
 
                      startActivity(new Intent(getApplicationContext(),
@@ -247,7 +256,8 @@ public class chooselogintype extends AppCompatActivity {
 
                      //end of go to planner dashboard
 
-                }else{
+                }
+                 else{
                      //go to vendor dashboard
 
                      startActivity(new Intent(getApplicationContext(),

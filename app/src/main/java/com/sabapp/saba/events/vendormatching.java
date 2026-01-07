@@ -2,6 +2,8 @@ package com.sabapp.saba.events;
 
 import static com.gun0912.tedpermission.provider.TedPermissionProvider.context;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Base64;
@@ -25,14 +27,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.sabapp.saba.R;
-import com.sabapp.saba.adapters.SelectedCapabilityAdapter;
 import com.sabapp.saba.adapters.capabilityRecyclerAdapter;
-import com.sabapp.saba.adapters.sabaeventlistclientHomeRecyclerAdapter;
+import com.sabapp.saba.adapters.vendormatchingRecyclerAdapter;
 import com.sabapp.saba.application.sabaapp;
 import com.sabapp.saba.data.model.SelectedCapabilityItem;
+import com.sabapp.saba.data.model.SelectedVendorItem;
 import com.sabapp.saba.data.model.sabaEventItem;
-import com.sabapp.saba.homeclientFragment;
-import com.sabapp.saba.onboarding.chooselogintype;
 import com.sabapp.saba.sabaDrawerActivity;
 import com.wang.avi.AVLoadingIndicatorView;
 
@@ -46,7 +46,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class chooseservices extends AppCompatActivity {
+public class vendormatching extends AppCompatActivity {
 
     AVLoadingIndicatorView progressindicator;
 
@@ -66,17 +66,29 @@ public class chooseservices extends AppCompatActivity {
 
     LinearLayout nextbuttonLayout;
 
-    String EventId;
+    String EventId,eventBudgetvalue;
 
     ArrayList<String> capability_codeList;
-    ArrayList<String> capability_nameList;
-    ArrayList<String> categoryList;
-    ArrayList<String> capability_imageidList;
-    ArrayList<String> capability_image_locationList;
+
+    ArrayList<String> base_pricelist;
+    ArrayList<JSONObject> capability_detailslist;
+    ArrayList<String> capability_idlist;
+    ArrayList<String> service_image_locationlist;
+
+
+    ArrayList<String> vendorserviceimage_idList;
+    ArrayList<String> vendorserviceimagelocationList;
+    ArrayList<String> vendoridList;
+
+    ArrayList<String> vendornameList;
+    ArrayList<String> vendorcapabilitynameList;
+    ArrayList<String> vendorlocationList;
 
     ArrayList<sabaEventItem> eventwholearray;
 
-    capabilityRecyclerAdapter sabaeventsadapter;
+    vendormatchingRecyclerAdapter sabaeventsadapter;
+
+    ArrayList<SelectedCapabilityItem> capabilityList;
 
     public void showProgressBar()
     {
@@ -97,50 +109,70 @@ public class chooseservices extends AppCompatActivity {
     public void onBackPressed(){
 
         super.onBackPressed();
-        startActivity(new Intent(getApplicationContext(), sabaDrawerActivity.class));
+        Intent intent2 = new Intent(vendormatching.this, sabaDrawerActivity.class);
+        //intent2.putStringArrayListExtra("selected_services", selectedCapabilities);
+        //intent2.putExtra("selected_services", selected);
+        intent2.putExtra("event_id", EventId);
+        startActivity(intent2);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.chooseservices);
+        setContentView(R.layout.vendormatchingevent);
 
         progressindicator = (AVLoadingIndicatorView) findViewById(R.id.progressindicator);
         app = (sabaapp) getApplicationContext();
 
-        Intent intent=getIntent();
-
-        EventId=intent.getStringExtra("event_id");
-
         servicesselected = (RecyclerView)findViewById(R.id.selectableoptions);
 
-        backbuttonImage = (ImageView) findViewById(R.id.backbuttonimage);
-
+        backbuttonImage = (ImageView)findViewById(R.id.backbuttonimage);
 
         nextbuttonLayout = (LinearLayout)findViewById(R.id.nextbuttonlayout);
 
+        Intent intent = getIntent();
+
+        EventId = intent.getStringExtra("event_id");
+
+        eventBudgetvalue = intent.getStringExtra("budget");
+
+        Serializable serializable = getIntent().getSerializableExtra("selected_services");
+        if (serializable instanceof ArrayList<?>) {
+            capabilityList =
+                    (ArrayList<SelectedCapabilityItem>) serializable;
+
+            // Now you can use this list to populate a RecyclerView
+                /*budgetlistRecycler.setLayoutManager(new LinearLayoutManager(this));
+                SelectedCapabilityAdapter adapter = new SelectedCapabilityAdapter(capabilityList, this);
+                budgetlistRecycler.setAdapter(adapter);*/
+
+            // Optional: Log to check
+            for (SelectedCapabilityItem item : capabilityList) {
+                Log.d("CAPABILITY_ITEM", item.getCode() + " - " + item.getName());
+            }
+        }
+
+        base_pricelist = new ArrayList<String>();
+        capability_detailslist = new ArrayList<JSONObject>();
+        capability_idlist = new ArrayList<String>();
+        service_image_locationlist = new ArrayList<String>();
         eventwholearray = new ArrayList<sabaEventItem>();
 
+        vendorserviceimage_idList = new ArrayList<String>();
+        vendorserviceimagelocationList = new ArrayList<String>();
+        vendoridList = new ArrayList<String>();
 
-        capability_codeList = new ArrayList<String>();
-        capability_nameList = new ArrayList<String>();
-        categoryList = new ArrayList<String>();
-        capability_imageidList = new ArrayList<String>();
-        capability_image_locationList = new ArrayList<String>();
+        vendornameList = new ArrayList<String>();
+        vendorcapabilitynameList = new ArrayList<String>();
+        vendorlocationList = new ArrayList<String>();
 
-        servicesselected.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
 
-        sabaeventsadapter=new capabilityRecyclerAdapter(eventwholearray,context, chooseservices.this, app);
+        servicesselected.setLayoutManager(new LinearLayoutManager(vendormatching.this, LinearLayoutManager.VERTICAL, false));
+
+        sabaeventsadapter=new vendormatchingRecyclerAdapter(eventwholearray,context, vendormatching.this, app);
         servicesselected.setAdapter(sabaeventsadapter);
 
-        backbuttonImage.setEnabled(false);
-        nextbuttonLayout.setEnabled(false);
-
-
-
-        getCapabilitylist();
-
-
+        sendpostRequest();
 
         backbuttonImage.setOnClickListener(v -> {
             // Action when layout is clicked
@@ -151,6 +183,8 @@ public class chooseservices extends AppCompatActivity {
 
 
         });
+
+
 
         nextbuttonLayout.setOnClickListener(v -> {
             // Action when layout is clicked
@@ -167,15 +201,28 @@ public class chooseservices extends AppCompatActivity {
                 return;
             }
 
-            Log.d("SELECTED SERVICES CHOOSE", String.valueOf(selected));
+            Log.d("SELECTED VENDORS CHOOSE", String.valueOf(selected));
+
+            ArrayList<SelectedVendorItem> vendorList = new ArrayList<>();
+
+            for (Map.Entry<String, String> entry : selected.entrySet()) {
+                SelectedVendorItem item =
+                        new SelectedVendorItem(entry.getKey(), entry.getValue());
+                vendorList.add(item);
+            }
 
 
 
-            Intent intent2 = new Intent(chooseservices.this, setupbudgets.class);
+
+            Intent intent2 = new Intent(vendormatching.this, finalizesetup.class);
             //intent2.putStringArrayListExtra("selected_services", selectedCapabilities);
-            intent2.putExtra("selected_services", selected);
             intent2.putExtra("event_id", EventId);
+            intent2.putExtra("budget", eventBudgetvalue);
+            intent2.putExtra("selected_services", (Serializable) capabilityList);
+            intent2.putExtra("selected_vendors", vendorList);
+
             startActivity(intent2);
+
 
 
         });
@@ -183,36 +230,58 @@ public class chooseservices extends AppCompatActivity {
 
 
 
-        //end of oncreate
+
+
+
+
+    //end of oncreate
     }
 
 
-    private void getCapabilitylist()
+    private void sendpostRequest()
     {
         //continuetonextbutton.setText("Uploading to your store...");
         showProgressBar();
 
 
-        String request_username = app.getApiusername();
+        JSONObject payload = new JSONObject();
+
+        try {
+            // =============================
+            // ROOT PAYLOAD
+            // =============================
+            payload.put("event_amountspent", "0");
+            payload.put("event_id", EventId);
+            payload.put("event_budget", eventBudgetvalue);
+
+            // =============================
+            // BUILD event_budgetitems ARRAY
+            // =============================
+            JSONArray capabilityCodesArray = new JSONArray();
+            for (SelectedCapabilityItem item : capabilityList) {
+                capabilityCodesArray.put(item.getCode());
+            }
+
+            payload.put("event_capabilities", capabilityCodesArray);
+
+        } catch (JSONException e) {
+            hideProgressBar();
+            e.printStackTrace();
+            return;
+        }
 
 
-        HashMap<String, String> paramsotpu = new HashMap<String, String>();
 
-        paramsotpu.put("username", app.getApiusername());
+        String paymentsendpoint="https://api.sabaapp.co/v0/events/vendors";
 
+        Log.d("SENDING MATCH PAYLOAD", String.valueOf(payload));
 
-        String paymentsendpoint="https://api.sabaapp.co/v0/vendors/capabilities";
-
-
-
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, paymentsendpoint, null,
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, paymentsendpoint, payload,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.e("response", "ALL Products: "+response.toString());
                         hideProgressBar();
-                        backbuttonImage.setEnabled(true);
-                        nextbuttonLayout.setEnabled(true);
                         if (!response.equals(null)) {
                             Log.e("response", "response "+response.toString());
                             JSONObject merchant_profile = null;
@@ -226,18 +295,35 @@ public class chooseservices extends AppCompatActivity {
                                 String messagedetails =jsonObj.getString("MESSAGE");
                                 if(message.toLowerCase().matches("success"))
                                 {
+
+
+
+
                                     dataobj = jsonObj.getJSONArray("DATA");
+
+                                    Log.d("Receive VENDOR DATA", String.valueOf(dataobj));
 
                                     if(dataobj.length()==0){
                                         // their are not values to add
                                         String messageerror="There was Zero products retrieved";
                                         Log.d("Msg:",messageerror);
 
-                                        capability_codeList.add(null);
-                                        capability_nameList.add("No services");;
-                                        categoryList.add("No services loaded");
-                                        capability_imageidList.add(null);
-                                        capability_image_locationList.add(null);
+
+
+                                        base_pricelist.add(null);
+                                        capability_detailslist.add(null);
+                                        capability_idlist.add(null);
+                                        service_image_locationlist.add(null);
+                                        eventwholearray.add(null);
+
+                                        vendorserviceimage_idList.add(null);
+                                        vendorserviceimagelocationList.add(null);
+                                        vendoridList.add(null);
+
+                                        vendornameList.add("No vendor loaded");
+                                        vendorcapabilitynameList.add(null);
+                                        vendorlocationList.add("Please try later");
+
 
                                         eventwholearray.clear();
 
@@ -257,42 +343,58 @@ public class chooseservices extends AppCompatActivity {
                                     }else{
 
                                         for (int i = 0; i < dataobj.length(); i++) {
+
                                             jsonObj = dataobj.getJSONObject(i);
 
+                                            String base_price = jsonObj.optString("base_price", null);
+                                            String capability_id = jsonObj.optString("capability_id", null);
+                                            String service_image_location = jsonObj.optString("service_image_location", null);
+                                            String capabilitname = jsonObj.optString("capability_name", null);
+                                            String vendorname = jsonObj.optString("vendor_name", null);
+                                            String vendorlocation = jsonObj.optString("location", null);
+                                            String vendorserviceimageid = jsonObj.optString("service_image_id", null);
+                                            String vendorid = jsonObj.optString("vendor_id", null);
 
-                                            String capability_code = jsonObj.getString("capability_code");
-                                            String capability_name = jsonObj.getString("capability_name");
-                                            String category= jsonObj.getString("category");
-                                            String capability_imageid = jsonObj.getString("capability_imageid");
+                                            JSONObject capability_details = jsonObj.optJSONObject("capability_details");
 
-                                            String capability_image_location =jsonObj.getString("capability_image_location");
+                                            base_pricelist.add(base_price);
+                                            capability_idlist.add(capability_id);
+                                            service_image_locationlist.add(service_image_location);
+                                            vendorserviceimage_idList.add(vendorserviceimageid);
+                                            vendoridList.add(vendorid);
+                                            vendornameList.add(vendorname);
+                                            vendorcapabilitynameList.add(capabilitname);
+                                            vendorlocationList.add(vendorlocation);
 
 
-                                            capability_codeList.add(capability_code);
-                                            capability_nameList.add(capability_name);
-                                            categoryList.add(category);
-                                            capability_imageidList.add(capability_imageid);
-                                            capability_image_locationList.add(capability_image_location);
+                                            capability_detailslist.add(capability_details);
 
-                                            //for
 
-                                            Log.d("Added Capability", capability_name + " To products array list");
+                                            Log.d("Added Capability", vendorname + " added");
                                         }
+
 
 
 
                                         eventwholearray.clear();
 
-                                        for(Integer i=0; i<capability_nameList.size(); i++)
+                                        for(Integer i=0; i<capability_idlist.size(); i++)
                                         {
                                             sabaEventItem item=new sabaEventItem();
 
 
-                                            item.setcapability_code(capability_codeList.get(i));
-                                            item.setcapability_name(capability_nameList.get(i));
-                                            item.setcapability_category(categoryList.get(i));
-                                            item.setcapability_imageid(capability_imageidList.get(i));
-                                            item.setcapability_image_location(capability_image_locationList.get(i));
+                                            item.setvendorbase_price(base_pricelist.get(i));
+                                            item.setvendorcapability_details(capability_detailslist.get(i));
+                                            item.setvendorcapability_id(capability_idlist.get(i));
+                                            item.setvendorserviceimage_id(vendorserviceimage_idList.get(i));
+                                            item.setvendorserviceimagelocation(service_image_locationlist.get(i));
+                                            item.setvendorid(vendoridList.get(i));
+
+                                            item.setvendorname(vendornameList.get(i));
+                                            item.setvendorcapabilityname(vendorcapabilitynameList.get(i));
+                                            item.setvendorlocation(vendorlocationList.get(i));
+
+
 
 
                                             //setImagebitmap
@@ -307,7 +409,7 @@ public class chooseservices extends AppCompatActivity {
                                         //WayaWayaItem item = new WayaWayaItem();
                                         //item.setproductListMain(productnameList);
 
-                                        for ( String singleRecord : capability_nameList)
+                                        for ( String singleRecord : capability_idlist)
                                         {
                                             Log.d("Event Name value--", singleRecord.toString());
                                         }
@@ -317,11 +419,27 @@ public class chooseservices extends AppCompatActivity {
 
                                     }
 
+
+
+
                                 }
                                 else
                                 {
                                     String messageerror="There was an Error";
                                     Log.d("Msg:",messageerror);
+
+                                    AlertDialog ad = new AlertDialog.Builder(vendormatching.this)
+                                            .create();
+                                    ad.setCancelable(true);
+                                    ad.setTitle("Request Failed");
+                                    ad.setMessage(messagedetails);
+                                    ad.setButton(getApplicationContext().getString(R.string.ok_text), new DialogInterface.OnClickListener() {
+
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                        }
+                                    });
+                                    ad.show();
 
                                 }
 
@@ -333,13 +451,9 @@ public class chooseservices extends AppCompatActivity {
                                 Log.e("errorIs", "error"+e.getMessage());
                             }
                             hideProgressBar();
-                            backbuttonImage.setEnabled(true);
-                            nextbuttonLayout.setEnabled(true);
 
                         } else {
                             hideProgressBar();
-                            backbuttonImage.setEnabled(true);
-                            nextbuttonLayout.setEnabled(true);
                             Log.e("Your Array Response", "Data Null");
                         }
 
@@ -349,8 +463,6 @@ public class chooseservices extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 hideProgressBar();
-                backbuttonImage.setEnabled(true);
-                nextbuttonLayout.setEnabled(true);
                 //continuetonextbutton.setText("Upload to your store");
                 Log.e("Menu list error is ", "" + error);
 
@@ -400,4 +512,6 @@ public class chooseservices extends AppCompatActivity {
 
 
     }
+
+
 }

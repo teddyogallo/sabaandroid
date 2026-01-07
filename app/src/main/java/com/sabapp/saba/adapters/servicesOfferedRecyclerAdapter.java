@@ -12,27 +12,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatImageView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
-import com.google.android.material.card.MaterialCardView;
-
-import java.util.List;
-
 import com.sabapp.saba.R;
 import com.sabapp.saba.application.sabaapp;
 import com.sabapp.saba.data.model.sabaEventItem;
-import com.sabapp.saba.events.createevent;
-import com.sabapp.saba.homeclientFragment;
+import com.sabapp.saba.vendorFragment;
 
-public class sabaeventlistclientHomeRecyclerAdapter  extends RecyclerView.Adapter<sabaeventlistclientHomeRecyclerAdapter.MyViewHolder>{
+import java.util.List;
+
+public class servicesOfferedRecyclerAdapter extends RecyclerView.Adapter<servicesOfferedRecyclerAdapter.MyViewHolder>{
     sabaapp app;
     int selected_position = 0;
     private List<sabaEventItem> bitmapList;
@@ -40,23 +36,30 @@ public class sabaeventlistclientHomeRecyclerAdapter  extends RecyclerView.Adapte
     private Context context;
 
     private Activity activity;
-    private homeclientFragment pulse;
+    private vendorFragment pulse;
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+
         public ImageView thumbnail;
-        public TextView title;
+        public TextView title,locationdetails,servicessupported,minimumbudgettextview;
         public TextView locationaddress, datevalues, eventstatus;
 
-        public LinearLayout cardView;
+        public LinearLayout cardView, amountlayout;
+
+        public RelativeLayout selectedlayout;
 
         public MyViewHolder(View view) {
             super(view);
             view.setOnClickListener(this);
-            cardView=view.findViewById(R.id.eventstatuslayout);
+            cardView=view.findViewById(R.id.eventlayoutvalues);
             thumbnail= view.findViewById(R.id.serviceimage);
             title= view.findViewById(R.id.eventtitle);
-            locationaddress= view.findViewById(R.id.eventlocation);
-            datevalues= view.findViewById(R.id.eventdate);
-            eventstatus= view.findViewById(R.id.eventstatustext);
+            locationdetails= view.findViewById(R.id.eventlocation);
+            servicessupported= view.findViewById(R.id.eventdate);
+            selectedlayout = view.findViewById(R.id.serviceselectedlayout);
+            amountlayout = view.findViewById(R.id.eventstatuslayout);
+            minimumbudgettextview = view.findViewById(R.id.eventstatustext);
+
 
 
         }
@@ -70,7 +73,7 @@ public class sabaeventlistclientHomeRecyclerAdapter  extends RecyclerView.Adapte
         }
     }
 
-    public sabaeventlistclientHomeRecyclerAdapter(List<sabaEventItem> bitmapList, Context context, homeclientFragment pulse, sabaapp app) {
+    public servicesOfferedRecyclerAdapter(List<sabaEventItem> bitmapList, Context context, vendorFragment pulse, sabaapp app) {
         this.bitmapList = bitmapList;
         this.context=context;
         this.pulse=pulse;
@@ -78,19 +81,19 @@ public class sabaeventlistclientHomeRecyclerAdapter  extends RecyclerView.Adapte
     }
 
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.eventshorizontalcell, parent, false);
+    public servicesOfferedRecyclerAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.servicesofferedcell, parent, false);
 
-        return new MyViewHolder(itemView);
+        return new servicesOfferedRecyclerAdapter.MyViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(servicesOfferedRecyclerAdapter.MyViewHolder holder, int position) {
 
         // holder.cardView.setStrokeColor(selected_position == position ? Color.YELLOW : Color.TRANSPARENT);
         final sabaEventItem sabaItem = bitmapList.get(position);
 
-        if(sabaItem.geteventimageLocation()!=null)
+        if(sabaItem.getvendorserviceimagelocation()!=null)
         {
 
 
@@ -101,14 +104,14 @@ public class sabaeventlistclientHomeRecyclerAdapter  extends RecyclerView.Adapte
             try{
 
                 Glide.with(context)
-                        .load(sabaItem.geteventimageLocation())
+                        .load(sabaItem.getvendorserviceimagelocation())
                         .placeholder(R.drawable.defaultimage)
                         .apply(requestOptions)
                         .into(holder.thumbnail);
 
             } catch (Exception e) {
 
-               Log.e("LOAD IMAGE ERROR: ",""+e);
+                Log.e("LOAD event assigned IMAGE ERROR: ",""+e);
 
                 Glide.with(context).load(R.drawable.defaultimage).apply(requestOptions).into(holder.thumbnail);
 
@@ -143,31 +146,23 @@ public class sabaeventlistclientHomeRecyclerAdapter  extends RecyclerView.Adapte
         holder.thumbnail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String productname = sabaItem.geteventName();
+                String productname = sabaItem.getevent_nameAssigned();
                 final Intent intent;
 
                 if(productname==null ||productname.equals(""))
                 {
                     // redirect to add new product
 
-                    intent =  new Intent(context, createevent.class);
-                    context.startActivity(intent);
-
-                    //end of redirect to new product
-
-                }else if(productname.toLowerCase().matches("No Name")||productname.equals("no name"))
-                {
-                    //start of redirect to new product
-                    /*intent =  new Intent(context, wwProductActivity.class);
+                    /*intent =  new Intent(context, createevent.class);
                     context.startActivity(intent);*/
 
                     //end of redirect to new product
 
-                }else if(productname.toLowerCase().matches("Add Event")||productname.equals("add event"))
+                }else if(productname.toLowerCase().matches("no event assigned"))
                 {
                     //start of redirect to new product
-                    intent =  new Intent(context, createevent.class);
-                    context.startActivity(intent);
+                    /*intent =  new Intent(context, wwProductActivity.class);
+                    context.startActivity(intent);*/
 
                     //end of redirect to new product
 
@@ -191,108 +186,52 @@ public class sabaeventlistclientHomeRecyclerAdapter  extends RecyclerView.Adapte
 
 
 
-
-
-        if(sabaItem.geteventName()==null || sabaItem.geteventName().equals(""))
+        if(sabaItem.getvendorname()==null || sabaItem.getvendorname().equals(""))
         {
             //holder.eventtitle.setVisibility(View.GONE);
-            holder.title.setText("No Name");
+            holder.title.setText("Not Valid");
         }
         else
         {
-            holder.title.setText(sabaItem.geteventName());
+            holder.title.setText(sabaItem.getvendorname());
         }
 
 
-
-        if(sabaItem.geteventLocation()==null || sabaItem.geteventLocation().equals(""))
+        if(sabaItem.getvendorlocation()==null || sabaItem.getvendorlocation().equals(""))
         {
-            holder.locationaddress.setVisibility(View.GONE);
-        }
-        else
-        {
-            holder.locationaddress.setText(sabaItem.geteventLocation());
-        }
-
-        if(sabaItem.geteventTime()==null || sabaItem.geteventTime().equals(""))
-        {
-            holder.datevalues.setVisibility(View.GONE);
+            //holder.eventtitle.setVisibility(View.GONE);
+            holder.locationdetails.setText("Not information");
         }
         else
         {
-            holder.datevalues.setText(sabaItem.geteventTime());
+            holder.locationdetails.setText(sabaItem.getvendorlocation());
         }
 
 
-        if(sabaItem.geteventStatus()==null || sabaItem.geteventStatus().equals(""))
+        if(sabaItem.getvendorcapabilityname()==null || sabaItem.getvendorcapabilityname().equals(""))
         {
+            //holder.eventtitle.setVisibility(View.GONE);
+            holder.servicessupported.setText("No information");
 
-
-            holder.cardView.setBackground(
-                    ContextCompat.getDrawable(holder.cardView.getContext(),
-                            R.drawable.home_background_ovalnew)
-            );
-
+            holder.servicessupported.setVisibility(View.GONE);
         }
         else
         {
-
-            if(sabaItem.geteventStatus().equalsIgnoreCase("pending")){
-
-                holder.cardView.setBackground(
-                        ContextCompat.getDrawable(holder.cardView.getContext(),
-                                R.drawable.orangesquere)
-                );
-
-            }else if(sabaItem.geteventStatus().equalsIgnoreCase("upcoming")){
-
-                holder.cardView.setBackground(
-                        ContextCompat.getDrawable(holder.cardView.getContext(),
-                                R.drawable.s8b868833sw1cr101)
-                );
-
-            }else if(sabaItem.geteventStatus().equalsIgnoreCase("completed")){
-
-                holder.cardView.setBackground(
-                        ContextCompat.getDrawable(holder.cardView.getContext(),
-                                R.drawable.cr8lr270a7be2e80d7f40a80)
-                );
-
-            }
-            else if(sabaItem.geteventStatus().equalsIgnoreCase("cancelled")){
-
-                holder.cardView.setBackground(
-                        ContextCompat.getDrawable(holder.cardView.getContext(),
-                                R.drawable.cr5bfb01600d)
-                );
-
-            }
-            else if(sabaItem.geteventStatus().equalsIgnoreCase("draft")){
-
-                holder.cardView.setBackground(
-                        ContextCompat.getDrawable(holder.cardView.getContext(),
-                                R.drawable.greysquere)
-                );
-
-            }else{
-
-                holder.cardView.setBackground(
-                        ContextCompat.getDrawable(holder.cardView.getContext(),
-                                R.drawable.cr10lr270fb0160f703d0)
-                );
-
-            }
-
+            holder.servicessupported.setVisibility(View.VISIBLE);
+            holder.servicessupported.setText(sabaItem.getvendorcapabilityname());
         }
 
 
-        if(sabaItem.geteventStatus()==null || sabaItem.geteventStatus().equals(""))
+        if(sabaItem.getvendorbase_price()==null || sabaItem.getvendorbase_price().equals(""))
         {
-            holder.eventstatus.setText(sabaItem.geteventStatus());
+            //holder.eventtitle.setVisibility(View.GONE);
+
+            holder.amountlayout.setVisibility(View.GONE);
         }
         else
         {
-            holder.eventstatus.setText(sabaItem.geteventStatus());
+            holder.amountlayout.setVisibility(View.VISIBLE);
+            holder.minimumbudgettextview.setText(sabaItem.getvendorbase_price());
         }
 
 

@@ -38,6 +38,8 @@ public class sabaapp extends Application {
 
     private ArrayList<sabaEventItem> sabaeventlist=new ArrayList<sabaEventItem>();;
 
+    private ArrayList<sabaEventItem> capabilitylist=new ArrayList<sabaEventItem>();;
+
     public String getDevversion() {
         String currentversion = "1";
 
@@ -128,11 +130,33 @@ public class sabaapp extends Application {
         return sabaeventlist;
     }
 
+
+    public void setCapabilitylist(ArrayList<sabaEventItem> eventslist)
+    {
+
+
+
+        this.capabilitylist=eventslist;
+
+    }
+    public ArrayList<sabaEventItem> getCapabilitylist()
+    {
+
+        return capabilitylist;
+    }
+
     public int getLoggeddashboardtime()
     {
         return sharedPrefsXtreme.getIntData("loggeddashtime");
     }
+    public void setCreateAdImage(String createAdImage)
+    {
+        sharedPrefsXtreme.saveData("createadimg", createAdImage);
+    }
 
+    public String getCreateAdImage()
+    {
+        return sharedPrefsXtreme.getData("createadimg");}
 
     @Override
     public void onCreate() {

@@ -1,12 +1,17 @@
 package com.sabapp.saba;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.sabapp.saba.R;
@@ -24,8 +29,27 @@ public class sabaDrawerActivity extends AppCompatActivity {
         Fragment firstFragment = new homeclientFragment();
         Fragment secondFragment = new SecondFragment();
         Fragment thirdFragment = new FirstFragment();
+        Fragment messageFragment = new messageFragment();
 
         setCurrentFragment(firstFragment);
+
+        MaterialToolbar toolbar = findViewById(R.id.main_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false); // hide default title
+
+        View customToolbar = LayoutInflater.from(this).inflate(R.layout.customtopactionbar, toolbar, false);
+        toolbar.addView(customToolbar);
+
+        ImageView userIcon = customToolbar.findViewById(R.id.user_icon);
+        ImageView notificationIcon = customToolbar.findViewById(R.id.notification_icon);
+
+        userIcon.setOnClickListener(v -> {
+            Toast.makeText(this, "User clicked", Toast.LENGTH_SHORT).show();
+        });
+
+        notificationIcon.setOnClickListener(v -> {
+            Toast.makeText(this, "Notification clicked", Toast.LENGTH_SHORT).show();
+        });
 
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
@@ -34,13 +58,13 @@ public class sabaDrawerActivity extends AppCompatActivity {
                 if (id == R.id.dashboard) {
                     setCurrentFragment(firstFragment);
                 } else if (id == R.id.events) {
-                    setCurrentFragment(secondFragment);
+                    setCurrentFragment(thirdFragment);
                 } else if (id == R.id.requestpay) {
                     setCurrentFragment(thirdFragment);
                 } else if (id == R.id.messages) {
-                    setCurrentFragment(thirdFragment);
+                    setCurrentFragment(messageFragment);
                 } else if (id == R.id.businesschatbot) {
-                    setCurrentFragment(thirdFragment);
+                    setCurrentFragment(secondFragment);
                 }
                 return true;
             }

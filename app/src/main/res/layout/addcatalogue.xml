@@ -62,28 +62,7 @@
                             android:background="@drawable/cr10lr270cd01a2891161"
                             android:orientation="vertical"></LinearLayout>
 
-                        <LinearLayout
-                            android:id="@+id/rzk42qoid8q9"
-                            android:layout_width="62dp"
-                            android:layout_height="4dp"
-                            android:layout_marginEnd="13dp"
-                            android:background="@drawable/cr10lr270cd01a2891161"
-                            android:orientation="vertical"></LinearLayout>
 
-                        <LinearLayout
-                            android:id="@+id/rvhmaojb94fg"
-                            android:layout_width="62dp"
-                            android:layout_height="4dp"
-                            android:layout_marginEnd="13dp"
-                            android:background="@drawable/cr10lr270cd01a2891161"
-                            android:orientation="vertical"></LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/rkkfmb4ss8ld"
-                            android:layout_width="62dp"
-                            android:layout_height="4dp"
-                            android:background="@drawable/cr10lr270cd01a2891161"
-                            android:orientation="vertical"></LinearLayout>
                     </LinearLayout>
                 </HorizontalScrollView>
                 <LinearLayout
@@ -101,7 +80,7 @@
                         android:layout_marginBottom="10dp"
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
-                        android:text="Start Event Setup"
+                        android:text="Start Service Setup"
                         />
                     <TextView
                         android:id="@+id/rinla7ljd1u"
@@ -109,9 +88,64 @@
                         android:textSize="14sp"
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
-                        android:text="Please fill the details below to start event setup"
+                        android:text="Please fill the details below to setup a service"
                         />
                 </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/rcmaar737wl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginStart="22dp"
+                    android:orientation="horizontal">
+                    <RelativeLayout
+                        android:id="@+id/serviceselectedlayout"
+                        android:layout_width="73dp"
+                        android:layout_height="73dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="4dp"
+                        android:background="@drawable/circlebordercolour">
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/selectedradioview"
+                            android:layout_width="67dp"
+                            android:layout_height="67dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            app:cardCornerRadius="50dp">
+
+                            <ImageView
+                                android:id="@+id/addeventimage"
+                                android:layout_width="73dp"
+                                android:layout_height="73dp"
+                                android:layout_marginEnd="26dp"
+                                android:src="@drawable/defaultimage"
+                                android:scaleType="fitXY"
+                                />
+
+                        </androidx.cardview.widget.CardView>
+                    </RelativeLayout>
+                    <TextView
+                        android:id="@+id/rb4andttzxo5"
+                        android:textColor="#000000"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:layout_marginEnd="26dp"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:text="Add service image"
+                        />
+                    <LinearLayout
+                        android:id="@+id/rmrkoweas9yl"
+                        android:layout_width="73dp"
+                        android:layout_height="73dp"
+                        android:orientation="vertical">
+                    </LinearLayout>
+                </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/rbhdwobsz90n"
                     android:layout_width="match_parent"
@@ -132,13 +166,13 @@
                         android:src="@drawable/userplaceholder" />
 
                     <EditText
-                        android:id="@+id/eventname"
+                        android:id="@+id/servicename"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="4dp"
                         android:layout_weight="1"
                         android:background="@null"
-                        android:hint="Please Enter Event Name"
+                        android:hint="Enter Service/Vendor Name"
                         android:inputType="text|textNoSuggestions"
                         android:paddingVertical="18dp"
                         android:textColor="#25131A"
@@ -213,37 +247,7 @@
                         android:textColor="#25131A"
                         android:textSize="14sp" />
                 </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/r6qq8k73e6ss"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:background="@drawable/s8b868833sw1cr10"
-                    android:paddingHorizontal="20dp"
-                    android:layout_marginBottom="20dp"
-                    android:layout_marginHorizontal="21dp"
-                    android:orientation="horizontal">
 
-                    <ImageView
-                        android:id="@+id/rcxqw4jno8ui"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_marginEnd="10dp"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/userplaceholder" />
-
-                    <EditText
-                        android:id="@+id/eventdate"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:hint="Select event date"
-                        android:focusable="false"
-                        android:clickable="true"
-                        android:inputType="none"
-                        android:paddingVertical="18dp"
-                        android:textSize="14sp" />
-                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/r6qq8k73e6ss1"
@@ -265,56 +269,20 @@
                         android:src="@drawable/userplaceholder" />
 
                     <EditText
-                        android:id="@+id/guestnumber"
+                        android:id="@+id/basepriceeditvalue"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="4dp"
                         android:layout_weight="1"
                         android:background="@null"
-                        android:hint="enter the expected guest count"
+                        android:hint="enter the base price"
                         android:inputType="number"
                         android:paddingVertical="18dp"
                         android:textColor="#25131A"
                         android:textSize="14sp" />
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/rbhdwobsz90n1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:background="@drawable/s8b868833sw1cr10"
-                    android:paddingHorizontal="20dp"
-                    android:layout_marginBottom="20dp"
-                    android:layout_marginHorizontal="20dp"
-                    android:orientation="horizontal">
 
-                    <ImageView
-                        android:id="@+id/r9he5pczrmt1"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_marginEnd="10dp"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/userplaceholder" />
-
-                    <androidx.appcompat.widget.AppCompatSpinner
-                        android:id="@+id/eventvibe"
-
-                        android:layout_gravity="center"
-                        android:animateLayoutChanges="true"
-                        android:overScrollMode="never"
-                        android:soundEffectsEnabled="true"
-                        android:spinnerMode="dropdown"
-                        android:textColor="#25131A"
-                        android:textSize="14sp"
-                        android:layout_marginEnd="4dp"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:paddingVertical="18dp"
-                        >
-                    </androidx.appcompat.widget.AppCompatSpinner>
-                </LinearLayout>
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="40dp">

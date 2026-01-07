@@ -13,11 +13,17 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+
+    <!-- Camera permission -->
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <!-- Required for Android 13+ if you still want direct media access -->
+    <uses-permission
+        android:name="android.permission.READ_MEDIA_IMAGES"
+        android:required="false" />
 
     <application
         android:name=".application.sabaapp"
@@ -63,6 +69,14 @@
             android:name=".sabaDrawerActivity"
             android:theme="@style/Theme.Saba"
             android:exported="false" />
+        <activity
+            android:name=".sabaVendorDrawerActivity"
+            android:theme="@style/Theme.Saba"
+            android:exported="false" />
+        <activity
+            android:name=".sabaplannerDrawerActivity"
+            android:theme="@style/Theme.Saba"
+            android:exported="false" />
 
         <activity
             android:name=".events.createevent"
@@ -72,6 +86,28 @@
             android:name=".events.chooseservices"
             android:theme="@style/Theme.Saba"
             android:exported="false" />
+
+        <activity
+            android:name=".events.setupbudgets"
+            android:theme="@style/Theme.Saba"
+            android:exported="false" />
+
+        <activity
+            android:name=".events.vendormatching"
+            android:theme="@style/Theme.Saba"
+            android:exported="false" />
+
+        <activity
+            android:name=".events.finalizesetup"
+            android:theme="@style/Theme.Saba"
+            android:exported="false" />
+
+        <activity
+            android:name=".vendors.addcatalogue"
+            android:theme="@style/Theme.Saba"
+            android:exported="false" />
+
+
 
     </application>
 

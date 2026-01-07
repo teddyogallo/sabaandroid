@@ -4,6 +4,7 @@ import static com.gun0912.tedpermission.provider.TedPermissionProvider.context;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,13 +25,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.sabapp.saba.adapters.recentactivitiesRecyclerAdapter;
 import com.sabapp.saba.adapters.sabaeventlistclientHomeRecyclerAdapter;
 import com.sabapp.saba.adapters.servicesOfferedRecyclerAdapter;
 import com.sabapp.saba.adapters.vendorassignmentsRecyclerAdapter;
 import com.sabapp.saba.application.sabaapp;
 import com.sabapp.saba.data.model.sabaEventItem;
 import com.sabapp.saba.events.createevent;
+import com.sabapp.saba.vendors.addcatalogue;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import org.json.JSONArray;
@@ -38,21 +39,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link homeclientFragment#newInstance} factory method to
+ * Use the {@link vendorFragment#newInstance} factory method to
  * create an instance of this fragment.
- *
  */
-public class homeclientFragment extends Fragment {
+public class vendorFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -63,48 +59,29 @@ public class homeclientFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    LinearLayout createEventLayout, messagesquicklink, paymentsquicklink, fevoritesquicklink;
-
-    AVLoadingIndicatorView progressBar;
-
-    sabaapp app;
-
-    JSONArray dataobj;
-    //eventlist values
+    public vendorFragment() {
+        // Required empty public constructor
+    }
 
 
-    ArrayList<String> user_idlist = new ArrayList<String>();
-    ArrayList<String> event_namelist;
-    ArrayList<String> event_timelist;
-    ArrayList<String> event_locationlist;
-    ArrayList<String> event_budgetlist;
-    ArrayList<String> budget_spentlist;
-    ArrayList<String> setup_statuslist;
-    ArrayList<String> event_statuslist;
-    ArrayList<String> planner_idlist;
-    ArrayList<String> event_image_idlist;
-    ArrayList<String> event_image_locationlist;
-    ArrayList<String> image_encodedlist;
-    ArrayList<String> time_setuplist;
-    ArrayList<String> event_idlist;
-
-    String globalapiusername, globalapipassword;
-
-    ArrayList<sabaEventItem> eventwholearray;
-
-    RecyclerView eventlistrecyclerview,servicesofferedrecycler;
-
-    int loggedinnumberGlobal =0;
-
-    sabaeventlistclientHomeRecyclerAdapter sabaeventsadapter;
-
-
-
-    //for services
     ArrayList<String> base_pricelist;
     ArrayList<JSONObject> capability_detailslist;
     ArrayList<String> capability_idlist;
     ArrayList<String> service_image_locationlist;
+
+    ArrayList<String> event_id;
+    ArrayList<String> vendor_id;
+    ArrayList<String>  capability_id;
+    ArrayList<String> status;
+    ArrayList<String> agreed_price;
+    ArrayList<JSONObject> contract_terms;
+    ArrayList<String> assigned_by;
+    ArrayList<String> time_assigned;
+    ArrayList<String> event_name;
+    ArrayList<String> eventimagelocationlist;
+
+
+    //for services
     ArrayList<String> vendorserviceimage_idList;
     ArrayList<String> vendorserviceimagelocationList;
     ArrayList<String> vendoridList;
@@ -113,13 +90,26 @@ public class homeclientFragment extends Fragment {
     ArrayList<String> vendorcapabilitynameList;
     ArrayList<String> vendorlocationList;
 
+    LinearLayout createEventLayout ,messagesquicklink, paymentsquicklink, fevoritesquicklink;
+
+    RecyclerView eventlistrecyclerview, servicesofferedrecycler;
+    AVLoadingIndicatorView progressBar;
+
+    ArrayList<sabaEventItem> eventwholearray;
 
     ArrayList<sabaEventItem> serviceswholearray;
 
+    vendorassignmentsRecyclerAdapter sabaeventsadapter;
 
-    recentactivitiesRecyclerAdapter servicesofferAdapter;
+    servicesOfferedRecyclerAdapter servicesofferAdapter;
 
 
+
+    sabaapp app;
+
+    JSONArray dataobj;
+
+    int loggedinnumberGlobal =0;
 
     /**
      * Use this factory method to create a new instance of
@@ -127,23 +117,17 @@ public class homeclientFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment homeclientFragment.
+     * @return A new instance of fragment vendorFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static homeclientFragment newInstance(String param1, String param2) {
-        homeclientFragment fragment = new homeclientFragment();
+    public static vendorFragment newInstance(String param1, String param2) {
+        vendorFragment fragment = new vendorFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
-
-    public homeclientFragment() {
-        // Required empty public constructor
-    }
-
-
 
     public void showProgressBar()
     {
@@ -204,37 +188,7 @@ public class homeclientFragment extends Fragment {
 
     }
 
-    private void loadTemplateImagesBottom()
-    {
-        eventwholearray.clear();
-        for(Integer i=0; i<event_namelist.size(); i++)
-        {
-            sabaEventItem item=new sabaEventItem();
 
-            item.seteventName(event_namelist.get(i));
-
-            item.seteventUserid(user_idlist.get(i));
-
-            item.seteventTime(event_timelist.get(i));
-            item.seteventLocation(event_locationlist.get(i));
-            item.seteventBudget(event_budgetlist.get(i));
-            item.seteventBudget(budget_spentlist.get(i));
-            item.seteventStatus(setup_statuslist.get(i));
-            item.seteventStatus(event_statuslist.get(i));
-            item.setplannerId(planner_idlist.get(i));
-            item.seteventimageId(event_image_idlist.get(i));
-            item.seteventimageLocation(event_image_locationlist.get(i));
-            item.seteventimageEncoded(image_encodedlist.get(i));
-            item.settime_Setup(time_setuplist.get(i));
-            item.setevent_Id(event_idlist.get(i));
-
-
-            //setImagebitmap
-            eventwholearray.add(item);
-
-        }
-        sabaeventsadapter.notifyDataSetChanged();
-    }
 
     private void setUpRecycler()
     {
@@ -244,15 +198,21 @@ public class homeclientFragment extends Fragment {
         eventlistrecyclerview.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
 
 
-        sabaeventsadapter=new sabaeventlistclientHomeRecyclerAdapter(eventwholearray,context, homeclientFragment.this, app);
+        sabaeventsadapter=new vendorassignmentsRecyclerAdapter(eventwholearray,context, vendorFragment.this, app);
         eventlistrecyclerview.setAdapter(sabaeventsadapter);
+
+
+        //setup services whole array
 
 
         servicesofferedrecycler.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
 
 
-        servicesofferAdapter=new recentactivitiesRecyclerAdapter(serviceswholearray,context, homeclientFragment.this, app);
+        servicesofferAdapter=new servicesOfferedRecyclerAdapter(serviceswholearray,context, vendorFragment.this, app);
         servicesofferedrecycler.setAdapter(servicesofferAdapter);
+
+
+
         /*
         janjarecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter=new wwdashboardAdapter(templateArrays,context, dashboardFragment.this);
@@ -263,9 +223,7 @@ public class homeclientFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        //return inflater.inflate(R.layout.fragment_homeclient, container, false);
-        View view = inflater.inflate(R.layout.fragment_homeclient, container, false);
-
+        View view = inflater.inflate(R.layout.fragment_vendor, container, false);
 
         createEventLayout = view.findViewById(R.id.createeventlayout);
         messagesquicklink = view.findViewById(R.id.messagequicklinkbutton);
@@ -280,21 +238,27 @@ public class homeclientFragment extends Fragment {
         eventwholearray = new ArrayList<sabaEventItem>();
         serviceswholearray = new ArrayList<sabaEventItem>();
 
-        user_idlist = new ArrayList<String>();
-        event_namelist  = new ArrayList<String>();
-        event_timelist  = new ArrayList<String>();
-        event_locationlist = new ArrayList<String>();
-        event_budgetlist  = new ArrayList<String>();
-        budget_spentlist = new ArrayList<String>();
-        setup_statuslist= new ArrayList<String>();
-        event_statuslist = new ArrayList<String>();
-        planner_idlist = new ArrayList<String>();
-        event_image_idlist = new ArrayList<String>();
-        event_image_locationlist = new ArrayList<String>();
-        image_encodedlist = new ArrayList<String>();
-        time_setuplist = new ArrayList<String>();
-        event_idlist  = new ArrayList<String>();
+        //FOR CAPABILITIES
 
+        base_pricelist = new ArrayList<String>();
+        capability_detailslist = new ArrayList<JSONObject>();
+        capability_idlist = new ArrayList<String>();
+        service_image_locationlist = new ArrayList<String>();
+
+        event_id = new ArrayList<String>();
+        vendor_id = new ArrayList<String>();
+        capability_id = new ArrayList<String>();
+        status = new ArrayList<String>();
+        agreed_price = new ArrayList<String>();
+        contract_terms = new ArrayList<JSONObject>();
+        assigned_by = new ArrayList<String>();
+        time_assigned = new ArrayList<String>();
+        event_name = new ArrayList<String>();
+        eventimagelocationlist = new ArrayList<String>();
+
+
+
+        //FOR SERVICES
 
         base_pricelist = new ArrayList<String>();
         capability_detailslist = new ArrayList<JSONObject>();
@@ -310,16 +274,16 @@ public class homeclientFragment extends Fragment {
         vendorcapabilitynameList = new ArrayList<String>();
         vendorlocationList = new ArrayList<String>();
 
+        //for services offered recycler
 
 
 
-        // Set click listener
         createEventLayout.setOnClickListener(v -> {
             // Action when layout is clicked
             // For example, open a new fragment or show a toast
             //Toast.makeText(getContext(), "Create New Event clicked", Toast.LENGTH_SHORT).show();
 
-            Intent intent = new Intent(getActivity(), createevent.class);
+            Intent intent = new Intent(getActivity(), addcatalogue.class);
             intent.putExtra("createadrad", "gotowhatsappbotmaker");
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
             getActivity().startActivity(intent);
@@ -355,12 +319,8 @@ public class homeclientFragment extends Fragment {
         });
 
 
-
-
-
-    return view;
+        return view;
     }
-
 
 
     private void getEventslist()
@@ -377,7 +337,7 @@ public class homeclientFragment extends Fragment {
         paramsotpu.put("username", app.getApiusername());
 
 
-        String paymentsendpoint="https://api.sabaapp.co/v0/events";
+        String paymentsendpoint="https://api.sabaapp.co/v0/vendor/assignments";
 
 
 
@@ -385,7 +345,7 @@ public class homeclientFragment extends Fragment {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.e("response", "ALL Products: "+response.toString());
+                        Log.e("response", "ALL ASSIGMENTS: "+response.toString());
                         hideProgressBar();
                         if (!response.equals(null)) {
                             Log.e("response", "response "+response.toString());
@@ -407,43 +367,36 @@ public class homeclientFragment extends Fragment {
                                         String messageerror="There was Zero products retrieved";
                                         Log.d("Msg:",messageerror);
 
-                                        user_idlist.add(app.getApiusername());
-                                        event_namelist.add("Add Event");
-                                        event_timelist.add(null);
-                                        event_locationlist.add("Tap to add a new event");
-                                        event_budgetlist.add(null);
-                                        budget_spentlist.add(null);
-                                        setup_statuslist.add(null);
-                                        event_statuslist.add("draft");
-                                        planner_idlist.add(null);
-                                        event_image_idlist.add(null);
-                                        event_image_locationlist.add(null);
-                                        image_encodedlist.add(null);
-                                        time_setuplist.add(null);
-                                        event_idlist.add(null);
+                                        event_id.add(null);
+                                        vendor_id.add(null);
+                                        capability_id.add(null);
+                                        status.add(null);
+                                        agreed_price.add(null);
+                                        contract_terms.add(null);
+                                        assigned_by.add(null);
+                                        time_assigned.add(null);
+                                        event_name.add("No event assigned");
+                                        eventimagelocationlist.add(null);
 
                                         eventwholearray.clear();
 
-                                        for(Integer i=0; i<event_namelist.size(); i++)
+                                        for(Integer i=0; i<event_name.size(); i++)
                                         {
                                             sabaEventItem item=new sabaEventItem();
 
-                                            item.seteventName(event_namelist.get(i));
+                                            item.setevent_idAssigned(event_id.get(i));
 
-                                            item.seteventUserid(user_idlist.get(i));
+                                            item.setvendor_idAssigned(vendor_id.get(i));
 
-                                            item.seteventTime(event_timelist.get(i));
-                                            item.seteventLocation(event_locationlist.get(i));
-                                            item.seteventBudget(event_budgetlist.get(i));
-                                            item.seteventBudget(budget_spentlist.get(i));
-                                            item.seteventStatus(setup_statuslist.get(i));
-                                            item.seteventStatus(event_statuslist.get(i));
-                                            item.setplannerId(planner_idlist.get(i));
-                                            item.seteventimageId(event_image_idlist.get(i));
-                                            item.seteventimageLocation(event_image_locationlist.get(i));
-                                            item.seteventimageEncoded(image_encodedlist.get(i));
-                                            item.settime_Setup(time_setuplist.get(i));
-                                            item.setevent_Id(event_idlist.get(i));
+                                            item.setcapability_idAssigned(capability_id.get(i));
+                                            item.setstatusAssigned(status.get(i));
+                                            item.setagreed_priceAssigned(agreed_price.get(i));
+                                            item.setcontract_termsAssigned(contract_terms.get(i));
+                                            item.setassigned_byAssigned(assigned_by.get(i));
+                                            item.settime_assignedAssigned(time_assigned.get(i));
+                                            item.setevent_nameAssigned(event_name.get(i));
+                                            item.setevent_imagelocationAssigned(eventimagelocationlist.get(i));
+
 
 
                                             //setImagebitmap
@@ -460,78 +413,57 @@ public class homeclientFragment extends Fragment {
                                         for (int i = 0; i < dataobj.length(); i++) {
                                             jsonObj = dataobj.getJSONObject(i);
 
-                                            String eventuserid = jsonObj.getString("user_id");
-                                            String eventname = jsonObj.getString("event_name");
-                                            String eventtime= jsonObj.getString("event_time");
-                                            String formattedEventTime = null;
-
-                                            if (isValidUnixTimestamp(eventtime)) {
-                                                formattedEventTime = convertUnixToDateTime(eventtime);
-                                            } else {
-                                                Log.w("EVENT_TIME", "Invalid Unix timestamp: " + eventtime);
-                                            }
-                                            String eventlocation = jsonObj.getString("event_location");
-
-                                            String eventbudget =jsonObj.getString("event_budget");
-                                            String budgetspent =jsonObj.getString("budget_spent");
-
-                                            String setupstatus =jsonObj.getString("setup_status");
-                                            String eventstatus =jsonObj.getString("event_status");
-                                            String plannerid =jsonObj.getString("planner_id");
-
-                                            String eventimageid =jsonObj.getString("event_image_id");
-                                            String eventimagelocation=jsonObj.getString("event_image_location");
-                                            String eventimageencoded =jsonObj.getString("image_encoded");
-                                            String time_setup =jsonObj.getString("time_setup");
-                                            String event_id =jsonObj.getString("event_id");
+                                            String event_idvalue = jsonObj.optString("event_id");
+                                            String vendor_idvalue =jsonObj.optString("vendor_id");
+                                            String capability_idvalue = jsonObj.optString("capability_id");
+                                            String statusvalue = jsonObj.getString("status");
+                                            String agreed_pricevalue = jsonObj.getString("agreed_price");
+                                            JSONObject contract_termsvalue = jsonObj.optJSONObject("contract_terms");
+                                            String assigned_byvalue = jsonObj.getString("assigned_by");
+                                            String time_assignedvalue = jsonObj.getString("time_assigned");
+                                            String event_namevalue = jsonObj.getString("event_name");
+                                            String eventimagelocation = jsonObj.getString("event_image_location");
 
 
-                                            user_idlist.add(eventuserid);
-                                            event_namelist.add(eventname);
-                                            event_timelist.add(formattedEventTime);
-                                            event_locationlist.add(eventlocation);
-                                            event_budgetlist.add(eventbudget);
-                                            budget_spentlist.add(budgetspent);
-                                            setup_statuslist.add(setupstatus);
-                                            event_statuslist.add(eventstatus);
-                                            planner_idlist.add(plannerid);
-                                            event_image_idlist.add(eventimageid);
-                                            event_image_locationlist.add(eventimagelocation);
-                                            image_encodedlist.add(eventimageencoded);
-                                            time_setuplist.add(time_setup);
-                                            event_idlist.add(event_id);
+                                            event_id.add(vendor_idvalue);
+                                            vendor_id.add(vendor_idvalue);
+                                            capability_id.add(capability_idvalue);
+                                            status.add(statusvalue);
+                                            agreed_price.add(agreed_pricevalue);
+                                            contract_terms.add(contract_termsvalue);
+                                            assigned_by.add(assigned_byvalue);
+                                            time_assigned.add(time_assignedvalue);
+                                            event_name.add(event_namevalue);
+                                            eventimagelocationlist.add(eventimagelocation);
+
 
 
 
                                             //for
 
-                                            Log.d("Added Item", eventname + " To products array list");
+                                            Log.d("Added Item", event_id + " To events array list");
                                         }
 
 
 
                                         eventwholearray.clear();
 
-                                        for(Integer i=0; i<event_namelist.size(); i++)
+                                        for(Integer i=0; i<event_id.size(); i++)
                                         {
                                             sabaEventItem item=new sabaEventItem();
 
-                                            item.seteventName(event_namelist.get(i));
+                                            item.setevent_idAssigned(event_id.get(i));
 
-                                            item.seteventUserid(user_idlist.get(i));
+                                            item.setvendor_idAssigned(vendor_id.get(i));
 
-                                            item.seteventTime(event_timelist.get(i));
-                                            item.seteventLocation(event_locationlist.get(i));
-                                            item.seteventBudget(event_budgetlist.get(i));
-                                            item.seteventBudget(budget_spentlist.get(i));
-                                            item.seteventStatus(setup_statuslist.get(i));
-                                            item.seteventStatus(event_statuslist.get(i));
-                                            item.setplannerId(planner_idlist.get(i));
-                                            item.seteventimageId(event_image_idlist.get(i));
-                                            item.seteventimageLocation(event_image_locationlist.get(i));
-                                            item.seteventimageEncoded(image_encodedlist.get(i));
-                                            item.settime_Setup(time_setuplist.get(i));
-                                            item.setevent_Id(event_idlist.get(i));
+                                            item.setcapability_idAssigned(capability_id.get(i));
+                                            item.setstatusAssigned(status.get(i));
+                                            item.setagreed_priceAssigned(agreed_price.get(i));
+                                            item.setcontract_termsAssigned(contract_terms.get(i));
+                                            item.setassigned_byAssigned(assigned_by.get(i));
+                                            item.settime_assignedAssigned(time_assigned.get(i));
+                                            item.setevent_nameAssigned(event_name.get(i));
+                                            item.setevent_imagelocationAssigned(eventimagelocationlist.get(i));
 
 
                                             //setImagebitmap
@@ -546,7 +478,7 @@ public class homeclientFragment extends Fragment {
                                         //WayaWayaItem item = new WayaWayaItem();
                                         //item.setproductListMain(productnameList);
 
-                                        for ( String singleRecord : event_namelist)
+                                        for ( String singleRecord : event_id)
                                         {
                                             Log.d("Event Name value--", singleRecord.toString());
                                         }
@@ -609,8 +541,6 @@ public class homeclientFragment extends Fragment {
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                String apiusername = globalapiusername;
-                String apipassword = globalapipassword;
 
 
                 String creds = String.format("%s:%s",app.getApiusername(),app.getApipassword());
@@ -869,33 +799,4 @@ public class homeclientFragment extends Fragment {
 
 
     }
-
-    private boolean isValidUnixTimestamp(String value) {
-        if (value == null) return false;
-        if (!value.matches("\\d+")) return false;
-
-        return value.length() == 10 || value.length() == 13;
-    }
-
-    private String convertUnixToDateTime(String timestamp) {
-        try {
-            long time = Long.parseLong(timestamp);
-
-            // If seconds → convert to milliseconds
-            if (timestamp.length() == 10) {
-                time *= 1000;
-            }
-
-            Date date = new Date(time);
-
-            SimpleDateFormat sdf =
-                    new SimpleDateFormat("HH:mm dd-MM-yyyy ", Locale.getDefault());
-
-            return sdf.format(date);
-
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
 }

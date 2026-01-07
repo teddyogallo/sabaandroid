@@ -15,12 +15,15 @@ import android.widget.Toast;
 
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
 import com.android.volley.NetworkResponse;
+import com.android.volley.NoConnectionError;
 import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -313,6 +316,18 @@ public class login extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Log.e("VolleyGetError", "JSON parsing error: " + e.getMessage());
+
+                            AlertDialog ad = new AlertDialog.Builder(login.this)
+                                    .create();
+                            ad.setCancelable(true);
+                            ad.setTitle("Login Failed");
+                            ad.setMessage("Cannot process server request");
+                            ad.setButton("Okay", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                            ad.show();
                         }
                     }
                 },
@@ -320,41 +335,67 @@ public class login extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+
                         loginbutton.setEnabled(true);
                         loginbuttontext.setText("Retry Login");
                         progressindicator.setVisibility(View.GONE);
                         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
-                        Log.e("VolleyError", "" + error);
+                        // 1️⃣ No internet / unreachable host
+                        if (error instanceof NoConnectionError || error instanceof NetworkError) {
+                            Log.e("VolleyError", "No internet or network unreachable", error);
+                            showError("No internet connection. Please check your network.");
+                            return;
+                        }
 
-                        if (error == null || error.networkResponse == null) return;
+                        // 2️⃣ Timeout
+                        if (error instanceof TimeoutError) {
+                            Log.e("VolleyError", "Request timed out", error);
+                            showError("Request timed out. Please try again.");
+                            return;
+                        }
 
+                        // 3️⃣ HTTP errors (400 / 401 / 500 etc)
                         NetworkResponse response = error.networkResponse;
 
-                        if (error instanceof ServerError && response != null) {
+                        if (response != null) {
+                            int statusCode = response.statusCode;
+
+                            Log.e("VolleyHTTP",
+                                    "HTTP " + statusCode + " | " +
+                                            new String(response.data));
+
+                            String serverMessage = "Server error occurred";
+
                             try {
-                                String res = new String(response.data,
-                                        HttpHeaderParser.parseCharset(response.headers, "utf-8"));
-                                JSONObject obj = new JSONObject(res);
-                                if (obj.has("message")) {
-                                    String messagedetails = obj.getString("message");
-                                    AlertDialog ad = new AlertDialog.Builder(login.this).create();
-                                    ad.setCancelable(true);
-                                    ad.setTitle("Login Failed");
-                                    ad.setMessage(messagedetails);
-                                    ad.setButton("Okay", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            dialog.dismiss();
-                                        }
-                                    });
-                                    ad.show();
-                                }
+                                String body = new String(
+                                        response.data,
+                                        HttpHeaderParser.parseCharset(response.headers, "utf-8")
+                                );
+
+                                JSONObject obj = new JSONObject(body);
+                                serverMessage = obj.optString("message", serverMessage);
+
                             } catch (Exception e) {
-                                e.printStackTrace();
+                                Log.e("VolleyParse", "Failed to parse error body", e);
                             }
+
+                            if (statusCode == 400 || statusCode == 401) {
+                                showError(serverMessage);
+                            } else if (statusCode >= 500) {
+                                showError("Server error. Please try again later.");
+                            } else {
+                                showError(serverMessage);
+                            }
+                            return;
                         }
+
+                        // 4️⃣ Fallback
+                        Log.e("VolleyError", "Unknown Volley error", error);
+                        showError("Unexpected error occurred.");
                     }
                 }
+
         ) {
             /** 🔑 Extract Verification header and decode base64 **/
             @Override
@@ -408,5 +449,17 @@ public class login extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
         queue.add(request);
     }
+
+
+    // Inside login Activity (same class as volleyGet)
+    private void showError(String message) {
+        new AlertDialog.Builder(login.this)
+                .setTitle("Login Failed")
+                .setMessage(message)
+                .setCancelable(true)
+                .setPositiveButton("Okay", (dialog, which) -> dialog.dismiss())
+                .show();
+    }
+
 
 }

@@ -1,35 +1,90 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SecondFragment">
+    tools:context=".homeclientFragment"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#FFFFFF">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
+        android:id="@+id/rwkt7uatih28"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp">
-
-        <Button
-            android:id="@+id/button_second"
-            android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/previous"
-            app:layout_constraintBottom_toTopOf="@id/textview_second"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textview_second"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/lorem_ipsum"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/button_second" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.core.widget.NestedScrollView>
+            <LinearLayout
+                android:id="@+id/createeventlayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:background="@drawable/sfb005fsw1cr15bffffff"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginHorizontal="18dp"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:id="@+id/r17kzwrocf58"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/sfb005fsw1tl15bl15lr270fb0160f703d0"
+                    android:paddingVertical="12dp"
+                    android:paddingHorizontal="10dp"
+                    android:layout_marginEnd="26dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:orientation="vertical">
+                    <ImageView
+                        android:id="@+id/rs2i8lsuooym"
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:src="@drawable/addeventicon"
+                        android:scaleType="fitXY"
+                        />
+                </LinearLayout>
+                <TextView
+                    android:id="@+id/r4clmgz9opk9"
+                    android:textColor="#000000"
+                    android:textSize="24sp"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="New Payment"
+                    />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/recentactivitiestitlelayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="1dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginHorizontal="18dp"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/rf66986yz1ea"
+                    android:textColor="#25131A"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="Recent Transactions"
+                    />
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recentactivitiesrecycler"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_gravity="center_horizontal"
+
+                android:layout_marginTop="5dp">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>

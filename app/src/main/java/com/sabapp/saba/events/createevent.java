@@ -3,9 +3,13 @@ package com.sabapp.saba.events;
 import static com.gun0912.tedpermission.provider.TedPermissionProvider.context;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -43,9 +47,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 
 public class createevent extends AppCompatActivity {
 
@@ -223,6 +233,71 @@ public class createevent extends AppCompatActivity {
             }
 
         });
+        eventdate.setOnClickListener(v -> {
+            Calendar calendar = Calendar.getInstance();
+
+            DatePickerDialog datePicker = new DatePickerDialog(
+                    createevent.this,
+                    (view, year, month, dayOfMonth) -> {
+
+                        calendar.set(Calendar.YEAR, year);
+                        calendar.set(Calendar.MONTH, month);
+                        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+                        TimePickerDialog timePicker = new TimePickerDialog(
+                                createevent.this,
+                                (timeView, hourOfDay, minute) -> {
+
+                                    calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                                    calendar.set(Calendar.MINUTE, minute);
+                                    calendar.set(Calendar.SECOND, 0);
+
+                                    SimpleDateFormat sdf =
+                                            new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
+                                    sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+                                    String formatted = sdf.format(calendar.getTime());
+                                    eventdate.setText(formatted);
+
+                                },
+                                calendar.get(Calendar.HOUR_OF_DAY),
+                                calendar.get(Calendar.MINUTE),
+                                true
+                        );
+
+                        timePicker.show();
+                    },
+                    calendar.get(Calendar.YEAR),
+                    calendar.get(Calendar.MONTH),
+                    calendar.get(Calendar.DAY_OF_MONTH)
+            );
+
+            datePicker.show();
+        });
+
+        SimpleDateFormat sdf =
+                new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
+
+        sdf.setLenient(false); // 🔥 CRITICAL
+        sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+        eventdate.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() == 19) {
+                    try {
+                        sdf.parse(s.toString());
+                        eventdate.setError(null);
+                    } catch (ParseException e) {
+                        eventdate.setError("Format: yyyy-MM-dd HH:mm:ss");
+                    }
+                }
+            }
+
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        });
+
 
 
 
@@ -304,6 +379,24 @@ public class createevent extends AppCompatActivity {
         //continuetonextbutton.setText("Uploading to your store...");
         showProgressBar();
 
+        // Get the text from EditText
+        String dateInput = eventdate.getText().toString().trim();
+        String unixTimestampString = null;
+
+        SimpleDateFormat sdf =
+                new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
+
+        sdf.setLenient(false);
+        sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+        try {
+            Date date = sdf.parse(dateInput);
+            long unixSeconds = date.getTime() / 1000;
+            unixTimestampString = String.valueOf(unixSeconds);
+        } catch (ParseException e) {
+            Log.e("DateParseError", "Invalid datetime. Expected yyyy-MM-dd HH:mm:ss");
+        }
+
 
         String request_username = app.getApiusername();
 
@@ -312,7 +405,7 @@ public class createevent extends AppCompatActivity {
 
         paramsotpu.put("username", app.getApiusername());
         paramsotpu.put("event_name", eventname.getText().toString());
-        paramsotpu.put("event_time", eventdate.getText().toString());
+        paramsotpu.put("event_time", unixTimestampString);
         paramsotpu.put("event_location", eventlocation.getText().toString());
         paramsotpu.put("event_type", eventtypeValue);
         paramsotpu.put("event_vibe", eventVibeString);
@@ -350,10 +443,10 @@ public class createevent extends AppCompatActivity {
                                     Log.d("EVENT ID", datavalue);
 
 
-                                    Intent intent =  new Intent(createevent.this, chooseservices.class);
+                                    Intent intent = new Intent(createevent.this, chooseservices.class);
                                     intent.putExtra("event_id", datavalue);
                                     intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);
-                                    context.startActivity(intent);
+                                    createevent.this.startActivity(intent);
 
 
 

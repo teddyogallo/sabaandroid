@@ -151,7 +151,7 @@
                                         android:scaleType="fitXY"
                                         android:src="@drawable/passwordplaceholder" />
                                     <EditText
-                                        android:inputType="text"
+                                        android:inputType="textPassword"
                                         android:hint="Enter Password"
                                         android:background="@null"
                                         android:id="@+id/password"
@@ -162,6 +162,7 @@
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
                                         android:paddingVertical="18dp"
+
                                         />
 
                                     <ImageView
