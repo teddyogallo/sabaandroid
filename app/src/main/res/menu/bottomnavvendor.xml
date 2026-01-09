@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:title="Home"
+        android:id="@+id/dashboard"
+        android:icon="@drawable/home"/>
+    <item
+        android:title="Catalogue"
+        android:id="@+id/catalogue"
+        android:icon="@drawable/janja_icons_storelocator"/>
+    <item
+        android:title="All Events"
+        android:id="@+id/allevents"
+        android:icon="@drawable/addeventicon"/>
+    <item
+        android:id="@+id/payments"
+        android:icon="@drawable/ic_card"
+        android:title="Payments" />
+    <item
+        android:title="Messages"
+        android:id="@+id/businesschatbot"
+        android:icon="@drawable/janja_icons_conversation"/>
+
+</menu>

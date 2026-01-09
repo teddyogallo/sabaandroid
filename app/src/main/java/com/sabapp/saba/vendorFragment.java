@@ -28,6 +28,7 @@ import com.android.volley.toolbox.Volley;
 import com.sabapp.saba.adapters.sabaeventlistclientHomeRecyclerAdapter;
 import com.sabapp.saba.adapters.servicesOfferedRecyclerAdapter;
 import com.sabapp.saba.adapters.vendorassignmentsRecyclerAdapter;
+import com.sabapp.saba.adapters.vendorproposalsRecyclerAdapter;
 import com.sabapp.saba.application.sabaapp;
 import com.sabapp.saba.data.model.sabaEventItem;
 import com.sabapp.saba.events.createevent;
@@ -64,10 +65,7 @@ public class vendorFragment extends Fragment {
     }
 
 
-    ArrayList<String> base_pricelist;
-    ArrayList<JSONObject> capability_detailslist;
-    ArrayList<String> capability_idlist;
-    ArrayList<String> service_image_locationlist;
+
 
     ArrayList<String> event_id;
     ArrayList<String> vendor_id;
@@ -81,7 +79,55 @@ public class vendorFragment extends Fragment {
     ArrayList<String> eventimagelocationlist;
 
 
+    //for proposals
+
+    ArrayList<String> base_priceProposallist;
+    ArrayList<JSONObject> capability_detailsProposallist;
+    ArrayList<String> capability_idProposallist;
+    ArrayList<String> service_image_locationProposallist;
+
+    ArrayList<String> event_idProposal;
+    ArrayList<String> vendor_idProposal;
+    ArrayList<String>  capability_idProposal;
+    ArrayList<String> statusProposal;
+    ArrayList<String> agreed_priceProposal;
+    ArrayList<JSONObject> contract_termsProposal;
+    ArrayList<String> assigned_byProposal;
+    ArrayList<String> time_assignedProposal;
+    ArrayList<String> event_nameProposal;
+    ArrayList<String> eventimagelocationlistProposal;
+
+
+    ArrayList<String> eventcapability_nameProposal;
+    ArrayList<String> depositbalance_percentageProposal;
+    ArrayList<String> deposit_percentageProposal;
+    ArrayList<String> event_allocatedtimeProposal;
+    ArrayList<String> event_locationProposal;
+    ArrayList<String> event_typeProposal;
+    ArrayList<String> event_vibeProposal;
+    ArrayList<String> eventcountryProposal;
+    ArrayList<String> event_vendorbase_priceProposal;
+    ArrayList<String> event_vendor_nameProposal;
+
+    //end of for proposals
+
+
     //for services
+    ArrayList<String> eventcapability_name;
+    ArrayList<String> depositbalance_percentage;
+    ArrayList<String> deposit_percentage;
+    ArrayList<String> event_allocatedtime;
+    ArrayList<String> event_location;
+    ArrayList<String> event_type;
+    ArrayList<String> event_vibe;
+    ArrayList<String> eventcountry;
+    ArrayList<String> event_vendorbase_price;
+    ArrayList<String> event_vendor_name;
+
+    ArrayList<String> base_pricelist;
+    ArrayList<JSONObject> capability_detailslist;
+    ArrayList<String> capability_idlist;
+    ArrayList<String> service_image_locationlist;
     ArrayList<String> vendorserviceimage_idList;
     ArrayList<String> vendorserviceimagelocationList;
     ArrayList<String> vendoridList;
@@ -97,9 +143,13 @@ public class vendorFragment extends Fragment {
 
     ArrayList<sabaEventItem> eventwholearray;
 
+    ArrayList<sabaEventItem> proposalswholearray;
+
     ArrayList<sabaEventItem> serviceswholearray;
 
     vendorassignmentsRecyclerAdapter sabaeventsadapter;
+
+    vendorproposalsRecyclerAdapter proposalsAdapter;
 
     servicesOfferedRecyclerAdapter servicesofferAdapter;
 
@@ -165,7 +215,7 @@ public class vendorFragment extends Fragment {
         //Objects.requireNonNull(((sabaDrawerActivity) requireActivity()).getSupportActionBar()).setHomeButtonEnabled(false);
         setUpRecycler();
         getEventslist();
-        getServicesList();
+        getEventProposals();
         //loadTemplateImagesBottom();
 
         //save number of times user has logged in
@@ -208,8 +258,8 @@ public class vendorFragment extends Fragment {
         servicesofferedrecycler.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
 
 
-        servicesofferAdapter=new servicesOfferedRecyclerAdapter(serviceswholearray,context, vendorFragment.this, app);
-        servicesofferedrecycler.setAdapter(servicesofferAdapter);
+        proposalsAdapter=new vendorproposalsRecyclerAdapter(proposalswholearray,context, vendorFragment.this, app);
+        servicesofferedrecycler.setAdapter(proposalsAdapter);
 
 
 
@@ -237,14 +287,9 @@ public class vendorFragment extends Fragment {
 
         eventwholearray = new ArrayList<sabaEventItem>();
         serviceswholearray = new ArrayList<sabaEventItem>();
+        proposalswholearray = new ArrayList<sabaEventItem>();
 
-        //FOR CAPABILITIES
-
-        base_pricelist = new ArrayList<String>();
-        capability_detailslist = new ArrayList<JSONObject>();
-        capability_idlist = new ArrayList<String>();
-        service_image_locationlist = new ArrayList<String>();
-
+        //FOR Active events
         event_id = new ArrayList<String>();
         vendor_id = new ArrayList<String>();
         capability_id = new ArrayList<String>();
@@ -257,6 +302,48 @@ public class vendorFragment extends Fragment {
         eventimagelocationlist = new ArrayList<String>();
 
 
+        eventcapability_name = new ArrayList<String>();
+        depositbalance_percentage = new ArrayList<String>();
+        deposit_percentage = new ArrayList<String>();
+        event_allocatedtime = new ArrayList<String>();
+        event_location = new ArrayList<String>();
+        event_type = new ArrayList<String>();
+        event_vibe = new ArrayList<String>();
+        eventcountry = new ArrayList<String>();
+        event_vendorbase_price = new ArrayList<String>();
+        event_vendor_name = new ArrayList<String>();
+
+        //for proposals
+        base_priceProposallist = new ArrayList<String>();
+        capability_detailsProposallist = new ArrayList<JSONObject>();
+        capability_idProposallist = new ArrayList<String>();
+        service_image_locationProposallist = new ArrayList<String>();
+
+        event_idProposal = new ArrayList<String>();
+        vendor_idProposal = new ArrayList<String>();
+        capability_idProposal = new ArrayList<String>();
+        statusProposal = new ArrayList<String>();
+        agreed_priceProposal = new ArrayList<String>();
+        contract_termsProposal = new ArrayList<JSONObject>();
+        assigned_byProposal = new ArrayList<String>();
+        time_assignedProposal = new ArrayList<String>();
+        event_nameProposal = new ArrayList<String>();
+        eventimagelocationlistProposal = new ArrayList<String>();
+
+        eventcapability_nameProposal = new ArrayList<String>();
+        depositbalance_percentageProposal = new ArrayList<String>();
+        deposit_percentageProposal = new ArrayList<String>();
+        event_allocatedtimeProposal = new ArrayList<String>();
+        event_locationProposal = new ArrayList<String>();
+        event_typeProposal = new ArrayList<String>();
+        event_vibeProposal = new ArrayList<String>();
+        eventcountryProposal = new ArrayList<String>();
+        event_vendorbase_priceProposal = new ArrayList<String>();
+        event_vendor_nameProposal = new ArrayList<String>();
+
+        //end of for proposals
+
+
 
         //FOR SERVICES
 
@@ -264,8 +351,6 @@ public class vendorFragment extends Fragment {
         capability_detailslist = new ArrayList<JSONObject>();
         capability_idlist = new ArrayList<String>();
         service_image_locationlist = new ArrayList<String>();
-        eventwholearray = new ArrayList<sabaEventItem>();
-
         vendorserviceimage_idList = new ArrayList<String>();
         vendorserviceimagelocationList = new ArrayList<String>();
         vendoridList = new ArrayList<String>();
@@ -378,6 +463,18 @@ public class vendorFragment extends Fragment {
                                         event_name.add("No event assigned");
                                         eventimagelocationlist.add(null);
 
+                                        //new values
+                                        eventcapability_name.add(null);
+                                        depositbalance_percentage.add(null);
+                                        deposit_percentage.add(null);
+                                        event_allocatedtime.add(null);
+                                        event_location.add(null);
+                                        event_type.add(null);
+                                        event_vibe.add(null);
+                                        eventcountry.add(null);
+                                        event_vendorbase_price.add(null);
+                                        event_vendor_name.add(null);
+
                                         eventwholearray.clear();
 
                                         for(Integer i=0; i<event_name.size(); i++)
@@ -396,6 +493,18 @@ public class vendorFragment extends Fragment {
                                             item.settime_assignedAssigned(time_assigned.get(i));
                                             item.setevent_nameAssigned(event_name.get(i));
                                             item.setevent_imagelocationAssigned(eventimagelocationlist.get(i));
+
+
+                                            item.seteventcapability_nameAssigned(eventcapability_name.get(i));
+                                            item.setdeposit_balance_percentageAssigned(depositbalance_percentage.get(i));
+                                            item.setdeposit_percentageAssigned(deposit_percentage.get(i));
+                                            item.setevent_allocated_timeAssigned(event_allocatedtime.get(i));
+                                            item.setevent_locationAssigned(event_location.get(i));
+                                            item.setevent_typeAssigned(event_type.get(i));
+                                            item.setevent_vibeAssigned(event_vibe.get(i));
+                                            item.setevent_countryAssigned(eventcountry.get(i));
+                                            item.setevent_vendor_base_priceAssigned(event_vendorbase_price.get(i));
+                                            item.setevent_vendor_nameAssigned(event_vendor_name.get(i));
 
 
 
@@ -424,8 +533,38 @@ public class vendorFragment extends Fragment {
                                             String event_namevalue = jsonObj.getString("event_name");
                                             String eventimagelocation = jsonObj.getString("event_image_location");
 
+                                            String eventcapability_namevalue = jsonObj.getString("capability_name");
+                                            String depositbalance_percentagevalue = jsonObj.getString("deposit_balance_percentage");
+                                            String deposit_percentagevalue = jsonObj.getString("deposit_percentage");
+                                            String event_allocatedtimevalue = jsonObj.getString("event_allocation_time");
+                                            String event_cityvalue = jsonObj.getString("event_city");
+                                            String eventcountryvalue = jsonObj.getString("event_country");
+                                            String event_locationvalue = jsonObj.getString("event_location");
+                                            String event_statevalue = jsonObj.getString("event_state");
+                                            String event_typevalue = jsonObj.getString("event_type");
+                                            String event_vibevalue = jsonObj.getString("event_vibe");
+                                            String event_latitudevalue = jsonObj.getString("latitude");
+                                            String event_longitudevalue = jsonObj.getString("longitude");
+                                            String event_postal_codevalue =  jsonObj.getString("postal_code");
+                                            String event_vendorbase_pricevalue = jsonObj.getString("vendor_base_price");
+                                            String event_vendor_namevalue = jsonObj.getString("vendor_name");
 
-                                            event_id.add(vendor_idvalue);
+
+                                            eventcapability_name.add(eventcapability_namevalue);
+                                            depositbalance_percentage.add(depositbalance_percentagevalue);
+                                            deposit_percentage.add(deposit_percentagevalue);
+                                            event_allocatedtime.add(event_allocatedtimevalue);
+                                            event_location.add(event_locationvalue);
+                                            event_type.add(event_typevalue);
+                                            event_vibe.add(event_vibevalue);
+                                            eventcountry.add(eventcountryvalue);
+                                            event_vendorbase_price.add(event_vendorbase_pricevalue);
+                                            event_vendor_name.add(event_vendor_namevalue);
+
+
+
+
+                                            event_id.add(event_idvalue);
                                             vendor_id.add(vendor_idvalue);
                                             capability_id.add(capability_idvalue);
                                             status.add(statusvalue);
@@ -435,6 +574,9 @@ public class vendorFragment extends Fragment {
                                             time_assigned.add(time_assignedvalue);
                                             event_name.add(event_namevalue);
                                             eventimagelocationlist.add(eventimagelocation);
+
+
+
 
 
 
@@ -465,6 +607,18 @@ public class vendorFragment extends Fragment {
                                             item.setevent_nameAssigned(event_name.get(i));
                                             item.setevent_imagelocationAssigned(eventimagelocationlist.get(i));
 
+                                            item.seteventcapability_nameAssigned(eventcapability_name.get(i));
+                                            item.setdeposit_balance_percentageAssigned(depositbalance_percentage.get(i));
+                                            item.setdeposit_percentageAssigned(deposit_percentage.get(i));
+                                            item.setevent_allocated_timeAssigned(event_allocatedtime.get(i));
+                                            item.setevent_locationAssigned(event_location.get(i));
+                                            item.setevent_typeAssigned(event_type.get(i));
+                                            item.setevent_vibeAssigned(event_vibe.get(i));
+                                            item.setevent_countryAssigned(eventcountry.get(i));
+                                            item.setevent_vendor_base_priceAssigned(event_vendorbase_price.get(i));
+                                            item.setevent_vendor_nameAssigned(event_vendor_name.get(i));
+
+
 
                                             //setImagebitmap
                                             eventwholearray.add(item);
@@ -494,6 +648,69 @@ public class vendorFragment extends Fragment {
                                     String messageerror="There was an Error";
                                     Log.d("Msg:",messageerror);
 
+
+
+                                        event_id.add(null);
+                                        vendor_id.add(null);
+                                        capability_id.add(null);
+                                        status.add(null);
+                                        agreed_price.add(null);
+                                        contract_terms.add(null);
+                                        assigned_by.add(null);
+                                        time_assigned.add(null);
+                                        event_name.add("No event found");
+                                        eventimagelocationlist.add(null);
+
+                                        eventcapability_name.add(null);
+                                        depositbalance_percentage.add(null);
+                                        deposit_percentage.add(null);
+                                        event_allocatedtime.add(null);
+                                        event_location.add(null);
+                                        event_type.add(null);
+                                        event_vibe.add(null);
+                                        eventcountry.add(null);
+                                        event_vendorbase_price.add(null);
+                                        event_vendor_name.add(null);
+
+                                        eventwholearray.clear();
+
+                                        for(Integer i=0; i<event_name.size(); i++)
+                                        {
+                                            sabaEventItem item=new sabaEventItem();
+
+                                            item.setevent_idAssigned(event_id.get(i));
+
+                                            item.setvendor_idAssigned(vendor_id.get(i));
+
+                                            item.setcapability_idAssigned(capability_id.get(i));
+                                            item.setstatusAssigned(status.get(i));
+                                            item.setagreed_priceAssigned(agreed_price.get(i));
+                                            item.setcontract_termsAssigned(contract_terms.get(i));
+                                            item.setassigned_byAssigned(assigned_by.get(i));
+                                            item.settime_assignedAssigned(time_assigned.get(i));
+                                            item.setevent_nameAssigned(event_name.get(i));
+                                            item.setevent_imagelocationAssigned(eventimagelocationlist.get(i));
+
+                                            item.seteventcapability_nameAssigned(eventcapability_name.get(i));
+                                            item.setdeposit_balance_percentageAssigned(depositbalance_percentage.get(i));
+                                            item.setdeposit_percentageAssigned(deposit_percentage.get(i));
+                                            item.setevent_allocated_timeAssigned(event_allocatedtime.get(i));
+                                            item.setevent_locationAssigned(event_location.get(i));
+                                            item.setevent_typeAssigned(event_type.get(i));
+                                            item.setevent_vibeAssigned(event_vibe.get(i));
+                                            item.setevent_countryAssigned(eventcountry.get(i));
+                                            item.setevent_vendor_base_priceAssigned(event_vendorbase_price.get(i));
+                                            item.setevent_vendor_nameAssigned(event_vendor_name.get(i));
+
+
+
+                                            //setImagebitmap
+                                            eventwholearray.add(item);
+
+                                        }
+                                        sabaeventsadapter.notifyDataSetChanged();
+
+
                                 }
 
 
@@ -566,7 +783,7 @@ public class vendorFragment extends Fragment {
 
     }
 
-    private void getServicesList()
+    private void getEventProposals()
     {
         //continuetonextbutton.setText("Uploading to your store...");
         showProgressBar();
@@ -580,7 +797,7 @@ public class vendorFragment extends Fragment {
         paramsotpu.put("username", app.getApiusername());
 
 
-        String paymentsendpoint="https://api.sabaapp.co/v0/vendor/capabilities";
+        String paymentsendpoint="https://api.sabaapp.co/v0/vendor/proposals";
 
 
 
@@ -588,7 +805,7 @@ public class vendorFragment extends Fragment {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.e("response", "ALL SERVICES: "+response.toString());
+                        Log.e("response", "ALL ASSIGMENTS: "+response.toString());
                         hideProgressBar();
                         if (!response.equals(null)) {
                             Log.e("response", "response "+response.toString());
@@ -605,116 +822,189 @@ public class vendorFragment extends Fragment {
                                 {
                                     dataobj = jsonObj.getJSONArray("DATA");
 
-
                                     if(dataobj.length()==0){
                                         // their are not values to add
                                         String messageerror="There was Zero products retrieved";
                                         Log.d("Msg:",messageerror);
 
+                                        event_idProposal.add(null);
+                                        vendor_idProposal.add(null);
+                                        capability_idProposal.add(null);
+                                        statusProposal.add(null);
+                                        agreed_priceProposal.add(null);
+                                        contract_termsProposal.add(null);
+                                        assigned_byProposal.add(null);
+                                        time_assignedProposal.add(null);
+                                        event_nameProposal.add("No event assigned");
+                                        eventimagelocationlistProposal.add(null);
+
+                                        eventcapability_nameProposal.add(null);
+                                        depositbalance_percentageProposal.add(null);
+                                        deposit_percentageProposal.add(null);
+                                        event_allocatedtimeProposal.add(null);
+                                        event_locationProposal.add(null);
+                                        event_typeProposal.add(null);
+                                        event_vibeProposal.add(null);
+                                        eventcountryProposal.add(null);
+                                        event_vendorbase_priceProposal.add(null);
+                                        event_vendor_nameProposal.add(null);
+
+                                        proposalswholearray.clear();
+
+                                        for(Integer i=0; i<event_nameProposal.size(); i++)
+                                        {
+                                            sabaEventItem item=new sabaEventItem();
+
+                                            item.setevent_idAssignedProposal(event_idProposal.get(i));
+
+                                            item.setvendor_idAssignedProposal(vendor_idProposal.get(i));
+
+                                            item.setcapability_idAssignedProposal(capability_idProposal.get(i));
+                                            item.setstatusAssignedProposal(statusProposal.get(i));
+                                            item.setagreed_priceAssignedProposal(agreed_priceProposal.get(i));
+                                            item.setcontract_termsAssignedProposal(contract_termsProposal.get(i));
+                                            item.setassigned_byAssignedProposal(assigned_byProposal.get(i));
+                                            item.settime_assignedAssignedProposal(time_assignedProposal.get(i));
+                                            item.setevent_nameAssignedProposal(event_nameProposal.get(i));
+                                            item.setevent_imagelocationAssignedProposal(eventimagelocationlistProposal.get(i));
 
 
-                                        base_pricelist.add(null);
-                                        capability_detailslist.add(null);
-                                        capability_idlist.add(null);
-                                        service_image_locationlist.add(null);
-                                        eventwholearray.add(null);
-
-                                        vendorserviceimage_idList.add(null);
-                                        vendorserviceimagelocationList.add(null);
-                                        vendoridList.add(null);
-
-                                        vendornameList.add("No Capability loaded");
-                                        vendorcapabilitynameList.add(null);
-                                        vendorlocationList.add("Please try later");
+                                            item.seteventcapability_nameAssignedProposal(eventcapability_nameProposal.get(i));
+                                            item.setdeposit_balance_percentageAssignedProposal(depositbalance_percentageProposal.get(i));
+                                            item.setdeposit_percentageAssignedProposal(deposit_percentageProposal.get(i));
+                                            item.setevent_allocated_timeAssignedProposal(event_allocatedtimeProposal.get(i));
+                                            item.setevent_locationAssignedProposal(event_locationProposal.get(i));
+                                            item.setevent_typeAssignedProposal(event_typeProposal.get(i));
+                                            item.setevent_vibeAssignedProposal(event_vibeProposal.get(i));
+                                            item.setevent_countryAssignedProposal(eventcountryProposal.get(i));
+                                            item.setevent_vendor_base_priceAssignedProposal(event_vendorbase_priceProposal.get(i));
+                                            item.setevent_vendor_nameAssignedProposal(event_vendor_nameProposal.get(i));
 
 
-                                        serviceswholearray.clear();
 
-                                        sabaEventItem item=new sabaEventItem();
-                                        item.setcapability_code(null);
-                                        item.setcapability_name("No services");
-                                        item.setcapability_category(null);
-                                        item.setcapability_imageid(null);
-                                        item.setcapability_image_location(null);
+                                            //setImagebitmap
+                                            proposalswholearray.add(item);
 
-                                        serviceswholearray.add(item);
+                                        }
+                                        proposalsAdapter.notifyDataSetChanged();
 
-                                        servicesofferAdapter.notifyDataSetChanged();
 
 
                                         //end of their are no values to add
                                     }else{
 
                                         for (int i = 0; i < dataobj.length(); i++) {
-
                                             jsonObj = dataobj.getJSONObject(i);
 
-                                            String base_price = jsonObj.optString("base_price", null);
-                                            String capability_id = jsonObj.optString("capability_id", null);
-                                            String service_image_location = jsonObj.optString("service_image_location", null);
-                                            String capabilitname = jsonObj.optString("capability_name", null);
-                                            String vendorname = jsonObj.optString("vendor_name", null);
-                                            String vendorlocation = jsonObj.optString("location", null);
-                                            String vendorserviceimageid = jsonObj.optString("service_image_id", null);
-                                            String vendorid = jsonObj.optString("vendor_id", null);
-
-                                            JSONObject capability_details = jsonObj.optJSONObject("capability_details");
-
-                                            base_pricelist.add(base_price);
-                                            capability_idlist.add(capability_id);
-                                            service_image_locationlist.add(service_image_location);
-                                            vendorserviceimage_idList.add(vendorserviceimageid);
-                                            vendoridList.add(vendorid);
-                                            vendornameList.add(vendorname);
-                                            vendorcapabilitynameList.add(capabilitname);
-                                            vendorlocationList.add(vendorlocation);
+                                            String event_idvalue = jsonObj.optString("event_id");
+                                            String vendor_idvalue =jsonObj.optString("vendor_id");
+                                            String capability_idvalue = jsonObj.optString("capability_id");
+                                            String statusvalue = jsonObj.getString("status");
+                                            String agreed_pricevalue = jsonObj.getString("agreed_price");
+                                            JSONObject contract_termsvalue = jsonObj.optJSONObject("contract_terms");
+                                            String assigned_byvalue = jsonObj.getString("assigned_by");
+                                            String time_assignedvalue = jsonObj.getString("time_assigned");
+                                            String event_namevalue = jsonObj.getString("event_name");
+                                            String eventimagelocation = jsonObj.getString("event_image_location");
 
 
-                                            capability_detailslist.add(capability_details);
+                                            String eventcapability_namevalue = jsonObj.getString("capability_name");
+                                            String depositbalance_percentagevalue = jsonObj.getString("deposit_balance_percentage");
+                                            String deposit_percentagevalue = jsonObj.getString("deposit_percentage");
+                                            String event_allocatedtimevalue = jsonObj.getString("event_allocation_time");
+                                            String event_cityvalue = jsonObj.getString("event_city");
+                                            String eventcountryvalue = jsonObj.getString("event_country");
+                                            String event_locationvalue = jsonObj.getString("event_location");
+                                            String event_statevalue = jsonObj.getString("event_state");
+                                            String event_typevalue = jsonObj.getString("event_type");
+                                            String event_vibevalue = jsonObj.getString("event_vibe");
+                                            String event_latitudevalue = jsonObj.getString("latitude");
+                                            String event_longitudevalue = jsonObj.getString("longitude");
+                                            String event_postal_codevalue =  jsonObj.getString("postal_code");
+                                            String event_vendorbase_pricevalue = jsonObj.getString("vendor_base_price");
+                                            String event_vendor_namevalue = jsonObj.getString("vendor_name");
 
 
-                                            Log.d("Added Capability", vendorname + " added");
+                                            event_idProposal.add(event_idvalue);
+                                            vendor_idProposal.add(vendor_idvalue);
+                                            capability_idProposal.add(capability_idvalue);
+                                            statusProposal.add(statusvalue);
+                                            agreed_priceProposal.add(agreed_pricevalue);
+                                            contract_termsProposal.add(contract_termsvalue);
+                                            assigned_byProposal.add(assigned_byvalue);
+                                            time_assignedProposal.add(time_assignedvalue);
+                                            event_nameProposal.add(event_namevalue);
+                                            eventimagelocationlistProposal.add(eventimagelocation);
+
+
+                                            eventcapability_nameProposal.add(eventcapability_namevalue);
+                                            depositbalance_percentageProposal.add(depositbalance_percentagevalue);
+                                            deposit_percentageProposal.add(deposit_percentagevalue);
+                                            event_allocatedtimeProposal.add(event_allocatedtimevalue);
+                                            event_locationProposal.add(event_locationvalue);
+                                            event_typeProposal.add(event_typevalue);
+                                            event_vibeProposal.add(event_vibevalue);
+                                            eventcountryProposal.add(eventcountryvalue);
+                                            event_vendorbase_priceProposal.add(event_vendorbase_pricevalue);
+                                            event_vendor_nameProposal.add(event_vendor_namevalue);
+
+
+
+
+                                            //for
+
+                                            Log.d("Added Item", event_id + " To proposals array list");
                                         }
 
 
 
+                                        proposalswholearray.clear();
 
-                                        serviceswholearray.clear();
-
-                                        for(Integer i=0; i<capability_idlist.size(); i++)
+                                        for(Integer i=0; i<event_idProposal.size(); i++)
                                         {
                                             sabaEventItem item=new sabaEventItem();
 
+                                            item.setevent_idAssignedProposal(event_idProposal.get(i));
 
-                                            item.setvendorbase_price(base_pricelist.get(i));
-                                            item.setvendorcapability_details(capability_detailslist.get(i));
-                                            item.setvendorcapability_id(capability_idlist.get(i));
-                                            item.setvendorserviceimage_id(vendorserviceimage_idList.get(i));
-                                            item.setvendorserviceimagelocation(service_image_locationlist.get(i));
-                                            item.setvendorid(vendoridList.get(i));
+                                            item.setvendor_idAssignedProposal(vendor_idProposal.get(i));
 
-                                            item.setvendorname(vendornameList.get(i));
-                                            item.setvendorcapabilityname(vendorcapabilitynameList.get(i));
-                                            item.setvendorlocation(vendorlocationList.get(i));
+                                            item.setcapability_idAssignedProposal(capability_idProposal.get(i));
+                                            item.setstatusAssignedProposal(statusProposal.get(i));
+                                            item.setagreed_priceAssignedProposal(agreed_priceProposal.get(i));
+                                            item.setcontract_termsAssignedProposal(contract_termsProposal.get(i));
+                                            item.setassigned_byAssignedProposal(assigned_byProposal.get(i));
+                                            item.settime_assignedAssignedProposal(time_assignedProposal.get(i));
+                                            item.setevent_nameAssignedProposal(event_nameProposal.get(i));
+                                            item.setevent_imagelocationAssignedProposal(eventimagelocationlistProposal.get(i));
 
 
+                                            item.seteventcapability_nameAssignedProposal(eventcapability_nameProposal.get(i));
+                                            item.setdeposit_balance_percentageAssignedProposal(depositbalance_percentageProposal.get(i));
+                                            item.setdeposit_percentageAssignedProposal(deposit_percentageProposal.get(i));
+                                            item.setevent_allocated_timeAssignedProposal(event_allocatedtimeProposal.get(i));
+                                            item.setevent_locationAssignedProposal(event_locationProposal.get(i));
+                                            item.setevent_typeAssignedProposal(event_typeProposal.get(i));
+                                            item.setevent_vibeAssignedProposal(event_vibeProposal.get(i));
+                                            item.setevent_countryAssignedProposal(eventcountryProposal.get(i));
+                                            item.setevent_vendor_base_priceAssignedProposal(event_vendorbase_priceProposal.get(i));
+                                            item.setevent_vendor_nameAssignedProposal(event_vendor_nameProposal.get(i));
 
 
                                             //setImagebitmap
-                                            serviceswholearray.add(item);
+                                            proposalswholearray.add(item);
 
                                         }
-                                        servicesofferAdapter.notifyDataSetChanged();
+                                        proposalsAdapter.notifyDataSetChanged();
 
-                                        app.setCapabilitylist( serviceswholearray);
+                                        app.setSabaEventlist( proposalswholearray);
 
 
                                         //WayaWayaItem item = new WayaWayaItem();
                                         //item.setproductListMain(productnameList);
 
-                                        for ( String singleRecord : capability_idlist)
+                                        for ( String singleRecord : event_idProposal)
                                         {
-                                            Log.d("Event Name value--", singleRecord.toString());
+                                            Log.d("Event Proposal Name value--", singleRecord.toString());
                                         }
 
 
@@ -727,6 +1017,67 @@ public class vendorFragment extends Fragment {
                                 {
                                     String messageerror="There was an Error";
                                     Log.d("Msg:",messageerror);
+
+                                    event_idProposal.add(null);
+                                    vendor_idProposal.add(null);
+                                    capability_idProposal.add(null);
+                                    statusProposal.add(null);
+                                    agreed_priceProposal.add(null);
+                                    contract_termsProposal.add(null);
+                                    assigned_byProposal.add(null);
+                                    time_assignedProposal.add(null);
+                                    event_nameProposal.add("No Proposals listed");
+                                    eventimagelocationlistProposal.add(null);
+
+                                    eventcapability_nameProposal.add(null);
+                                    depositbalance_percentageProposal.add(null);
+                                    deposit_percentageProposal.add(null);
+                                    event_allocatedtimeProposal.add(null);
+                                    event_locationProposal.add(null);
+                                    event_typeProposal.add(null);
+                                    event_vibeProposal.add(null);
+                                    eventcountryProposal.add(null);
+                                    event_vendorbase_priceProposal.add(null);
+                                    event_vendor_nameProposal.add(null);
+
+                                    proposalswholearray.clear();
+
+                                    for(Integer i=0; i<event_nameProposal.size(); i++)
+                                    {
+                                        sabaEventItem item=new sabaEventItem();
+
+                                        item.setevent_idAssignedProposal(event_idProposal.get(i));
+
+                                        item.setvendor_idAssignedProposal(vendor_idProposal.get(i));
+
+                                        item.setcapability_idAssignedProposal(capability_idProposal.get(i));
+                                        item.setstatusAssignedProposal(statusProposal.get(i));
+                                        item.setagreed_priceAssignedProposal(agreed_priceProposal.get(i));
+                                        item.setcontract_termsAssignedProposal(contract_termsProposal.get(i));
+                                        item.setassigned_byAssignedProposal(assigned_byProposal.get(i));
+                                        item.settime_assignedAssignedProposal(time_assignedProposal.get(i));
+                                        item.setevent_nameAssignedProposal(event_nameProposal.get(i));
+                                        item.setevent_imagelocationAssignedProposal(eventimagelocationlistProposal.get(i));
+
+
+                                        item.seteventcapability_nameAssignedProposal(eventcapability_nameProposal.get(i));
+                                        item.setdeposit_balance_percentageAssignedProposal(depositbalance_percentageProposal.get(i));
+                                        item.setdeposit_percentageAssignedProposal(deposit_percentageProposal.get(i));
+                                        item.setevent_allocated_timeAssignedProposal(event_allocatedtimeProposal.get(i));
+                                        item.setevent_locationAssignedProposal(event_locationProposal.get(i));
+                                        item.setevent_typeAssignedProposal(event_typeProposal.get(i));
+                                        item.setevent_vibeAssignedProposal(event_vibeProposal.get(i));
+                                        item.setevent_countryAssignedProposal(eventcountryProposal.get(i));
+                                        item.setevent_vendor_base_priceAssignedProposal(event_vendorbase_priceProposal.get(i));
+                                        item.setevent_vendor_nameAssignedProposal(event_vendor_nameProposal.get(i));
+
+
+
+                                        //setImagebitmap
+                                        proposalswholearray.add(item);
+
+                                    }
+                                    proposalsAdapter.notifyDataSetChanged();
 
                                 }
 
@@ -799,4 +1150,6 @@ public class vendorFragment extends Fragment {
 
 
     }
+
+
 }

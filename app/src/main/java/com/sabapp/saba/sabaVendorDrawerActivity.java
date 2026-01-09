@@ -27,8 +27,9 @@ public class sabaVendorDrawerActivity extends AppCompatActivity {
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
         Fragment firstFragment = new vendorFragment();
-        Fragment secondFragment = new SecondFragment();
-        Fragment thirdFragment = new FirstFragment();
+        Fragment secondFragment = new VendorCatalogueFragment();
+        Fragment alleventsFragment = new alleventsVendorFragment();
+        Fragment thirdFragment = new SecondFragment();
         Fragment messageFragment = new messageFragment();
 
         setCurrentFragment(firstFragment);
@@ -57,14 +58,14 @@ public class sabaVendorDrawerActivity extends AppCompatActivity {
                 int id = item.getItemId();
                 if (id == R.id.dashboard) {
                     setCurrentFragment(firstFragment);
-                } else if (id == R.id.events) {
-                    setCurrentFragment(thirdFragment);
-                } else if (id == R.id.requestpay) {
-                    setCurrentFragment(thirdFragment);
-                } else if (id == R.id.messages) {
-                    setCurrentFragment(messageFragment);
-                } else if (id == R.id.businesschatbot) {
+                } else if (id == R.id.catalogue) {
                     setCurrentFragment(secondFragment);
+                } else if (id == R.id.allevents) {
+                    setCurrentFragment(alleventsFragment);
+                } else if (id == R.id.payments) {
+                    setCurrentFragment(thirdFragment);
+                } else if (id == R.id.businesschatbot) {
+                    setCurrentFragment(messageFragment);
                 }
                 return true;
             }

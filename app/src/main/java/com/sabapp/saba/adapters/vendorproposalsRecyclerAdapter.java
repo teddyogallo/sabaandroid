@@ -23,13 +23,11 @@ import com.bumptech.glide.request.RequestOptions;
 import com.sabapp.saba.R;
 import com.sabapp.saba.application.sabaapp;
 import com.sabapp.saba.data.model.sabaEventItem;
-import com.sabapp.saba.events.createevent;
-import com.sabapp.saba.homeclientFragment;
 import com.sabapp.saba.vendorFragment;
 
 import java.util.List;
 
-public class vendorassignmentsRecyclerAdapter extends RecyclerView.Adapter<vendorassignmentsRecyclerAdapter.MyViewHolder>{
+public class vendorproposalsRecyclerAdapter extends RecyclerView.Adapter<vendorproposalsRecyclerAdapter.MyViewHolder>{
     sabaapp app;
     int selected_position = 0;
     private List<sabaEventItem> bitmapList;
@@ -67,7 +65,7 @@ public class vendorassignmentsRecyclerAdapter extends RecyclerView.Adapter<vendo
         }
     }
 
-    public vendorassignmentsRecyclerAdapter(List<sabaEventItem> bitmapList, Context context, vendorFragment pulse, sabaapp app) {
+    public vendorproposalsRecyclerAdapter(List<sabaEventItem> bitmapList, Context context, vendorFragment pulse, sabaapp app) {
         this.bitmapList = bitmapList;
         this.context=context;
         this.pulse=pulse;
@@ -75,19 +73,19 @@ public class vendorassignmentsRecyclerAdapter extends RecyclerView.Adapter<vendo
     }
 
     @Override
-    public vendorassignmentsRecyclerAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.eventshorizontalcell, parent, false);
+    public vendorproposalsRecyclerAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.proposal_listcell, parent, false);
 
-        return new vendorassignmentsRecyclerAdapter.MyViewHolder(itemView);
+        return new vendorproposalsRecyclerAdapter.MyViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(vendorassignmentsRecyclerAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(vendorproposalsRecyclerAdapter.MyViewHolder holder, int position) {
 
         // holder.cardView.setStrokeColor(selected_position == position ? Color.YELLOW : Color.TRANSPARENT);
         final sabaEventItem sabaItem = bitmapList.get(position);
 
-        if(sabaItem.getevent_imagelocationAssigned()!=null)
+        if(sabaItem.getevent_imagelocationAssignedProposal()!=null)
         {
 
 
@@ -98,7 +96,7 @@ public class vendorassignmentsRecyclerAdapter extends RecyclerView.Adapter<vendo
             try{
 
                 Glide.with(context)
-                        .load(sabaItem.getevent_imagelocationAssigned())
+                        .load(sabaItem.getevent_imagelocationAssignedProposal())
                         .placeholder(R.drawable.defaultimage)
                         .apply(requestOptions)
                         .into(holder.thumbnail);
@@ -140,7 +138,7 @@ public class vendorassignmentsRecyclerAdapter extends RecyclerView.Adapter<vendo
         holder.thumbnail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String productname = sabaItem.getevent_nameAssigned();
+                String productname = sabaItem.getevent_nameAssignedProposal();
                 final Intent intent;
 
                 if(productname==null ||productname.equals(""))
@@ -152,7 +150,7 @@ public class vendorassignmentsRecyclerAdapter extends RecyclerView.Adapter<vendo
 
                     //end of redirect to new product
 
-                }else if(productname.toLowerCase().matches("no event assigned"))
+                }else if(productname.toLowerCase().matches("No Proposal"))
                 {
                     //start of redirect to new product
                     /*intent =  new Intent(context, wwProductActivity.class);
@@ -182,38 +180,38 @@ public class vendorassignmentsRecyclerAdapter extends RecyclerView.Adapter<vendo
 
 
 
-        if(sabaItem.getevent_nameAssigned()==null || sabaItem.getevent_nameAssigned().equals(""))
+        if(sabaItem.getevent_nameAssignedProposal()==null || sabaItem.getevent_nameAssignedProposal().equals(""))
         {
             //holder.eventtitle.setVisibility(View.GONE);
-            holder.title.setText("No Name");
+            holder.title.setText("No Proposal");
         }
         else
         {
-            holder.title.setText(sabaItem.getevent_nameAssigned());
+            holder.title.setText(sabaItem.getevent_nameAssignedProposal());
         }
 
 
 
-        if(sabaItem.getevent_locationAssigned()==null || sabaItem.getevent_locationAssigned().equals(""))
+        if(sabaItem.getevent_locationAssignedProposal()==null || sabaItem.getevent_locationAssignedProposal().equals(""))
         {
             holder.locationaddress.setVisibility(View.GONE);
         }
         else
         {
-            holder.locationaddress.setText(sabaItem.getstatusAssigned());
+            holder.locationaddress.setText(sabaItem.getevent_locationAssignedProposal());
         }
 
-        if(sabaItem.gettime_assignedAssigned()==null || sabaItem.gettime_assignedAssigned().equals(""))
+        if(sabaItem.gettime_assignedAssignedProposal()==null || sabaItem.gettime_assignedAssignedProposal().equals(""))
         {
             holder.datevalues.setVisibility(View.GONE);
         }
         else
         {
-            holder.datevalues.setText(sabaItem.gettime_assignedAssigned());
+            holder.datevalues.setText(sabaItem.gettime_assignedAssignedProposal());
         }
 
 
-        if(sabaItem.getstatusAssigned()==null || sabaItem.getstatusAssigned().equals(""))
+        if(sabaItem.getstatusAssignedProposal()==null || sabaItem.getstatusAssignedProposal().equals(""))
         {
 
 
@@ -226,21 +224,21 @@ public class vendorassignmentsRecyclerAdapter extends RecyclerView.Adapter<vendo
         else
         {
 
-            if(sabaItem.getstatusAssigned().equalsIgnoreCase("pending")|| sabaItem.getstatusAssigned().equalsIgnoreCase("proposal")){
+            if(sabaItem.getstatusAssignedProposal().equalsIgnoreCase("pending")|| sabaItem.getstatusAssignedProposal().equalsIgnoreCase("proposal")){
 
                 holder.cardView.setBackground(
                         ContextCompat.getDrawable(holder.cardView.getContext(),
                                 R.drawable.orangesquere)
                 );
 
-            }else if(sabaItem.getstatusAssigned().equalsIgnoreCase("active")){
+            }else if(sabaItem.getstatusAssignedProposal().equalsIgnoreCase("active")){
 
                 holder.cardView.setBackground(
                         ContextCompat.getDrawable(holder.cardView.getContext(),
                                 R.drawable.s8b868833sw1cr101)
                 );
 
-            }else if(sabaItem.getstatusAssigned().equalsIgnoreCase("completed")){
+            }else if(sabaItem.getstatusAssignedProposal().equalsIgnoreCase("completed")){
 
                 holder.cardView.setBackground(
                         ContextCompat.getDrawable(holder.cardView.getContext(),
@@ -248,7 +246,7 @@ public class vendorassignmentsRecyclerAdapter extends RecyclerView.Adapter<vendo
                 );
 
             }
-            else if(sabaItem.getstatusAssigned().equalsIgnoreCase("cancelled")){
+            else if(sabaItem.getstatusAssignedProposal().equalsIgnoreCase("cancelled")){
 
                 holder.cardView.setBackground(
                         ContextCompat.getDrawable(holder.cardView.getContext(),
@@ -256,7 +254,7 @@ public class vendorassignmentsRecyclerAdapter extends RecyclerView.Adapter<vendo
                 );
 
             }
-            else if(sabaItem.getstatusAssigned().equalsIgnoreCase("draft")){
+            else if(sabaItem.getstatusAssignedProposal().equalsIgnoreCase("draft")){
 
                 holder.cardView.setBackground(
                         ContextCompat.getDrawable(holder.cardView.getContext(),
@@ -275,14 +273,14 @@ public class vendorassignmentsRecyclerAdapter extends RecyclerView.Adapter<vendo
         }
 
 
-        if(sabaItem.getagreed_priceAssigned()==null || sabaItem.getagreed_priceAssigned().equals(""))
+        if(sabaItem.getagreed_priceAssignedProposal()==null || sabaItem.getagreed_priceAssignedProposal().equals(""))
         {
 
             holder.eventstatus.setVisibility(View.GONE);
         }
         else
         {
-            holder.eventstatus.setText(sabaItem.getagreed_priceAssigned());
+            holder.eventstatus.setText(sabaItem.getagreed_priceAssignedProposal());
         }
 
 

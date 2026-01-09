@@ -1,0 +1,114 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".homeclientFragment"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#FFFFFF">
+
+    <ScrollView
+        android:id="@+id/rwkt7uatih28"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/createcataloguelayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:background="@drawable/sfb005fsw1cr15bffffff"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginHorizontal="18dp"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:id="@+id/r17kzwrocf58"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/sfb005fsw1tl15bl15lr270fb0160f703d0"
+                    android:paddingVertical="12dp"
+                    android:paddingHorizontal="10dp"
+                    android:layout_marginEnd="26dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:orientation="vertical">
+                    <ImageView
+                        android:id="@+id/rs2i8lsuooym"
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:src="@drawable/addeventicon"
+                        android:scaleType="fitXY"
+                        />
+                </LinearLayout>
+                <TextView
+                    android:id="@+id/r4clmgz9opk9"
+                    android:textColor="#000000"
+                    android:textSize="24sp"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="Add catalogue"
+                    />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/loadingindicatorlayour"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+
+                >
+                <com.wang.avi.AVLoadingIndicatorView
+                    android:id="@+id/progressbar"
+
+                    style="@style/AVLoadingIndicatorView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="192dp"
+                    android:visibility="gone"
+                    android:layout_marginTop="4dp"
+                    android:gravity="center"
+                    app:indicatorColor="@color/purplethemelight"
+                    app:indicatorName="BallTrianglePathIndicator"
+
+                    />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/recentactivitiestitlelayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="1dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginHorizontal="18dp"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/rf66986yz1ea"
+                    android:textColor="#25131A"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="My Services"
+                    />
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/catalogueservicesrecycler"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_gravity="center_horizontal"
+
+                android:layout_marginTop="5dp">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>

@@ -68,6 +68,24 @@ public class sabaEventItem {
     String event_nameAssigned;
 
     String event_imagelocationAssigned;
+    String event_location,event_city,event_state,postal_code,event_country,longitude,latitude,deposit_percentage,deposit_balance_percentage,eventcapability_name,event_vibe,event_type,event_vendor_name,event_vendor_base_price,event_allocated_time;
+
+
+    //for vendor proposals
+
+    String event_idAssignedProposal;
+    String vendor_idAssignedProposal;
+    String capability_idAssignedProposal;
+    String statusAssignedProposal;
+    String agreed_priceAssignedProposal;
+    JSONObject contract_termsAssignedProposal;
+    String assigned_byAssignedProposal;
+    String time_assignedAssignedProposal;
+    String event_nameAssignedProposal;
+
+    String event_imagelocationAssignedProposal;
+
+    String event_locationProposal,event_cityProposal,event_stateProposal,postal_codeProposal,event_countryProposal,longitudeProposal,latitudeProposal,deposit_percentageProposal,deposit_balanceProposal_percentage,eventcapability_nameProposal,event_vibeProposal,event_typeProposal,event_vendor_nameProposal,event_vendor_base_priceProposal,event_allocated_timeProposal;
 
 
 
@@ -290,7 +308,350 @@ public class sabaEventItem {
 
     public void setevent_imagelocationAssigned(String name) {
         this.event_imagelocationAssigned=name;
+
+
     }
+
+
+    public String getevent_locationAssigned () {return event_location;}
+
+    public void setevent_locationAssigned(String name) {
+        this.event_location=name;
+
+
+    }
+
+    public String getevent_cityAssigned () {return event_city;}
+
+    public void setevent_cityAssigned(String name) {
+        this.event_city=name;
+
+
+    }
+
+
+    public String getevent_stateAssigned () {return event_state;}
+
+    public void setevent_stateAssigned(String name) {
+        this.event_state=name;
+
+
+    }
+
+    public String getpostal_codeAssigned () {return postal_code;}
+
+    public void setpostal_codeAssigned(String name) {
+        this.postal_code=name;
+
+
+    }
+
+
+
+
+    public String getevent_countryAssigned () {return event_country;}
+
+    public void setevent_countryAssigned(String name) {
+        this.event_country=name;
+
+
+    }
+
+
+    public String getlongitudeAssigned () {return longitude;}
+
+    public void setlongitudeAssigned(String name) {
+        this.longitude=name;
+
+
+    }
+
+    public String getlatitudeAssigned () {return latitude;}
+
+    public void setlatitudeAssigned(String name) {
+        this.latitude=name;
+
+
+    }
+
+
+
+    public String getdeposit_percentageAssigned () {return deposit_percentage;}
+
+    public void setdeposit_percentageAssigned(String name) {
+        this.deposit_percentage=name;
+
+
+    }
+
+
+
+    public String getdeposit_balance_percentageAssigned () {return deposit_balance_percentage;}
+
+    public void setdeposit_balance_percentageAssigned(String name) {
+        this.deposit_balance_percentage=name;
+
+
+    }
+
+
+
+    public String geteventcapability_nameAssigned () {return eventcapability_name;}
+
+    public void seteventcapability_nameAssigned(String name) {
+        this.eventcapability_name=name;
+
+
+    }
+
+
+    public String getevent_vibeAssigned () {return event_vibe;}
+
+    public void setevent_vibeAssigned(String name) {
+        this.event_vibe=name;
+
+
+    }
+
+
+
+    public String getevent_typeAssigned () {return event_type;}
+
+    public void setevent_typeAssigned(String name) {
+        this.event_type=name;
+
+
+    }
+
+
+    public String getevent_vendor_nameAssigned () {return event_vendor_name;}
+
+    public void setevent_vendor_nameAssigned(String name) {
+        this.event_vendor_name=name;
+
+
+    }
+
+
+    public String getevent_vendor_base_priceAssigned () {return event_vendor_base_price;}
+
+    public void setevent_vendor_base_priceAssigned(String name) {
+        this.event_vendor_base_price=name;
+
+
+    }
+
+
+    public String getevent_allocated_timeAssigned () {return event_allocated_time;}
+
+    public void setevent_allocated_timeAssigned(String name) {
+        this.event_allocated_time=name;
+
+
+    }
+
+
+    //end of for vendor assignments
+    //start of for vendor proposals
+
+    public String getevent_idAssignedProposal () {return event_idAssignedProposal;}
+    public void setevent_idAssignedProposal(String name) {
+        this.event_idAssignedProposal=name;
+    }
+
+    public String getvendor_idAssignedProposal () {return vendor_idAssignedProposal;}
+    public void setvendor_idAssignedProposal(String name) {
+        this.vendor_idAssignedProposal=name;
+    }
+
+    public String getcapability_idAssignedProposal () {return capability_idAssignedProposal;}
+    public void setcapability_idAssignedProposal(String name) {
+        this.capability_idAssignedProposal=name;
+    }
+
+    public String getstatusAssignedProposal () {return statusAssignedProposal;}
+    public void setstatusAssignedProposal(String name) {
+        this.statusAssignedProposal=name;
+    }
+
+    public String getagreed_priceAssignedProposal () {return agreed_priceAssignedProposal;}
+    public void setagreed_priceAssignedProposal(String name) {
+        this.agreed_priceAssignedProposal=name;
+    }
+
+    public JSONObject getcontract_termsAssignedProposal () {return contract_termsAssignedProposal;}
+    public void setcontract_termsAssignedProposal(JSONObject name) {
+        this.contract_termsAssignedProposal=name;
+    }
+
+    public String getassigned_byAssignedProposal () {return assigned_byAssignedProposal;}
+    public void setassigned_byAssignedProposal(String name) {
+        this.assigned_byAssignedProposal=name;
+    }
+
+    public String gettime_assignedAssignedProposal () {return time_assignedAssignedProposal;}
+    public void settime_assignedAssignedProposal(String name) {
+        this.time_assignedAssignedProposal=name;
+    }
+
+
+    public String getevent_nameAssignedProposal () {return event_nameAssignedProposal;}
+
+    public void setevent_nameAssignedProposal(String name) {
+        this.event_nameAssignedProposal=name;
+    }
+
+
+
+    public String getevent_imagelocationAssignedProposal () {return event_imagelocationAssignedProposal;}
+
+    public void setevent_imagelocationAssignedProposal(String name) {
+        this.event_imagelocationAssignedProposal=name;
+
+
+    }
+
+
+
+    public String getevent_locationAssignedProposal () {return event_locationProposal;}
+
+    public void setevent_locationAssignedProposal(String name) {
+        this.event_locationProposal=name;
+
+
+    }
+
+    public String getevent_cityAssignedProposal () {return event_cityProposal;}
+
+    public void setevent_cityAssignedProposal(String name) {
+        this.event_cityProposal=name;
+
+
+    }
+
+
+    public String getevent_stateAssignedProposal () {return event_stateProposal;}
+
+    public void setevent_stateAssignedProposal(String name) {
+        this.event_stateProposal=name;
+
+
+    }
+
+    public String getpostal_codeAssignedProposal () {return postal_codeProposal;}
+
+    public void setpostal_codeAssignedProposal(String name) {
+        this.postal_codeProposal=name;
+
+
+    }
+
+
+
+
+    public String getevent_countryAssignedProposal () {return event_countryProposal;}
+
+    public void setevent_countryAssignedProposal(String name) {
+        this.event_countryProposal=name;
+
+
+    }
+
+
+    public String getlongitudeAssignedProposal () {return longitudeProposal;}
+
+    public void setlongitudeAssignedProposal(String name) {
+        this.longitudeProposal=name;
+
+
+    }
+
+    public String getlatitudeAssignedProposal () {return latitudeProposal;}
+
+    public void setlatitudeAssignedProposal(String name) {
+        this.latitudeProposal=name;
+
+
+    }
+
+
+
+    public String getdeposit_percentageAssignedProposal () {return deposit_percentageProposal;}
+
+    public void setdeposit_percentageAssignedProposal(String name) {
+        this.deposit_percentageProposal=name;
+
+
+    }
+
+
+
+    public String getdeposit_balance_percentageAssignedProposal () {return deposit_balanceProposal_percentage;}
+
+    public void setdeposit_balance_percentageAssignedProposal(String name) {
+        this.deposit_balanceProposal_percentage=name;
+
+
+    }
+
+
+
+    public String geteventcapability_nameAssignedProposal () {return eventcapability_nameProposal;}
+
+    public void seteventcapability_nameAssignedProposal(String name) {
+        this.eventcapability_nameProposal=name;
+
+
+    }
+
+
+    public String getevent_vibeAssignedProposal () {return event_vibeProposal;}
+
+    public void setevent_vibeAssignedProposal(String name) {
+        this.event_vibeProposal=name;
+
+
+    }
+
+
+
+    public String getevent_typeAssignedProposal () {return event_typeProposal;}
+
+    public void setevent_typeAssignedProposal(String name) {
+        this.event_typeProposal=name;
+
+
+    }
+
+
+    public String getevent_vendor_nameAssignedProposal () {return event_vendor_nameProposal;}
+
+    public void setevent_vendor_nameAssignedProposal(String name) {
+        this.event_vendor_nameProposal=name;
+
+
+    }
+
+
+    public String getevent_vendor_base_priceAssignedProposal () {return event_vendor_base_priceProposal;}
+
+    public void setevent_vendor_base_priceAssignedProposal(String name) {
+        this.event_vendor_base_priceProposal=name;
+
+
+    }
+
+
+    public String getevent_allocated_timeAssignedProposal () {return event_allocated_timeProposal;}
+
+    public void setevent_allocated_timeAssignedProposal(String name) {
+        this.event_allocated_timeProposal=name;
+
+
+    }
+
+
+    //end of vendor proposals
 
 
 

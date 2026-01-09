@@ -22,6 +22,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.sabapp.saba.R;
+import com.sabapp.saba.VendorCatalogueFragment;
 import com.sabapp.saba.application.sabaapp;
 import com.sabapp.saba.data.model.sabaEventItem;
 import com.sabapp.saba.vendorFragment;
@@ -36,7 +37,7 @@ public class servicesOfferedRecyclerAdapter extends RecyclerView.Adapter<service
     private Context context;
 
     private Activity activity;
-    private vendorFragment pulse;
+    private VendorCatalogueFragment pulse;
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
 
@@ -73,7 +74,7 @@ public class servicesOfferedRecyclerAdapter extends RecyclerView.Adapter<service
         }
     }
 
-    public servicesOfferedRecyclerAdapter(List<sabaEventItem> bitmapList, Context context, vendorFragment pulse, sabaapp app) {
+    public servicesOfferedRecyclerAdapter(List<sabaEventItem> bitmapList, Context context, VendorCatalogueFragment pulse, sabaapp app) {
         this.bitmapList = bitmapList;
         this.context=context;
         this.pulse=pulse;

@@ -21,15 +21,14 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.sabapp.saba.R;
+import com.sabapp.saba.alleventsVendorFragment;
 import com.sabapp.saba.application.sabaapp;
 import com.sabapp.saba.data.model.sabaEventItem;
-import com.sabapp.saba.events.createevent;
-import com.sabapp.saba.homeclientFragment;
 import com.sabapp.saba.vendorFragment;
 
 import java.util.List;
 
-public class vendorassignmentsRecyclerAdapter extends RecyclerView.Adapter<vendorassignmentsRecyclerAdapter.MyViewHolder>{
+public class alleventslistRecyclerAdapter extends RecyclerView.Adapter<alleventslistRecyclerAdapter.MyViewHolder>{
     sabaapp app;
     int selected_position = 0;
     private List<sabaEventItem> bitmapList;
@@ -37,7 +36,7 @@ public class vendorassignmentsRecyclerAdapter extends RecyclerView.Adapter<vendo
     private Context context;
 
     private Activity activity;
-    private vendorFragment pulse;
+    private alleventsVendorFragment pulse;
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public ImageView thumbnail;
         public TextView title;
@@ -67,7 +66,7 @@ public class vendorassignmentsRecyclerAdapter extends RecyclerView.Adapter<vendo
         }
     }
 
-    public vendorassignmentsRecyclerAdapter(List<sabaEventItem> bitmapList, Context context, vendorFragment pulse, sabaapp app) {
+    public alleventslistRecyclerAdapter(List<sabaEventItem> bitmapList, Context context, alleventsVendorFragment pulse, sabaapp app) {
         this.bitmapList = bitmapList;
         this.context=context;
         this.pulse=pulse;
@@ -75,14 +74,14 @@ public class vendorassignmentsRecyclerAdapter extends RecyclerView.Adapter<vendo
     }
 
     @Override
-    public vendorassignmentsRecyclerAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public alleventslistRecyclerAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.eventshorizontalcell, parent, false);
 
-        return new vendorassignmentsRecyclerAdapter.MyViewHolder(itemView);
+        return new alleventslistRecyclerAdapter.MyViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(vendorassignmentsRecyclerAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(alleventslistRecyclerAdapter.MyViewHolder holder, int position) {
 
         // holder.cardView.setStrokeColor(selected_position == position ? Color.YELLOW : Color.TRANSPARENT);
         final sabaEventItem sabaItem = bitmapList.get(position);
@@ -309,4 +308,5 @@ public class vendorassignmentsRecyclerAdapter extends RecyclerView.Adapter<vendo
     public int getItemCount() {
         return bitmapList.size();
     }
+
 }
