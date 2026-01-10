@@ -1,5 +1,7 @@
 package com.sabapp.saba.adapters;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -23,7 +25,10 @@ import com.bumptech.glide.request.RequestOptions;
 import com.sabapp.saba.R;
 import com.sabapp.saba.application.sabaapp;
 import com.sabapp.saba.data.model.sabaEventItem;
+import com.sabapp.saba.events.chooseservices;
+import com.sabapp.saba.events.setupbudgets;
 import com.sabapp.saba.vendorFragment;
+import com.sabapp.saba.vendors.eventvendoroverview;
 
 import java.util.List;
 
@@ -41,7 +46,7 @@ public class vendorproposalsRecyclerAdapter extends RecyclerView.Adapter<vendorp
         public TextView title;
         public TextView locationaddress, datevalues, eventstatus;
 
-        public LinearLayout cardView;
+        public LinearLayout cardView, wholelayout;
 
         public MyViewHolder(View view) {
             super(view);
@@ -52,6 +57,7 @@ public class vendorproposalsRecyclerAdapter extends RecyclerView.Adapter<vendorp
             locationaddress= view.findViewById(R.id.eventlocation);
             datevalues= view.findViewById(R.id.eventdate);
             eventstatus= view.findViewById(R.id.eventstatustext);
+            wholelayout = view.findViewById(R.id.eventlayoutvalues);
 
 
         }
@@ -135,7 +141,7 @@ public class vendorproposalsRecyclerAdapter extends RecyclerView.Adapter<vendorp
 
 
 
-        holder.thumbnail.setOnClickListener(new View.OnClickListener() {
+        holder.wholelayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String productname = sabaItem.getevent_nameAssignedProposal();
@@ -170,6 +176,52 @@ public class vendorproposalsRecyclerAdapter extends RecyclerView.Adapter<vendorp
                     bottomSheetFragment.show((activity).getSupportFragmentManager(), bottomSheetFragment.getTag());
                     */
                     //End of redirect to payment popup
+
+                    //    String event_idAssignedProposal;
+                    //    String vendor_idAssignedProposal;
+                    //    String capability_idAssignedProposal;
+                    //    String statusAssignedProposal;
+                    //    String agreed_priceAssignedProposal;
+                    //    JSONObject contract_termsAssignedProposal;
+                    //    String assigned_byAssignedProposal;
+                    //    String time_assignedAssignedProposal;
+                    //    String event_nameAssignedProposal;
+                    //
+                    //    String event_imagelocationAssignedProposal;
+                    //
+                    //    String event_locationProposal,event_cityProposal,event_stateProposal,postal_codeProposal,event_countryProposal,longitudeProposal,latitudeProposal,deposit_percentageProposal,deposit_balanceProposal_percentage,eventcapability_nameProposal,event_vibeProposal,event_typeProposal,event_vendor_nameProposal,event_vendor_base_priceProposal,event_allocated_timeProposal
+
+
+                    Intent intent2 = new Intent(pulse.requireActivity(), eventvendoroverview.class);
+                    intent2.putExtra("event_id", sabaItem.getevent_idAssignedProposal());
+                    intent2.putExtra("vendor_id", sabaItem.getvendor_idAssignedProposal());
+                    intent2.putExtra("image_location", sabaItem.getevent_imagelocationAssignedProposal());
+                    intent2.putExtra("capability_id", sabaItem.getcapability_idAssignedProposal());
+                    intent2.putExtra("event_status", sabaItem.getstatusAssignedProposal());
+                    intent2.putExtra("agreed_price", sabaItem.getagreed_priceAssignedProposal());
+                    intent2.putExtra("assigned_by", sabaItem.getassigned_byAssignedProposal());
+                    intent2.putExtra("time_assigned", sabaItem.gettime_assignedAssignedProposal());
+                    intent2.putExtra("event_name", sabaItem.getevent_nameAssignedProposal());
+
+                    intent2.putExtra("event_location", sabaItem.getevent_locationAssignedProposal());
+                    intent2.putExtra("event_city", sabaItem.getevent_cityAssignedProposal());
+                    intent2.putExtra("event_state", sabaItem.getevent_stateAssignedProposal());
+                    intent2.putExtra("postal_code", sabaItem.getpostal_codeAssignedProposal());
+                    intent2.putExtra("event_country", sabaItem.getevent_countryAssignedProposal());
+                    intent2.putExtra("longitude", sabaItem.getlongitudeAssignedProposal());
+                    intent2.putExtra("latitude", sabaItem.getlongitudeAssignedProposal());
+                    intent2.putExtra("deposit_percentage", sabaItem.getdeposit_percentageAssignedProposal());
+                    intent2.putExtra("deposit_balance", sabaItem.getdeposit_balance_percentageAssignedProposal());
+                    intent2.putExtra("eventcapability_name", sabaItem.geteventcapability_nameAssignedProposal());
+                    intent2.putExtra("event_vibe", sabaItem.getevent_vibeAssignedProposal());
+                    intent2.putExtra("event_type", sabaItem.getevent_typeAssignedProposal());
+                    intent2.putExtra("event_vendor_name", sabaItem.getevent_vendor_nameAssignedProposal());
+
+                    pulse.startActivity(intent2);
+
+
+
+
                 }
 
 
@@ -192,7 +244,7 @@ public class vendorproposalsRecyclerAdapter extends RecyclerView.Adapter<vendorp
 
 
 
-        if(sabaItem.getevent_locationAssignedProposal()==null || sabaItem.getevent_locationAssignedProposal().equals(""))
+        if(sabaItem.getevent_locationAssignedProposal()==null || sabaItem.getevent_locationAssignedProposal().equals("") || sabaItem.getevent_locationAssignedProposal().equals("null"))
         {
             holder.locationaddress.setVisibility(View.GONE);
         }
@@ -201,13 +253,13 @@ public class vendorproposalsRecyclerAdapter extends RecyclerView.Adapter<vendorp
             holder.locationaddress.setText(sabaItem.getevent_locationAssignedProposal());
         }
 
-        if(sabaItem.gettime_assignedAssignedProposal()==null || sabaItem.gettime_assignedAssignedProposal().equals(""))
+        if(sabaItem.getevent_allocated_timeAssignedProposal()==null || sabaItem.getevent_allocated_timeAssignedProposal().equals(""))
         {
             holder.datevalues.setVisibility(View.GONE);
         }
         else
         {
-            holder.datevalues.setText(sabaItem.gettime_assignedAssignedProposal());
+            holder.datevalues.setText(sabaItem.getevent_allocated_timeAssignedProposal());
         }
 
 

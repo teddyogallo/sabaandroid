@@ -41,7 +41,7 @@
                         android:id="@+id/rs2i8lsuooym"
                         android:layout_width="56dp"
                         android:layout_height="56dp"
-                        android:src="@drawable/addeventicon"
+                        android:src="@drawable/janja_icons_conversation"
                         android:scaleType="fitXY"
                         />
                 </LinearLayout>

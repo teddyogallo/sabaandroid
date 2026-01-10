@@ -75,7 +75,7 @@ public class alleventslistRecyclerAdapter extends RecyclerView.Adapter<allevents
 
     @Override
     public alleventslistRecyclerAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.eventshorizontalcell, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.alleventslistcell, parent, false);
 
         return new alleventslistRecyclerAdapter.MyViewHolder(itemView);
     }
@@ -193,22 +193,22 @@ public class alleventslistRecyclerAdapter extends RecyclerView.Adapter<allevents
 
 
 
-        if(sabaItem.getevent_locationAssigned()==null || sabaItem.getevent_locationAssigned().equals(""))
+        if(sabaItem.getevent_locationAssigned()==null || sabaItem.getevent_locationAssigned().equals("") || sabaItem.getevent_locationAssigned().equals("null"))
         {
             holder.locationaddress.setVisibility(View.GONE);
         }
         else
         {
-            holder.locationaddress.setText(sabaItem.getstatusAssigned());
+            holder.locationaddress.setText(sabaItem.getevent_locationAssigned());
         }
 
-        if(sabaItem.gettime_assignedAssigned()==null || sabaItem.gettime_assignedAssigned().equals(""))
+        if(sabaItem.getevent_allocated_timeAssigned()==null || sabaItem.getevent_allocated_timeAssigned().equals(""))
         {
             holder.datevalues.setVisibility(View.GONE);
         }
         else
         {
-            holder.datevalues.setText(sabaItem.gettime_assignedAssigned());
+            holder.datevalues.setText(sabaItem.getevent_allocated_timeAssigned());
         }
 
 

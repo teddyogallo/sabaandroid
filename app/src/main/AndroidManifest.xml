@@ -107,6 +107,11 @@
             android:theme="@style/Theme.Saba"
             android:exported="false" />
 
+        <activity
+            android:name=".vendors.eventvendoroverview"
+            android:theme="@style/Theme.Saba"
+            android:exported="false" />
+
 
 
     </application>

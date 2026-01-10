@@ -36,8 +36,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -199,7 +202,7 @@ public class alleventsVendorFragment extends Fragment {
 
 
 
-        eventlistrecyclerview.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+        eventlistrecyclerview.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
 
 
         sabaeventsadapter=new alleventslistRecyclerAdapter(eventwholearray,context, alleventsVendorFragment.this, app);
@@ -402,11 +405,19 @@ public class alleventsVendorFragment extends Fragment {
                                             String event_vendorbase_pricevalue = jsonObj.getString("vendor_base_price");
                                             String event_vendor_namevalue = jsonObj.getString("vendor_name");
 
+                                            String formattedEventTime = null;
+
+                                            if (isValidUnixTimestamp(event_allocatedtimevalue)) {
+                                                formattedEventTime = convertUnixToDateTime(event_allocatedtimevalue);
+                                            } else {
+                                                Log.w("EVENT_TIME", "Invalid Unix timestamp: " + event_allocatedtimevalue);
+                                            }
+
 
                                             eventcapability_name.add(eventcapability_namevalue);
                                             depositbalance_percentage.add(depositbalance_percentagevalue);
                                             deposit_percentage.add(deposit_percentagevalue);
-                                            event_allocatedtime.add(event_allocatedtimevalue);
+                                            event_allocatedtime.add(formattedEventTime);
                                             event_location.add(event_locationvalue);
                                             event_type.add(event_typevalue);
                                             event_vibe.add(event_vibevalue);
@@ -443,7 +454,11 @@ public class alleventsVendorFragment extends Fragment {
 
                                         eventwholearray.clear();
 
-                                        for(Integer i=0; i<event_id.size(); i++)
+                                        //
+
+                                        //Integer i=0; i<event_id.size(); i++
+
+                                        for(int i = event_id.size() - 1; i >= 0; i--)
                                         {
                                             sabaEventItem item=new sabaEventItem();
 
@@ -634,5 +649,34 @@ public class alleventsVendorFragment extends Fragment {
         queue.add(request);
 
 
+    }
+
+
+    private boolean isValidUnixTimestamp(String value) {
+        if (value == null) return false;
+        if (!value.matches("\\d+")) return false;
+
+        return value.length() == 10 || value.length() == 13;
+    }
+
+    private String convertUnixToDateTime(String timestamp) {
+        try {
+            long time = Long.parseLong(timestamp);
+
+            // If seconds → convert to milliseconds
+            if (timestamp.length() == 10) {
+                time *= 1000;
+            }
+
+            Date date = new Date(time);
+
+            SimpleDateFormat sdf =
+                    new SimpleDateFormat("HH:mm dd-MM-yyyy ", Locale.getDefault());
+
+            return sdf.format(date);
+
+        } catch (Exception e) {
+            return null;
+        }
     }
 }
