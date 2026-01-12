@@ -94,8 +94,7 @@ public class messagestartactivity  extends AppCompatActivity {
 
     @Override
     public void onBackPressed(){
-
-        //startActivity(new Intent(getApplicationContext(), sabaDrawerActivity.class));
+        startActivity(new Intent(getApplicationContext(), sabaDrawerActivity.class));
     }
 
 
@@ -115,6 +114,31 @@ public class messagestartactivity  extends AppCompatActivity {
 
 
         // calling the action bar
+
+
+        // calling the action bar
+        Toolbar toolbarTop = (Toolbar) findViewById(R.id.toolbar_gchannel);
+        // add toolbar back button
+        setSupportActionBar(toolbarTop);
+
+        // add back arrow to toolbar
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setDisplayShowTitleEnabled(false);  // Disable the default title
+        }
+        toolbarTop.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // back button pressed
+                startActivity(new Intent(getApplicationContext(), sabaDrawerActivity.class));
+
+            }
+        });
+        //end of add toolbar back button
+        TextView mTitle = (TextView) toolbarTop.findViewById(R.id.toolbar_title);
+
+        mTitle.setText("All Messages");
 
 
         app = (sabaapp)  this.getApplicationContext();

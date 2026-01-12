@@ -82,7 +82,6 @@ public class conversationactivity extends AppCompatActivity {
     int allnotifications_number = 0;
     String activechatname;
 
-    TextView conversationtitle;
 
     ImageView backbuttonimage;
 
@@ -103,9 +102,32 @@ public class conversationactivity extends AppCompatActivity {
 
         progressBar=(AVLoadingIndicatorView)findViewById(R.id.progressBar);
 
+        Toolbar toolbarTop = (Toolbar) findViewById(R.id.toolbar_gchannel);
+        // add toolbar back button
+        setSupportActionBar(toolbarTop);
+
+        // add back arrow to toolbar
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setDisplayShowTitleEnabled(false);  // Disable the default title
+        }
+        toolbarTop.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // back button pressed
+                startActivity(new Intent(getApplicationContext(), messagestartactivity.class));
+
+            }
+        });
+        //end of add toolbar back button
+        TextView mTitle = (TextView) toolbarTop.findViewById(R.id.toolbar_title);
+
+
+
 
         //end of add toolbar back button
-        conversationtitle = (TextView) findViewById(R.id.conversationtitle);
+
         backbuttonimage = (ImageView)findViewById(R.id.backarrowimage);
         replymessage=(EditText) findViewById(R.id.edit_gchat_message);
         sendmessagebutton=(Button) findViewById(R.id.button_gchat_send);
@@ -119,7 +141,7 @@ public class conversationactivity extends AppCompatActivity {
         String activechat=intent.getStringExtra("activeuser");
         if(!chatname.equals("")){
 
-            conversationtitle.setText("Chat with: "+chatname);
+            mTitle.setText("Chat with: "+chatname);
         }
 
         if(!activechat.equals("")){
