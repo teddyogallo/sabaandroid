@@ -112,6 +112,16 @@
             android:theme="@style/Theme.Saba"
             android:exported="false" />
 
+        <activity
+            android:name=".messaging.messagestartactivity"
+            android:theme="@style/Theme.Saba"
+            android:exported="false" />
+
+        <activity
+            android:name=".messaging.conversationactivity"
+            android:theme="@style/Theme.Saba"
+            android:exported="false" />
+
 
 
     </application>

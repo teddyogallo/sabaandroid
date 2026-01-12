@@ -1,5 +1,7 @@
 package com.sabapp.saba.data.model;
 
+import android.graphics.Bitmap;
+
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -87,7 +89,137 @@ public class sabaEventItem {
 
     String event_locationProposal,event_cityProposal,event_stateProposal,postal_codeProposal,event_countryProposal,longitudeProposal,latitudeProposal,deposit_percentageProposal,deposit_balanceProposal_percentage,eventcapability_nameProposal,event_vibeProposal,event_typeProposal,event_vendor_nameProposal,event_vendor_base_priceProposal,event_allocated_timeProposal;
 
+    //for conversations start
+    String businessname,status,productprice,details;
+    byte[] decodedString;
 
+    Bitmap imagebitmap;
+
+    Integer templateImg;
+
+    //for messages
+
+    String message,chatusertype,sentmessage,sentmessagetime,sentmessagedate,sentmessagesender,sendermessagetitle, receivedmessage,receivedmessagetime,receivedmessagedate,receivedmessagesender,receivedmessagetitle,encodedbase64,image_id,price_tier;
+
+    public void setMessage(String message) {
+        this.message=message;
+    }
+
+    public String getMessage() {return message;}
+
+    public void setChatusertype(String message) {
+        this.chatusertype=message;
+    }
+    public void setSentmessage(String message) {
+        this.sentmessage=message;
+    }
+    public void setSentmessagetime(String message) {
+        this.sentmessagetime=message;
+    }
+    public void setSentmessagedate(String message) {
+        this.sentmessagedate=message;
+    }
+    public void setSentmessagesender(String message) {
+        this.sentmessagesender=message;
+    }
+    public void setSentmessagetitle(String message) {
+        this.sendermessagetitle=message;
+    }
+
+    public String getChatusertype() {return chatusertype;}
+    public String getSentmessage() {return sentmessage;}
+    public String getSentmessagetime() {return sentmessagetime;}
+    public String getSentmessagedate() {return sentmessagedate;}
+    public String getSentmessagesender() {return sentmessagesender;}
+    public String getSentmessagetitle() {return sendermessagetitle;}
+
+    public void setReceivedmessage(String message) {
+        this.receivedmessage=message;
+    }
+    public void setReceivedmessagetime(String message) {
+        this.receivedmessagetime=message;
+    }
+    public void setReceivedmessagedate(String message) {
+        this.receivedmessagedate=message;
+    }
+    public void setReceivedmessagesender(String message) {
+        this.receivedmessagesender=message;
+    }
+    public void setReceivedmessagetitle(String message){this.receivedmessagetitle=message;}
+
+
+    public String getReceivedmessage() {return receivedmessage;}
+    public String getReceivedmessagetime() {return receivedmessagetime;}
+    public String getReceivedmessagedate() {return receivedmessagedate;}
+    public String getReceivedmessagesender() {return receivedmessagesender;}
+    public String getReceivedmessagetitle() {return receivedmessagetitle;}
+
+    public void setEncodedstring(String encodedbase64) {
+        this.encodedbase64=encodedbase64;
+    }
+
+    public String getEncodedstring() {return encodedbase64;}
+
+    public void setImage_id(String image_id) {
+        this.image_id =image_id;
+    }
+
+    public String getImage_id() {return image_id;}
+    public void setPrice_tier(String price_tier) {
+        this.price_tier =price_tier;
+    }
+
+    public String getPrice_tier() {return price_tier;}
+
+
+    //start for conversation start
+    public void setBytes(byte[] decodedString) {
+        this.decodedString=decodedString;
+    }
+
+    public byte[] getBytes() {return decodedString;}
+
+
+    public void setBusinessname(String businessname) {
+        this.businessname =businessname;
+    }
+
+    public String getBusinessname() {return businessname;}
+
+    public void setProductprice(String productprice) {
+        this.productprice=productprice;
+    }
+
+    public String getProductprice() {return productprice;}
+    public void setStatus(String status) {
+        this.status=status;
+    }
+
+    public String getStatus() {return status;}
+
+    public void setDetails(String details) {
+        this.details =details;
+    }
+
+    public String getDetails() {return details;}
+
+    public void setImagebitmap(Bitmap imagebitmap) {
+        this.imagebitmap=imagebitmap;
+    }
+
+    public Bitmap getImagebitmap() {return imagebitmap;}
+
+    public void setTemplateImg(Integer templateImg) {
+        this.templateImg =templateImg;
+    }
+
+    public Integer getTemplateImg() {return templateImg;}
+
+
+
+
+
+    //end for conversation start
 
     public String geteventUserid() {return eventUserid;}
 

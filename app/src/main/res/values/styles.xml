@@ -36,4 +36,10 @@
         <item name="android:fontFamily">@font/graphik_semibold</item>
         <!-- include other attributes you want to change: textColor, textStyle, etc -->
     </style>
+
+    <style name="FontRegularRoboto">
+        <item name="android:fontFamily">@font/roboto_regular</item>
+        <item name="fontFamily">@font/roboto_regular</item>
+        <item name="android:textStyle">normal</item>
+    </style>
 </resources>

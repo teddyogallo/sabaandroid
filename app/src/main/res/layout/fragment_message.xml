@@ -74,9 +74,25 @@
                     android:text="Recent Conversations"
                     />
             </LinearLayout>
+            <com.wang.avi.AVLoadingIndicatorView
+                android:id="@+id/progressBar"
+
+                style="@style/AVLoadingIndicatorView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:visibility="gone"
+                app:indicatorColor="@color/yellow"
+                app:indicatorName="BallTrianglePathIndicator"
+                app:layout_constraintBottom_toTopOf="@id/text_gchat_indicator"
+                app:layout_constraintEnd_toEndOf="parent"
+
+                app:layout_constraintStart_toStartOf="parent" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recentactivitiesrecycler"
+                android:id="@+id/recycler_gchat"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
                 android:layout_gravity="center_horizontal"

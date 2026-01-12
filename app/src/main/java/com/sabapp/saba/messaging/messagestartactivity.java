@@ -1,6 +1,4 @@
-package com.sabapp.saba;
-
-import static com.gun0912.tedpermission.provider.TedPermissionProvider.context;
+package com.sabapp.saba.messaging;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -8,23 +6,25 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.util.Base64;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.Toolbar;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.text.TextUtils;
-import android.util.Base64;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -35,12 +35,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.textfield.TextInputEditText;
-import com.sabapp.saba.adapters.messagefragmentRecyclerAdapter;
+import com.sabapp.saba.SharedPrefsXtreme;
 import com.sabapp.saba.adapters.messagestartactivityRecycler;
-import com.sabapp.saba.adapters.recentactivitiesRecyclerAdapter;
-import com.sabapp.saba.adapters.sabaeventlistclientHomeRecyclerAdapter;
 import com.sabapp.saba.application.sabaapp;
 import com.sabapp.saba.data.model.sabaEventItem;
+import com.sabapp.saba.sabaDrawerActivity;
+import com.sabapp.saba.sabaVendorDrawerActivity;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import org.json.JSONArray;
@@ -53,23 +53,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import com.sabapp.saba.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link messageFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class messageFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+public class messagestartactivity  extends AppCompatActivity {
 
     private RecyclerView mMessageRecycler;
 
@@ -81,7 +69,7 @@ public class messageFragment extends Fragment {
     ArrayList<String> socialidlist;
     ArrayList<String> senderidlist;
     ArrayList<String> productImagelist;
-    messagefragmentRecyclerAdapter adaptertwo;
+    messagestartactivityRecycler adaptertwo;
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     int chat_number = 0;
     int allnotifications_number = 0;
@@ -98,110 +86,40 @@ public class messageFragment extends Fragment {
 
     ImageButton addContactbutton;
 
+    ImageView backimagebutton;
 
-    public messageFragment() {
-        // Required empty public constructor
-    }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment messageFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static messageFragment newInstance(String param1, String param2) {
-        messageFragment fragment = new messageFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    private static final int REQUEST_CONTACT = 1;
+    private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 100;
 
     @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        this.context = context; // now you can safely use it
+    public void onBackPressed(){
+
+        //startActivity(new Intent(getApplicationContext(), sabaDrawerActivity.class));
     }
 
+
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        app = (sabaapp) requireActivity().getApplication();
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+        setContentView(R.layout.messagesmainlist);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
-    @Override
-    public void onResume()
-    {
-        super.onResume();
+        taptotest = (RelativeLayout) findViewById(R.id.test_whatsapp);
+        progressBar=(AVLoadingIndicatorView)findViewById(R.id.progressBar);
 
-        // register new push message receiver
-        // by doing this, the activity will be notified each time a new message arrives
+        customersearch = (TextInputEditText) findViewById(R.id.customernametext);
 
-        //Objects.requireNonNull(((sabaDrawerActivity) requireActivity()).getSupportActionBar()).setDisplayHomeAsUpEnabled(false);
-        //Objects.requireNonNull(((sabaDrawerActivity) requireActivity()).getSupportActionBar()).setHomeButtonEnabled(false);
-
-        setUpRecycler();
-        getFevorites();
-
-
-        LocalBroadcastManager.getInstance(context).registerReceiver(mRegistrationBroadcastReceiver,
-                new IntentFilter("CHAT_BROADCAST"));
-
-        LocalBroadcastManager.getInstance(context).registerReceiver(mRegistrationBroadcastReceiver,
-                new IntentFilter("PAYMENT_BROADCAST"));
-
-        LocalBroadcastManager.getInstance(context).registerReceiver(mRegistrationBroadcastReceiver,
-                new IntentFilter("ORDER_BROADCAST"));
-
-        LocalBroadcastManager.getInstance(context).registerReceiver(mRegistrationBroadcastReceiver,
-                new IntentFilter("NOTIFICATION_LOCAL_BROADCAST"));
+        addContactbutton = (ImageButton)findViewById(R.id.addcardbutton);
 
 
 
-        /*LocalBroadcastManager.getInstance(context).registerReceiver(mRegistrationBroadcastReceiver,
-                new IntentFilter("CHAT_BROADCAST"));
-
-        LocalBroadcastManager.getInstance(context).registerReceiver(mRegistrationBroadcastReceiver,
-                new IntentFilter("PAYMENT_BROADCAST"));
-
-        LocalBroadcastManager.getInstance(context).registerReceiver(mRegistrationBroadcastReceiver,
-                new IntentFilter("ORDER_BROADCAST"));
-        LocalBroadcastManager.getInstance(context).registerReceiver(mRegistrationBroadcastReceiver,
-                new IntentFilter("NOTIFICATION_LOCAL_BROADCAST"));*/
-
-    }
+        // calling the action bar
 
 
-    private void setUpRecycler()
-    {
+        app = (sabaapp)  this.getApplicationContext();
+        context = getApplicationContext();
 
-
-
-        //mMessageAdapter=new conversationactivityRecycler(templateArraystwo,getApplicationContext(), this);
-        adaptertwo = new messagefragmentRecyclerAdapter(templateArraystwo, context, messageFragment.this);
-        mMessageRecycler.setLayoutManager(new LinearLayoutManager(context));
-        mMessageRecycler.setAdapter(adaptertwo);
-
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_message, container, false);
-
-        mMessageRecycler = (RecyclerView) view.findViewById(R.id.recycler_gchat);
-
-        progressBar = view.findViewById(R.id.progressBar);
-        hideProgressBar();
 
         templateArraystwo= new ArrayList<sabaEventItem>();
         janjalisttwo= new ArrayList<String>();
@@ -211,6 +129,40 @@ public class messageFragment extends Fragment {
         senderidlist=new ArrayList<String>();
         productImagelist = new ArrayList<String>();
         images= new ArrayList<Integer>();
+
+        List<sabaEventItem> filteredList = new ArrayList<>(templateArraystwo);
+
+        customersearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Step 3: Implement filter logic
+                filteredList.clear();
+                if (s.length() == 0) {
+                    filteredList.addAll(templateArraystwo); // Show full list when search is cleared
+                } else {
+                    for (sabaEventItem item : templateArraystwo) {
+                        if (item.getBusinessname() != null && item.getBusinessname().toLowerCase().contains(s.toString().toLowerCase())) {
+                            filteredList.add(item);
+                        }
+                    }
+                }
+                adaptertwo.updateList(filteredList); // Assuming updateList is a method in your adapter
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+
+        mMessageRecycler = (RecyclerView) findViewById(R.id.recycler_gchat);
+        //mMessageAdapter=new conversationactivityRecycler(templateArraystwo,getApplicationContext(), this);
+        adaptertwo = new messagestartactivityRecycler(templateArraystwo, this, messagestartactivity.this);
+        mMessageRecycler.setLayoutManager(new LinearLayoutManager(this));
+        mMessageRecycler.setAdapter(adaptertwo);
+
+        getFevorites();
 
 
 
@@ -459,9 +411,52 @@ public class messageFragment extends Fragment {
 
 
 
-        return view;
+
+
+
+
+
+
+
     }
 
+
+
+
+
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+
+        LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(mRegistrationBroadcastReceiver,
+                new IntentFilter("CHAT_BROADCAST"));
+
+        LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(mRegistrationBroadcastReceiver,
+                new IntentFilter("PAYMENT_BROADCAST"));
+
+        LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(mRegistrationBroadcastReceiver,
+                new IntentFilter("ORDER_BROADCAST"));
+
+        LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(mRegistrationBroadcastReceiver,
+                new IntentFilter("NOTIFICATION_LOCAL_BROADCAST"));
+
+        String current_status = "LOGIN";
+
+
+
+
+    }
+
+    @Override
+    public void onPause() {
+        LocalBroadcastManager.getInstance(getApplicationContext()).unregisterReceiver(mRegistrationBroadcastReceiver);
+        super.onPause();
+        String current_status = "LOGOUT";
+
+
+    }
 
 
     private void getFevorites()
@@ -506,8 +501,8 @@ public class messageFragment extends Fragment {
                                     if(dataobj.length()==0){
                                         //add place holder here
 
-                                        janjalisttwo.add("No new messages");
-                                        janjalistthree.add("Start chatting to create new messages");
+                                        janjalisttwo.add("Start chatting to see more");
+                                        janjalistthree.add("No Message");
                                         timelist.add("Time not updated");
                                         socialidlist.add("No_Val");
                                         senderidlist.add("No_val");
@@ -516,8 +511,7 @@ public class messageFragment extends Fragment {
 
 
                                         //end of add placeholder here
-                                    }
-                                    else{
+                                    }else{
                                         //no need to add place holder
                                         templateArraystwo.clear();
 
@@ -627,9 +621,9 @@ public class messageFragment extends Fragment {
                                 else
                                 {
 
-                                    /*janjalisttwo.add("No new messages");
-                                    janjalistthree.add("Start chatting to create messages");
-                                    timelist.add("Time not updated");
+                                    /*janjalisttwo.add("Add new product");
+                                    janjalistthree.add("Tap to add");
+                                    timelist.add("Time not added");
                                     socialidlist.add("No_Val");
                                     senderidlist.add("No_val");
                                     productImagelist.add(imagetobase64(R.drawable.profileplaceholder));
@@ -638,7 +632,7 @@ public class messageFragment extends Fragment {
                                     templateArraystwo.clear();
                                     for(Integer i=0; i<janjalisttwo.size(); i++)
                                     {
-                                        sabaEventItem item=new sabaEventItem();
+                                        WayaWayaItem item=new WayaWayaItem();
                                         item.setBusinessname(janjalisttwo.get(i));
                                         item.setProductprice(janjalistthree.get(i));
                                         item.setStatus(senderidlist.get(i));
@@ -744,6 +738,7 @@ public class messageFragment extends Fragment {
     {
         progressBar.smoothToHide();
     }
+
 
 
 

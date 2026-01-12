@@ -2,9 +2,11 @@ package com.sabapp.saba;
 
 import static com.gun0912.tedpermission.provider.TedPermissionProvider.context;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,6 +34,7 @@ import com.sabapp.saba.adapters.vendorproposalsRecyclerAdapter;
 import com.sabapp.saba.application.sabaapp;
 import com.sabapp.saba.data.model.sabaEventItem;
 import com.sabapp.saba.events.createevent;
+import com.sabapp.saba.messaging.messagestartactivity;
 import com.sabapp.saba.vendors.addcatalogue;
 import com.wang.avi.AVLoadingIndicatorView;
 
@@ -62,6 +65,8 @@ public class vendorFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    Context context;
 
     public vendorFragment() {
         // Required empty public constructor
@@ -180,6 +185,12 @@ public class vendorFragment extends Fragment {
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.context = context; // now you can safely use it
     }
 
     public void showProgressBar()
@@ -386,6 +397,12 @@ public class vendorFragment extends Fragment {
             // Action when layout is clicked
             // For example, open a new fragment or show a toast
             Toast.makeText(getContext(), "Messages link clicked", Toast.LENGTH_SHORT).show();
+
+            Toast.makeText(getContext(), "Messages link clicked", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getActivity(), messagestartactivity.class);
+            intent.putExtra("createadrad", "gotowhatsappbotmaker");
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            getActivity().startActivity(intent);
 
 
         });

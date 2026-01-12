@@ -167,29 +167,6 @@ public class vendorproposalsRecyclerAdapter extends RecyclerView.Adapter<vendorp
                 }
                 else{
                     // redirect to payment popup
-                    /*app.setProductselectedprice(sabaItem.getProductprice());
-                    app.setProductselectedname(productname);
-                    app.setProductimgbyte(context, sabaItem.getBytes());
-
-                    AppCompatActivity activity = (AppCompatActivity) context;
-                    requestpaymentprefilled bottomSheetFragment = new requestpaymentprefilled();
-                    bottomSheetFragment.show((activity).getSupportFragmentManager(), bottomSheetFragment.getTag());
-                    */
-                    //End of redirect to payment popup
-
-                    //    String event_idAssignedProposal;
-                    //    String vendor_idAssignedProposal;
-                    //    String capability_idAssignedProposal;
-                    //    String statusAssignedProposal;
-                    //    String agreed_priceAssignedProposal;
-                    //    JSONObject contract_termsAssignedProposal;
-                    //    String assigned_byAssignedProposal;
-                    //    String time_assignedAssignedProposal;
-                    //    String event_nameAssignedProposal;
-                    //
-                    //    String event_imagelocationAssignedProposal;
-                    //
-                    //    String event_locationProposal,event_cityProposal,event_stateProposal,postal_codeProposal,event_countryProposal,longitudeProposal,latitudeProposal,deposit_percentageProposal,deposit_balanceProposal_percentage,eventcapability_nameProposal,event_vibeProposal,event_typeProposal,event_vendor_nameProposal,event_vendor_base_priceProposal,event_allocated_timeProposal
 
 
                     Intent intent2 = new Intent(pulse.requireActivity(), eventvendoroverview.class);

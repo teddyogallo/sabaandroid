@@ -1,0 +1,671 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+    <LinearLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:padding="10dp"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_height="60dp">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.6dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                android:background="@color/grey_active"
+                android:visibility="visible">
+
+            </View>
+
+            <ImageView
+                android:id="@+id/imagefront"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:backgroundTint="@color/darkblue"
+                android:src="@drawable/storefront"
+                app:tint="@color/darkblue">
+
+            </ImageView>
+
+            <RelativeLayout
+                android:id="@+id/storefrontcont"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@+id/imagefront">
+
+                <TextView
+                    android:id="@+id/bizdescplac"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="10dp"
+
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="Business Description"
+                    android:textSize="12dp"
+                    android:textStyle="bold"
+                    android:visibility="gone">
+
+                </TextView>
+
+
+                <TextView
+                    android:id="@+id/businessdescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:ellipsize="end"
+
+
+                    android:text="Selling Vegetables"
+                    android:textColor="@color/grey"
+                    android:textStyle="bold">
+
+                </TextView>
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+
+
+
+
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_height="60dp">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.6dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                android:background="@color/grey_active"
+                android:visibility="visible">
+
+            </View>
+
+            <ImageView
+                android:id="@+id/industryname"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:backgroundTint="@color/darkblue"
+                android:src="@drawable/workspaces_outline"
+                app:tint="@color/darkblue">
+
+            </ImageView>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@+id/industryname">
+
+                <TextView
+                    android:id="@+id/statedesc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="10dp"
+
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="State"
+                    android:textSize="12dp"
+                    android:textStyle="bold"
+                    android:visibility="gone">
+
+                </TextView>
+
+
+                <TextView
+                    android:id="@+id/state"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_below="@+id/statedesc"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginBottom="10dp"
+
+
+                    android:text="Edo"
+                    android:textColor="@color/grey"
+                    android:textStyle="bold">
+
+                </TextView>
+            </RelativeLayout>
+        </RelativeLayout>
+
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:visibility="visible"
+            android:layout_height="30dp">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <TextView
+                    style="@style/FontMedium"
+                    android:layout_width="120dp"
+                    android:layout_height="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="Shared Number"
+
+
+                    android:textColor="@color/orangeDefualt"
+                    android:textSize="15dp">
+
+                </TextView>
+            </RelativeLayout>
+        </RelativeLayout>
+        <View
+            android:layout_width="120dp"
+            android:layout_height="1dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginBottom="20dp"
+            android:background="@color/yellow">
+
+        </View>
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:visibility="visible"
+            android:layout_height="30dp">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <TextView
+                    style="@style/FontMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="Use Shared Number"
+
+
+                    android:textColor="@color/black"
+                    android:textSize="15dp">
+
+                </TextView>
+            </RelativeLayout>
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:visibility="visible"
+            android:layout_marginTop="10dp"
+            android:layout_height="30dp">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <TextView
+                    android:id="@+id/businesstitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginBottom="10dp"
+
+
+                    android:text="Lorem ipsum description text goes here."
+                    android:textColor="@color/black">
+
+                </TextView>
+            </RelativeLayout>
+        </RelativeLayout>
+
+
+
+
+
+
+        <RelativeLayout
+            android:id="@+id/addbusinessaddress"
+            android:layout_width="match_parent"
+            android:visibility="visible"
+            android:layout_marginTop="10dp"
+            android:layout_height="60dp">
+
+
+            <ImageView
+                android:id="@+id/placename"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:src="@drawable/tick">
+
+            </ImageView>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@+id/placename">
+
+
+                <TextView
+                    android:id="@+id/businessaddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginBottom="10dp"
+
+
+                    android:text="Automate your service on WhatsApp"
+                    android:textColor="@color/black">
+
+                </TextView>
+            </RelativeLayout>
+        </RelativeLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <RelativeLayout
+            android:id="@+id/addopeninghours"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+
+            android:visibility="gone">
+
+
+            <ImageView
+                android:id="@+id/clockwise"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:backgroundTint="@color/darkblue"
+                android:src="@drawable/access_time"
+                app:tint="@color/darkblue">
+
+            </ImageView>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@+id/clockwise">
+
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginBottom="10dp"
+
+
+                    android:text="Add Opening Hours"
+                    android:textColor="@color/grey"
+                    android:textStyle="bold">
+
+                </TextView>
+            </RelativeLayout>
+        </RelativeLayout>
+
+
+
+
+
+
+
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp">
+
+
+            <ImageView
+                android:id="@+id/calling"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:src="@drawable/tick">
+
+            </ImageView>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@+id/calling">
+
+
+                <TextView
+                    android:id="@+id/phoneNum"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginBottom="10dp"
+
+
+                    android:text="Ask customers to save WhatsApp number +254797318700"
+                    android:textColor="@color/black">
+
+                </TextView>
+            </RelativeLayout>
+        </RelativeLayout>
+
+
+
+
+
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp">
+
+
+            <ImageView
+                android:id="@+id/mailoutline"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:src="@drawable/tick">
+
+            </ImageView>
+            <RelativeLayout
+                android:layout_toRightOf="@+id/mailoutline"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <TextView
+                    android:id="@+id/email"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginBottom="10dp"
+
+
+                    android:text="Get customers started by having them send “message Mchana Coffee Shop”"
+                    android:textColor="@color/black">
+
+                </TextView>
+            </RelativeLayout>
+        </RelativeLayout>
+
+
+
+
+
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp">
+
+
+            <ImageView
+                android:id="@+id/worldoutline"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:src="@drawable/tick">
+
+            </ImageView>
+            <RelativeLayout
+                android:layout_toRightOf="@+id/worldoutline"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <TextView
+                    android:id="@+id/engaugesite"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginBottom="10dp"
+
+
+                    android:text="Upload products to receive payments"
+                    android:textColor="@color/black">
+
+                </TextView>
+            </RelativeLayout>
+        </RelativeLayout>
+
+
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp">
+
+
+            <ImageView
+                android:id="@+id/businessdescriptiona"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:src="@drawable/tick">
+
+            </ImageView>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@+id/businessdescriptiona"
+                android:gravity="center_vertical">
+
+
+                <TextView
+                    android:id="@+id/realbusinessdesc"
+
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="end"
+                    android:lines="2"
+
+
+                    android:text="Answer questions from your customers right on WhatsApp"
+                    android:textColor="@color/black">
+
+                </TextView>
+            </RelativeLayout>
+        </RelativeLayout>
+
+
+
+
+
+
+
+
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/requestpaymentbutton"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+
+
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="5dp"
+            android:inputType="textCapCharacters"
+            android:text="Start request"
+
+
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="13dp"
+
+            app:backgroundTint="@color/orangeDefualt"
+
+            app:cornerRadius="100dp">
+
+        </com.google.android.material.button.MaterialButton>
+
+
+    </LinearLayout>
+
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabs"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="20dp"
+
+
+        app:tabIconTint="@drawable/tabicomini"
+        app:tabIndicatorColor="@color/orangeDefualt"
+
+        app:tabIndicatorFullWidth="false"
+        app:tabIndicatorGravity="bottom"
+
+        app:tabIndicatorHeight="2dp"
+
+        app:tabPaddingBottom="11dp"
+
+        app:tabRippleColor="@color/transpar"
+
+        app:tabSelectedTextColor="@color/orangeDefualt"
+        app:tabTextAppearance="@style/MineCustomTabTextTwo"
+
+        app:tabTextColor="@drawable/tabstatenormal"
+
+
+        >
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabItemo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Share Catalogue"
+            app:tabIconTint="@drawable/tabico"
+
+
+            />
+
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabItem2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Payment request" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabItem3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Support Update" />
+
+
+    </com.google.android.material.tabs.TabLayout>
+
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tabs"
+        android:layout_centerInParent="true" />
+
+
+
+
+
+
+
+</RelativeLayout>

@@ -1,5 +1,6 @@
 package com.sabapp.saba;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,15 @@ import com.sabapp.saba.databinding.FragmentFirstBinding;
 public class FirstFragment extends Fragment {
 
     private FragmentFirstBinding binding;
+
+    Context context;
+
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.context = context; // now you can safely use it
+    }
 
     @Override
     public View onCreateView(

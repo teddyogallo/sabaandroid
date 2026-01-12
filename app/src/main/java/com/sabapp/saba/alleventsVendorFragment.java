@@ -2,8 +2,10 @@ package com.sabapp.saba;
 
 import static com.gun0912.tedpermission.provider.TedPermissionProvider.context;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -115,6 +117,8 @@ public class alleventsVendorFragment extends Fragment {
 
     JSONArray dataobj;
 
+    Context context;
+
     int loggedinnumberGlobal =0;
 
     public alleventsVendorFragment() {
@@ -137,6 +141,12 @@ public class alleventsVendorFragment extends Fragment {
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.context = context; // now you can safely use it
     }
 
     public void showProgressBar()

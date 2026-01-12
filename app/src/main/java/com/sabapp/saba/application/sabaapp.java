@@ -158,6 +158,102 @@ public class sabaapp extends Application {
     {
         return sharedPrefsXtreme.getData("createadimg");}
 
+    public int getChatNumber()
+    {
+        return sharedPrefsXtreme.getIntData("chat_notifications_num");
+
+    }
+
+    public int getPaymentNumber()
+    {
+        return sharedPrefsXtreme.getIntData("payment_notifications_num");
+
+    }
+
+
+    public int getLoginNumber()
+    {
+        return sharedPrefsXtreme.getIntData("login_number_times");
+
+    }
+
+
+
+    public int getOrderNumber()
+    {
+        return sharedPrefsXtreme.getIntData("order_notifications_num");
+
+    }
+
+    public int getGeneralNotificationsNumber()
+    {
+        return sharedPrefsXtreme.getIntData("general_notifications_num");
+
+    }
+
+    public String getSetMenulevel()
+    {
+        return sharedPrefsXtreme.getData("set_menulevel");
+
+    }
+
+    public String getCurrentNotificationtitle()
+    {
+        return sharedPrefsXtreme.getData("current_notificationtitle");
+
+    }
+
+    public String getCurrentNotificationmessage()
+    {
+        return sharedPrefsXtreme.getData("current_notification_message");
+
+    }
+
+    public String getCurrentNotificationtype()
+    {
+        return sharedPrefsXtreme.getData("current_notification_type");
+
+    }
+
+    public String getCurrentNotificationid()
+    {
+        return sharedPrefsXtreme.getData("current_notification_id");
+
+    }
+
+    public String getCurrentNotificationname()
+    {
+        return sharedPrefsXtreme.getData("current_notification_name");
+
+    }
+
+    public String getSetmenuActionid()
+    {
+        return sharedPrefsXtreme.getData("set_menuactionid");
+
+    }
+
+    public String getActiveChatuser()
+    {
+        return sharedPrefsXtreme.getData("activechatuser");
+
+    }
+
+
+    public String getActiveChatfullname()
+    {
+        return sharedPrefsXtreme.getData("activechatname");
+
+    }
+
+    public String getRecipientid()
+    {
+        return sharedPrefsXtreme.getData("recipient_id");
+
+    }
+
+
+
     @Override
     public void onCreate() {
         super.onCreate();

@@ -4,7 +4,9 @@
     android:layout_height="match_parent"
     tools:context=".homeclientFragment"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#FFFFFF">
+    android:background="#FFFFFF"
+    android:id="@+id/fragment_container"
+    >
 
     <ScrollView
         android:id="@+id/rwkt7uatih28"
@@ -74,6 +76,22 @@
                     android:text="Recent Transactions"
                     />
             </LinearLayout>
+            <com.wang.avi.AVLoadingIndicatorView
+                android:id="@+id/progressBar"
+
+                style="@style/AVLoadingIndicatorView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:visibility="gone"
+                app:indicatorColor="@color/yellow"
+                app:indicatorName="BallTrianglePathIndicator"
+                app:layout_constraintBottom_toTopOf="@id/text_gchat_indicator"
+                app:layout_constraintEnd_toEndOf="parent"
+
+                app:layout_constraintStart_toStartOf="parent" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recentactivitiesrecycler"
