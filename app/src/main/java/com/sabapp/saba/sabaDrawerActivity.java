@@ -33,7 +33,7 @@ public class sabaDrawerActivity extends AppCompatActivity {
 
         setCurrentFragment(firstFragment);
 
-        MaterialToolbar toolbar = findViewById(R.id.main_toolbar);
+        /*MaterialToolbar toolbar = findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false); // hide default title
 
@@ -49,7 +49,34 @@ public class sabaDrawerActivity extends AppCompatActivity {
 
         notificationIcon.setOnClickListener(v -> {
             Toast.makeText(this, "Notification clicked", Toast.LENGTH_SHORT).show();
+        });*/
+
+
+        MaterialToolbar toolbar = findViewById(R.id.main_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false); // hide default title
+
+// Set toolbar background
+        toolbar.setBackgroundColor(getResources().getColor(R.color.bg_primary));
+
+// Inflate custom layout into toolbar
+        View customToolbar = LayoutInflater.from(this).inflate(R.layout.customtopactionbarmaterial, toolbar, false);
+        toolbar.addView(customToolbar);
+
+// Find icons
+        ImageView userIcon = customToolbar.findViewById(R.id.user_icon);
+        ImageView notificationIcon = customToolbar.findViewById(R.id.notification_icon);
+
+// Click listeners
+        userIcon.setOnClickListener(v -> {
+            Toast.makeText(this, "User clicked", Toast.LENGTH_SHORT).show();
         });
+
+        notificationIcon.setOnClickListener(v -> {
+            Toast.makeText(this, "Notification clicked", Toast.LENGTH_SHORT).show();
+        });
+
+
 
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="0dp"
+    android:layout_height="@dimen/metric_card_height"
+    android:layout_weight="1"
+    android:orientation="vertical"
+    android:padding="@dimen/padding_m"
+    android:background="@drawable/bg_metric_card"
+    android:layout_margin="@dimen/spacing_s"
+    android:elevation="@dimen/elevation_card">
+
+    <!-- Icon -->
+    <ImageView
+        android:id="@+id/metric_icon"
+        android:layout_width="@dimen/icon_l"
+        android:layout_height="@dimen/icon_l"
+        android:src="@drawable/ic_placeholder"
+        android:contentDescription="@string/metric_icon"
+        android:tint="@color/primary_pink"
+        android:layout_marginBottom="@dimen/spacing_m" />
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/metric_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/metric_title"
+        android:textSize="@dimen/text_body"
+        android:textColor="@color/text_primary"
+        android:textStyle="bold"
+        android:layout_marginBottom="@dimen/spacing_xs" />
+
+    <!-- Main Value -->
+    <TextView
+        android:id="@+id/metric_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/metric_value"
+        android:textSize="@dimen/text_headline_large"
+        android:textColor="@color/primary_pink"
+        android:textStyle="bold"
+        android:layout_marginBottom="@dimen/spacing_m" />
+
+    <!-- Spacer -->
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <!-- Status Label -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/metric_status_icon"
+            android:layout_width="@dimen/icon_s"
+            android:layout_height="@dimen/icon_s"
+            android:src="@drawable/ic_check"
+            android:contentDescription="@string/status_icon"
+            android:tint="@color/success_green"
+            android:layout_marginEnd="@dimen/spacing_xs" />
+
+        <TextView
+            android:id="@+id/metric_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/metric_status"
+            android:textSize="@dimen/text_caption"
+            android:textColor="@color/text_secondary" />
+
+    </LinearLayout>
+
+</LinearLayout>

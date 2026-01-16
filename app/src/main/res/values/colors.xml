@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="brandcolorpurple">#AD0075</color>
+    <color name="whitesurfacecard">#F8F8F8</color>
+    <color name="whitedivider">#E6E6E6</color>
+    <color name="buttoncream">#fbe2db</color>
+    <color name="verylightpink">#f8e7f1</color>
+    <color name="blackprimarytext">#111111</color>
+    <color name="greysecondary">#6B6B6B</color>
+    <color name="splashpurple">#AD0075</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="cardgreen">#afbc40</color>
+    <color name="deepredsaba">#bb0a64</color>
     <color name="greenthemelight">#D7F40A</color>
     <color name="greenthemedark">#A7BE2E</color>
     <color name="purplelight">#FB0160</color>
@@ -72,4 +82,43 @@
     <color name="yellown">#276BF6</color>
     <color name="yellowtrans">#99276BF6</color>
 
-</resources>
+
+        <!-- Primary Brand Colors -->
+        <color name="primary_pink">#E0178C</color>
+        <color name="primary_pink_light">#F5E6F0</color>
+        <color name="primary_pink_dark">#C01578</color>
+
+        <!-- Success & Status Colors -->
+        <color name="success_green">#6BA82A</color>
+        <color name="success_green_light">#E8F0D6</color>
+
+        <!-- Warning & Alert Colors -->
+        <color name="warning_orange">#F5A623</color>
+        <color name="warning_orange_light">#FFF0E6</color>
+
+        <!-- Status Colors -->
+        <color name="status_low_risk">#F5A623</color>
+        <color name="status_on_track">#6BA82A</color>
+
+        <!-- Neutral Colors -->
+
+        <color name="white_95">#F2F2F2</color>
+        <color name="white_90">#E8E8E8</color>
+        <color name="gray_light">#F5F5F5</color>
+        <color name="gray_medium">#CCCCCC</color>
+        <color name="gray_dark">#666666</color>
+
+        <!-- Text Colors -->
+        <color name="text_primary">#2C2C2C</color>
+        <color name="text_secondary">#6B6B6B</color>
+        <color name="text_tertiary">#999999</color>
+        <color name="text_light">#FFFFFF</color>
+
+        <!-- Background Colors -->
+        <color name="bg_primary">#FCF0F7</color>
+        <color name="bg_secondary">#FFFFFF</color>
+
+        <!-- Chart & Visual Colors -->
+        <color name="chart_purple">#7B68EE</color>
+        <color name="chart_yellow">#FFD700</color>
+    </resources>

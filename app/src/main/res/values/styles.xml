@@ -4,11 +4,10 @@
         <item name="cornerSize">10dp</item>
     </style>
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <item name="colorPrimary">@color/greenthemedark</item>
-        <item name="colorPrimaryDark">@color/greenthemelight</item>
-        <item name="colorAccent">@color/purplethemedark</item>
+        <item name="colorPrimaryVariant">@color/greenthemelight</item>
+        <item name="colorSecondary">@color/purplethemedark</item>
     </style>
 
     <style name="ToolbarTheme" parent="@style/ThemeOverlay.AppCompat.ActionBar">
@@ -42,4 +41,44 @@
         <item name="fontFamily">@font/roboto_regular</item>
         <item name="android:textStyle">normal</item>
     </style>
+
+    <style name="TopRoundedCard">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopLeft">10dp</item>
+        <item name="cornerSizeTopRight">10dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+    </style>
+
+
+
+    <style name="Theme.Saba.EventDashboard" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Keep action bar off -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+
+        <!-- Disable Material button tinting -->
+        <item name="materialButtonStyle">@style/Widget.AppCompat.Button.Borderless</item>
+        <item name="android:backgroundTint">@null</item>
+        <item name="backgroundTint">@null</item>
+
+        <!-- Force text colors to respect XML -->
+        <item name="android:textColorPrimary">@null</item>
+        <item name="android:textColorSecondary">@null</item>
+
+        <!-- Disable ripple/state elevation interference -->
+        <item name="android:stateListAnimator">@null</item>
+
+        <!-- Optional: keep buttons looking “flat” like your design -->
+        <item name="buttonStyle">@style/Widget.AppCompat.Button</item>
+    </style>
+
+    <!-- res/values/styles.xml -->
+    <style name="BottomNavLabel" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+
 </resources>

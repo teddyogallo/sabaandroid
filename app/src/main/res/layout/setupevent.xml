@@ -21,6 +21,7 @@
                 android:id="@+id/ruggey7fj0bk"
                 android:layout_width="match_parent"
                 android:layout_height="843dp"
+                android:paddingTop="15dp"
                 android:background="#FFFFFF"
                 android:orientation="vertical">
 

@@ -31,11 +31,24 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
-        android:layout_height="75dp"
+        android:layout_height="80dp"
+
+        android:background="@color/bg_primary"
+        app:itemIconTint="@color/primary_pink"
+        app:itemTextColor="@color/primary_pink"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottomnavclient"/>
+        app:menu="@menu/bottomnavclient"
+
+        app:itemIconSize="32dp"
+        app:itemIconPadding="6dp"
+        app:itemTextAppearanceActive="@style/BottomNavLabel"
+        app:itemTextAppearanceInactive="@style/BottomNavLabel"
+
+       />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -96,7 +96,7 @@ public class onboardone extends AppCompatActivity {
                         }else {
 
 
-                            Intent intent =  new Intent(getApplicationContext(), login.class);
+                            Intent intent =  new Intent(getApplicationContext(), loginoptionchoose.class);
                             startActivity(intent);
 
 

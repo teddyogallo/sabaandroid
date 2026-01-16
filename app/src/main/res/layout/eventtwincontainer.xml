@@ -1,0 +1,544 @@
+<!-- In your activity_main.xml -->
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/container_event_twin"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:background="@color/bg_primary">
+
+    <!-- Event Twin UI -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    <!-- Wedding & Reception Title with On Track Badge -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/padding_m"
+        android:paddingEnd="@dimen/padding_m"
+        android:paddingTop="@dimen/padding_m"
+        android:paddingBottom="@dimen/spacing_m">
+
+        <TextView
+            android:id="@+id/eventnamelabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/wedding_reception"
+            android:textSize="@dimen/text_headline_large"
+            android:textColor="@color/text_primary"
+            android:textStyle="bold" />
+
+        <include layout="@layout/component_status_badge" />
+
+    </LinearLayout>
+
+    <!-- Countdown Card -->
+    <include layout="@layout/component_countdown_card" />
+
+    <!-- Metric Cards Row -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <!-- Timeline Health Card -->
+        <LinearLayout
+            android:id="@+id/timelinehealthlayoutcard"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/metric_card_height"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:padding="@dimen/padding_m"
+            android:background="@drawable/bg_metric_card"
+            android:layout_margin="@dimen/spacing_s"
+            android:elevation="@dimen/elevation_card">
+
+            <ImageView
+                android:layout_width="@dimen/icon_l"
+                android:layout_height="@dimen/icon_l"
+                android:src="@drawable/ic_clock"
+                android:contentDescription="@string/timeline_icon"
+                android:tint="@color/chart_yellow"
+                android:layout_marginBottom="@dimen/spacing_m" />
+
+            <TextView
+                android:id="@+id/timelinehealthlabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/timeline_health"
+                android:textSize="@dimen/text_body"
+                android:textColor="@color/text_primary"
+                android:textStyle="bold"
+                android:layout_marginBottom="@dimen/spacing_m" />
+
+            <LinearLayout
+                android:id="@+id/timelinehealthvaluelayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:background="@drawable/bg_status_badge_on_track"
+                android:paddingStart="@dimen/padding_s"
+                android:paddingEnd="@dimen/padding_s"
+                android:paddingTop="@dimen/padding_xs"
+                android:paddingBottom="@dimen/padding_xs"
+                android:layout_marginBottom="@dimen/spacing_m">
+
+                <TextView
+                    android:id="@+id/timelinehealthtext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0%"
+                    android:textSize="@dimen/text_body"
+                    android:textColor="@color/text_light"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/icon_s"
+                    android:layout_height="@dimen/icon_s"
+                    android:src="@drawable/ic_check"
+                    android:contentDescription="@string/check_icon"
+                    android:tint="@color/success_green"
+                    android:layout_marginEnd="@dimen/spacing_xs" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/on_schedule"
+                    android:textSize="@dimen/text_caption"
+                    android:textColor="@color/text_secondary" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Vendor Readiness Card -->
+        <LinearLayout
+            android:id="@+id/vendorreadinesscardlayout"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/metric_card_height"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:padding="@dimen/padding_m"
+            android:background="@drawable/bg_metric_card"
+            android:layout_margin="@dimen/spacing_s"
+            android:elevation="@dimen/elevation_card">
+
+            <ImageView
+                android:layout_width="@dimen/icon_l"
+                android:layout_height="@dimen/icon_l"
+                android:src="@drawable/ic_vendor"
+                android:contentDescription="@string/vendor_icon"
+                android:tint="@color/warning_orange"
+                android:layout_marginBottom="@dimen/spacing_m" />
+
+            <TextView
+                android:id="@+id/vendorreadinesscardlabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/vendor_readiness"
+                android:textSize="@dimen/text_body"
+                android:textColor="@color/text_primary"
+                android:textStyle="bold"
+                android:layout_marginBottom="@dimen/spacing_s" />
+
+            <TextView
+                android:id="@+id/vendorreadinesscardvalue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0 out of 0"
+                android:textSize="@dimen/text_headline"
+                android:textColor="@color/primary_pink"
+                android:textStyle="bold"
+                android:layout_marginBottom="@dimen/spacing_m" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:background="@drawable/bg_status_badge_low_risk"
+                android:paddingStart="@dimen/padding_s"
+                android:paddingEnd="@dimen/padding_s"
+                android:paddingTop="@dimen/padding_xs"
+                android:paddingBottom="@dimen/padding_xs"
+                android:layout_marginBottom="@dimen/spacing_m">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/low_risk"
+                    android:textSize="@dimen/text_caption"
+                    android:textColor="@color/text_light"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+        <!-- Budget Health Card -->
+        <LinearLayout
+            android:id="@+id/budgethealthcardlayout"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/metric_card_height"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:padding="@dimen/padding_m"
+            android:background="@drawable/bg_metric_card"
+            android:layout_margin="@dimen/spacing_s"
+            android:elevation="@dimen/elevation_card">
+
+            <ImageView
+                android:layout_width="@dimen/icon_l"
+                android:layout_height="@dimen/icon_l"
+                android:src="@drawable/ic_budget"
+                android:contentDescription="@string/budget_icon"
+                android:tint="@color/chart_purple"
+                android:layout_marginBottom="@dimen/spacing_m" />
+
+            <TextView
+                android:id="@+id/budgethealthtextlabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/budget_health"
+                android:textSize="@dimen/text_body"
+                android:textColor="@color/text_primary"
+                android:textStyle="bold"
+                android:layout_marginBottom="@dimen/spacing_s" />
+
+            <TextView
+                android:id="@+id/budgethealthtextvalue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0% Budget Used"
+                android:textSize="@dimen/text_headline"
+                android:textColor="@color/primary_pink"
+                android:textStyle="bold"
+                android:layout_marginBottom="@dimen/spacing_m" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:background="@drawable/bg_status_badge_on_track"
+                android:paddingStart="@dimen/padding_s"
+                android:paddingEnd="@dimen/padding_s"
+                android:paddingTop="@dimen/padding_xs"
+                android:paddingBottom="@dimen/padding_xs">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/within_budget"
+                    android:textSize="@dimen/text_caption"
+                    android:textColor="@color/text_light"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Action Feed Tab Navigation -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/padding_m"
+        android:paddingEnd="@dimen/padding_m"
+        android:paddingTop="@dimen/padding_m"
+        android:paddingBottom="@dimen/spacing_m"
+        android:background="@color/bg_primary">
+
+        <Button
+            android:id="@+id/tab_action_feed"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/button_height_small"
+            android:text="@string/action_feed"
+            android:textColor="@color/text_light"
+            android:background="@drawable/bg_pill_button_primary"
+            android:paddingStart="@dimen/padding_m"
+            android:paddingEnd="@dimen/padding_m"
+            android:textSize="@dimen/text_body"
+            android:textStyle="bold"
+            android:layout_marginEnd="@dimen/spacing_m" />
+
+        <Button
+            android:id="@+id/tab_alerts"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/button_height_small"
+            android:text="@string/alerts"
+            android:textColor="@color/text_primary"
+            android:background="@android:color/transparent"
+            android:paddingStart="@dimen/padding_m"
+            android:paddingEnd="@dimen/padding_m"
+            android:textSize="@dimen/text_body"
+            android:layout_marginEnd="@dimen/spacing_m" />
+
+        <Button
+            android:id="@+id/tab_suggestions"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/button_height_small"
+            android:text="@string/suggestions"
+            android:textColor="@color/text_primary"
+            android:background="@android:color/transparent"
+            android:paddingStart="@dimen/padding_m"
+            android:paddingEnd="@dimen/padding_m"
+            android:textSize="@dimen/text_body"
+            android:layout_marginEnd="@dimen/spacing_m" />
+
+        <Button
+            android:id="@+id/tab_drafts"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/button_height_small"
+            android:text="@string/drafts"
+            android:textColor="@color/text_primary"
+            android:background="@android:color/transparent"
+            android:paddingStart="@dimen/padding_m"
+            android:paddingEnd="@dimen/padding_m"
+            android:textSize="@dimen/text_body" />
+
+    </LinearLayout>
+
+    <!-- Action Feed Items -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/padding_m"
+        android:paddingEnd="@dimen/padding_m">
+
+        <!-- Item 1: Timeline Adjustment -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/padding_m"
+            android:background="@drawable/bg_metric_card"
+            android:layout_margin="@dimen/spacing_m"
+            android:elevation="@dimen/elevation_card">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="@dimen/spacing_m">
+
+                <ImageView
+                    android:layout_width="@dimen/icon_m"
+                    android:layout_height="@dimen/icon_m"
+                    android:src="@drawable/ic_warning"
+                    android:contentDescription="@string/warning_icon"
+                    android:tint="@color/warning_orange"
+                    android:layout_marginEnd="@dimen/spacing_m" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/recommended_timeline"
+                    android:textSize="@dimen/text_headline"
+                    android:textColor="@color/text_primary"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="@dimen/icon_s"
+                    android:layout_height="@dimen/icon_s"
+                    android:src="@drawable/ic_arrow_right"
+                    android:contentDescription="@string/expand"
+                    android:tint="@color/text_tertiary" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/timeline_description"
+                android:textSize="@dimen/text_body"
+                android:textColor="@color/text_secondary"
+                android:layout_marginBottom="@dimen/spacing_m" />
+
+            <Button
+                android:id="@+id/btn_fix_now"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/button_height_medium"
+                android:text="@string/fix_now"
+                android:textColor="@color/text_light"
+                android:background="@drawable/bg_pill_button_primary"
+                android:textSize="@dimen/text_body_large"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <!-- Item 2: Draft Quote -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/padding_m"
+            android:background="@color/white_95"
+            android:layout_marginStart="@dimen/spacing_m"
+            android:layout_marginEnd="@dimen/spacing_m"
+            android:layout_marginBottom="@dimen/spacing_m">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/draft"
+                android:textSize="@dimen/text_caption"
+                android:textColor="@color/text_tertiary"
+                android:layout_marginBottom="@dimen/spacing_s" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="@dimen/spacing_m">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/draft_message"
+                    android:textSize="@dimen/text_body"
+                    android:textColor="@color/text_primary" />
+
+                <ImageView
+                    android:layout_width="@dimen/icon_s"
+                    android:layout_height="@dimen/icon_s"
+                    android:src="@drawable/ic_arrow_right"
+                    android:contentDescription="@string/expand"
+                    android:tint="@color/text_tertiary" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_message_vendor"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/button_height_medium"
+                android:text="@string/message_vendor"
+                android:textColor="@color/text_light"
+                android:background="@drawable/bg_pill_button_secondary"
+                android:textSize="@dimen/text_body_large"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <!-- Item 3: DJ Rush Mode -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/padding_m"
+            android:background="@drawable/bg_metric_card"
+            android:layout_margin="@dimen/spacing_m"
+            android:elevation="@dimen/elevation_card">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="@dimen/spacing_m">
+
+                <ImageView
+                    android:layout_width="@dimen/icon_m"
+                    android:layout_height="@dimen/icon_m"
+                    android:src="@drawable/ic_lightning"
+                    android:contentDescription="@string/lightning_icon"
+                    android:tint="@color/warning_orange"
+                    android:layout_marginEnd="@dimen/spacing_m" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/speed_up_dj"
+                    android:textSize="@dimen/text_headline"
+                    android:textColor="@color/text_primary"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="@dimen/icon_s"
+                    android:layout_height="@dimen/icon_s"
+                    android:src="@drawable/ic_arrow_right"
+                    android:contentDescription="@string/expand"
+                    android:tint="@color/text_tertiary" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/rush_description"
+                android:textSize="@dimen/text_body"
+                android:textColor="@color/text_secondary"
+                android:layout_marginBottom="@dimen/spacing_m" />
+
+            <Button
+                android:id="@+id/btn_activate_rush"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/button_height_medium"
+                android:text="@string/activate_rush"
+                android:textColor="@color/text_light"
+                android:background="@drawable/bg_pill_button_primary"
+                android:textSize="@dimen/text_body_large"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- View All Button -->
+    <Button
+        android:id="@+id/btn_view_all"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height_large"
+        android:text="@string/view_all"
+        android:textColor="@color/text_light"
+        android:background="@drawable/bg_pill_button_primary"
+        android:textSize="@dimen/text_headline"
+        android:textStyle="bold"
+        android:layout_margin="@dimen/padding_m" />
+
+    <!-- Bottom Spacing -->
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/padding_m" />
+
+
+    </LinearLayout>
+
+</FrameLayout>

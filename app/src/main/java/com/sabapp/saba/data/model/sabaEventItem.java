@@ -101,6 +101,10 @@ public class sabaEventItem {
 
     String message,chatusertype,sentmessage,sentmessagetime,sentmessagedate,sentmessagesender,sendermessagetitle, receivedmessage,receivedmessagetime,receivedmessagedate,receivedmessagesender,receivedmessagetitle,encodedbase64,image_id,price_tier;
 
+
+    //for eventtwin recommendations
+    String eventtwin_notificationtitle, eventtwin_notificationcontent, eventtwin_notificationtype,eventtwin_notificationtypevalue;
+
     public void setMessage(String message) {
         this.message=message;
     }
@@ -784,6 +788,48 @@ public class sabaEventItem {
 
 
     //end of vendor proposals
+
+
+    //start for event twin notification values
+
+    public String geteventtwin_notificationtitle () {return eventtwin_notificationtitle;}
+
+    public void seteventtwin_notificationtitle(String name) {
+        this.eventtwin_notificationtitle=name;
+
+
+    }
+
+
+    public String geteventtwin_notificationcontent () {return eventtwin_notificationcontent;}
+
+    public void seteventtwin_notificationcontent(String name) {
+        this.eventtwin_notificationcontent=name;
+
+
+    }
+
+
+    public String geteventtwin_notificationtype () {return eventtwin_notificationtype;}
+
+    public void seteventtwin_notificationtype(String name) {
+        this.eventtwin_notificationtype=name;
+
+
+    }
+
+
+
+
+    public String geteventtwin_notificationtypevalue () {return eventtwin_notificationtypevalue;}
+
+    public void seteventtwin_notificationtypevalue(String name) {
+        this.eventtwin_notificationtypevalue=name;
+
+
+    }
+
+    //end of for eventtwin notification values
 
 
 

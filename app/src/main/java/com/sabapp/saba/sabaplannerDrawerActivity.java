@@ -37,12 +37,18 @@ public class sabaplannerDrawerActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false); // hide default title
 
-        View customToolbar = LayoutInflater.from(this).inflate(R.layout.customtopactionbar, toolbar, false);
+// Set toolbar background
+        toolbar.setBackgroundColor(getResources().getColor(R.color.bg_primary));
+
+// Inflate custom layout into toolbar
+        View customToolbar = LayoutInflater.from(this).inflate(R.layout.customtopactionbarmaterial, toolbar, false);
         toolbar.addView(customToolbar);
 
+// Find icons
         ImageView userIcon = customToolbar.findViewById(R.id.user_icon);
         ImageView notificationIcon = customToolbar.findViewById(R.id.notification_icon);
 
+// Click listeners
         userIcon.setOnClickListener(v -> {
             Toast.makeText(this, "User clicked", Toast.LENGTH_SHORT).show();
         });

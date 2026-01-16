@@ -3,22 +3,22 @@
     <item
         android:title="Home"
         android:id="@+id/dashboard"
-        android:icon="@drawable/home"/>
+        android:icon="@drawable/nav_home"/>
     <item
         android:title="Events"
         android:id="@+id/events"
-        android:icon="@drawable/addeventicon"/>
+        android:icon="@drawable/nav_addeventicon"/>
     <item
         android:title=""
         android:id="@+id/requestpay"
         android:icon="@android:color/transparent"/>
     <item
         android:id="@+id/messages"
-        android:icon="@drawable/janja_icons_conversation"
+        android:icon="@drawable/nav_janja_icons_conversation"
         android:title="Messages" />
     <item
         android:title="Payments"
         android:id="@+id/businesschatbot"
-        android:icon="@drawable/ic_card"/>
+        android:icon="@drawable/nav_ic_card"/>
 
 </menu>

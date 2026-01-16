@@ -385,7 +385,7 @@ public class vendorFragment extends Fragment {
             Intent intent = new Intent(getActivity(), addcatalogue.class);
             intent.putExtra("createadrad", "gotowhatsappbotmaker");
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-            getActivity().startActivity(intent);
+            startActivity(intent);
 
 
 
@@ -402,7 +402,7 @@ public class vendorFragment extends Fragment {
             Intent intent = new Intent(getActivity(), messagestartactivity.class);
             intent.putExtra("createadrad", "gotowhatsappbotmaker");
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-            getActivity().startActivity(intent);
+            startActivity(intent);
 
 
         });

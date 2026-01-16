@@ -56,9 +56,11 @@ public class chooselogintype extends AppCompatActivity {
     String accounttype;
 
     String businessnamevalue = null;
-    LinearLayout setupupbutton, hiddenlayer;
+    LinearLayout setupupbutton, hiddenlayer, chooseaccounttypelayout;
 
     EditText addressText, cityText, stateText, postalcodeText, businessnameText, businessdescriptionText;
+
+    SharedPrefsXtreme sharedPrefsXtreme;
 
 
     public void showProgressBar()
@@ -80,7 +82,7 @@ public class chooselogintype extends AppCompatActivity {
     public void onBackPressed(){
 
         super.onBackPressed();
-        startActivity(new Intent(getApplicationContext(), chooselogintype.class));
+        startActivity(new Intent(getApplicationContext(), loginoptionchoose.class));
     }
 
     @Override
@@ -92,7 +94,7 @@ public class chooselogintype extends AppCompatActivity {
         app = (sabaapp) getApplicationContext();
 
 
-        SharedPrefsXtreme sharedPrefsXtreme = SharedPrefsXtreme.getInstance(getApplicationContext());
+        sharedPrefsXtreme = SharedPrefsXtreme.getInstance(getApplicationContext());
 
         businessnamevalue = sharedPrefsXtreme.getData("business_name");
         String businessdescription = sharedPrefsXtreme.getData("business_description");
@@ -100,11 +102,13 @@ public class chooselogintype extends AppCompatActivity {
         Log.d("BUSINESS NAME",businessnamevalue );
 
 
+
         progressindicator.setVisibility(View.GONE);
 
 
         setupupbutton = (LinearLayout) findViewById(R.id.loginaccountlayoutbutton);
         hiddenlayer = (LinearLayout) findViewById(R.id.businessoptionalfields);
+        chooseaccounttypelayout = (LinearLayout)findViewById(R.id.chooseaccounttypelayout);
 
         hiddenlayer.setVisibility(View.GONE);
 
@@ -122,6 +126,17 @@ public class chooselogintype extends AppCompatActivity {
 
 
         setuptypeList= new ArrayList<String>();
+        accounttype = app.getLoginAccounttype();
+
+
+        if(accounttype!=null && !accounttype.equalsIgnoreCase("standard") && (businessnamevalue == null || businessnamevalue.isEmpty() || businessnamevalue.equalsIgnoreCase("null"))){
+
+            hiddenlayer.setVisibility(View.VISIBLE);
+
+        }
+
+        setup_type_spinner.setVisibility(View.GONE);
+        chooseaccounttypelayout.setVisibility(View.GONE);
 
         //setup for account type
 
@@ -149,6 +164,7 @@ public class chooselogintype extends AppCompatActivity {
 
                         hiddenlayer.setVisibility(View.GONE);
                         accounttype = "standard";
+
 
                     }else {
 
@@ -191,7 +207,11 @@ public class chooselogintype extends AppCompatActivity {
         setupupbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                sharedPrefsXtreme.saveData("loginaccounttype", accounttype);
                  if(accounttype.equalsIgnoreCase("standard")){
+
+
 
                      startActivity(new Intent(getApplicationContext(),
                              sabaDrawerActivity.class));

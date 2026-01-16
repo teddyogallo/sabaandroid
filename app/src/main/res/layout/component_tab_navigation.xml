@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/bg_primary"
+    android:scrollbars="none"
+    android:paddingStart="7dp"
+    android:paddingEnd="7dp"
+    android:paddingTop="@dimen/padding_s"
+    android:paddingBottom="@dimen/padding_s">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <!-- Event Twin™ Tab (Active) -->
+        <Button
+            android:id="@+id/tab_event_twin"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/button_height_small"
+            android:text="@string/event_twin"
+            android:textColor="@color/text_light"
+            android:background="@drawable/bg_pill_button_primary"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:layout_marginEnd="6dp" />
+
+        <!-- Other Tabs (Inactive) -->
+        <Button
+            android:id="@+id/tab_mood_board"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/button_height_small"
+            android:text="@string/mood_board"
+            android:textColor="@color/text_primary"
+            android:background="@android:color/transparent"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:textSize="11sp"
+            android:layout_marginEnd="6dp" />
+
+        <Button
+            android:id="@+id/tab_vendors"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/button_height_small"
+            android:text="@string/vendors"
+            android:textColor="@color/text_primary"
+            android:background="@android:color/transparent"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:textSize="11sp"
+            android:layout_marginEnd="6dp" />
+
+        <Button
+            android:id="@+id/tab_timeline"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/button_height_small"
+            android:text="@string/timeline"
+            android:textColor="@color/text_primary"
+            android:background="@android:color/transparent"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:textSize="11sp"
+            android:layout_marginEnd="6dp" />
+
+        <Button
+            android:id="@+id/tab_budget"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/button_height_small"
+            android:text="@string/budget"
+            android:textColor="@color/text_primary"
+            android:background="@android:color/transparent"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:textSize="11sp" />
+
+    </LinearLayout>
+
+</HorizontalScrollView>

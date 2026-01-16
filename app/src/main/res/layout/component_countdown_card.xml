@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/countdown_card_height"
+    android:background="@drawable/bg_metric_card"
+    android:layout_margin="@dimen/spacing_m"
+    android:elevation="@dimen/elevation_card"
+    android:id="@+id/eventcountdownframelayout"
+    >
+
+    <!-- Background Image (placeholder) -->
+    <ImageView
+
+        android:id="@+id/eventcountdowncountdown_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/ic_countdown_bg"
+        android:contentDescription="@string/countdown_bg"
+        android:scaleType="centerCrop"
+        android:alpha="0.3" />
+
+    <!-- Overlay Gradient -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_countdown_overlay" />
+
+    <!-- Text Content -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/padding_m"
+        android:paddingEnd="@dimen/padding_m">
+
+        <TextView
+            android:id="@+id/eventcountdown_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0 Days to go"
+            android:textSize="@dimen/text_headline_large"
+            android:textColor="@color/primary_pink"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+</FrameLayout>

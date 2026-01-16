@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <!-- Background circle -->
+    <path
+        android:fillColor="#2C2C2C"
+        android:pathData="
+            M12,2
+            A10,10 0 1,1 11.999,2
+        " />
+
+    <!-- S-shape -->
+    <path
+        android:fillColor="#FFD700"
+        android:pathData="
+            M12,6
+            Q14,8 14,12
+            Q14,16 12,18
+            M12,6
+            Q10,8 10,12
+            Q10,16 12,18
+        " />
+</vector>

@@ -334,10 +334,7 @@ public class homeclientFragment extends Fragment {
             Intent intent = new Intent(getActivity(), createevent.class);
             intent.putExtra("createadrad", "gotowhatsappbotmaker");
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-            getActivity().startActivity(intent);
-
-
-
+            startActivity(intent);
 
 
         });
@@ -349,7 +346,7 @@ public class homeclientFragment extends Fragment {
             Intent intent = new Intent(getActivity(), messagestartactivity.class);
             intent.putExtra("createadrad", "gotowhatsappbotmaker");
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-            getActivity().startActivity(intent);
+            startActivity(intent);
 
 
         });
@@ -528,7 +525,10 @@ public class homeclientFragment extends Fragment {
 
                                         eventwholearray.clear();
 
-                                        for(Integer i=0; i<event_namelist.size(); i++)
+
+                                        //Integer i=0; i<event_namelist.size(); i++
+
+                                        for(int i = event_namelist.size() - 1; i >= 0; i--)
                                         {
                                             sabaEventItem item=new sabaEventItem();
 

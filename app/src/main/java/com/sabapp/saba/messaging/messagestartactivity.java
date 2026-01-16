@@ -41,6 +41,7 @@ import com.sabapp.saba.application.sabaapp;
 import com.sabapp.saba.data.model.sabaEventItem;
 import com.sabapp.saba.sabaDrawerActivity;
 import com.sabapp.saba.sabaVendorDrawerActivity;
+import com.sabapp.saba.sabaplannerDrawerActivity;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import org.json.JSONArray;
@@ -92,9 +93,30 @@ public class messagestartactivity  extends AppCompatActivity {
     private static final int REQUEST_CONTACT = 1;
     private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 100;
 
+    String logintype;
+
     @Override
     public void onBackPressed(){
-        startActivity(new Intent(getApplicationContext(), sabaDrawerActivity.class));
+
+
+        if(logintype!=null && logintype.equalsIgnoreCase("standard")){
+
+            startActivity(new Intent(getApplicationContext(), sabaDrawerActivity.class));
+
+        }else if(logintype!=null && logintype.equalsIgnoreCase("vendor")){
+
+            startActivity(new Intent(getApplicationContext(), sabaVendorDrawerActivity.class));
+
+        }else if(logintype!=null && logintype.equalsIgnoreCase("planner")){
+
+            startActivity(new Intent(getApplicationContext(), sabaplannerDrawerActivity.class));
+
+        }else{
+
+            startActivity(new Intent(getApplicationContext(), sabaDrawerActivity.class));
+
+        }
+
     }
 
 
@@ -131,7 +153,23 @@ public class messagestartactivity  extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // back button pressed
-                startActivity(new Intent(getApplicationContext(), sabaDrawerActivity.class));
+                if(logintype!=null && logintype.equalsIgnoreCase("standard")){
+
+                    startActivity(new Intent(getApplicationContext(), sabaDrawerActivity.class));
+
+                }else if(logintype!=null && logintype.equalsIgnoreCase("vendor")){
+
+                    startActivity(new Intent(getApplicationContext(), sabaVendorDrawerActivity.class));
+
+                }else if(logintype!=null && logintype.equalsIgnoreCase("planner")){
+
+                    startActivity(new Intent(getApplicationContext(), sabaplannerDrawerActivity.class));
+
+                }else{
+
+                    startActivity(new Intent(getApplicationContext(), sabaDrawerActivity.class));
+
+                }
 
             }
         });
@@ -143,6 +181,8 @@ public class messagestartactivity  extends AppCompatActivity {
 
         app = (sabaapp)  this.getApplicationContext();
         context = getApplicationContext();
+        logintype = app.getLoginAccounttype();
+
 
 
         templateArraystwo= new ArrayList<sabaEventItem>();

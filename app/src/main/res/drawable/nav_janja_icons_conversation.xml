@@ -1,0 +1,6 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:width="32dp"
+        android:height="32dp"
+        android:drawable="@drawable/janja_icons_conversation" /> <!-- your original PNG -->
+</layer-list>

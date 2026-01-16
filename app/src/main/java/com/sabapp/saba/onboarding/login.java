@@ -34,6 +34,7 @@ import com.google.android.material.button.MaterialButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.sabapp.saba.MyFirebaseMessagingService;
 import com.sabapp.saba.R;
 import com.sabapp.saba.SharedPrefsXtreme;
@@ -53,7 +54,7 @@ import android.util.Base64;
 public class login extends AppCompatActivity {
 
 
-    LinearLayout loginbutton, loginfacebookbutton, logingooglebutton;
+    LinearLayout loginbutton;
     EditText usernameEditText, passwordEditText;
 
     TextView signuptextviewButton, loginbuttontext;
@@ -66,6 +67,8 @@ public class login extends AppCompatActivity {
     sabaapp app;
 
     String fcm_token = null;
+
+    SharedPrefsXtreme sharedPrefsXtreme;
 
     String logged_api_username, loggedapi_password, loggin_country, loggin_currency, loginkeytime, bearerToken;
 
@@ -82,8 +85,7 @@ public class login extends AppCompatActivity {
         progressindicator.setVisibility(View.GONE);
 
         loginbutton  = (LinearLayout) findViewById(R.id.loginlayoutbutton);
-        loginfacebookbutton  = (LinearLayout) findViewById(R.id.loginwithfacebooklayoutbutton);
-        logingooglebutton  = (LinearLayout) findViewById(R.id.loginwithgooglelayout);
+
 
         usernameEditText = (EditText) findViewById(R.id.username);
         passwordEditText = (EditText) findViewById(R.id.password);
@@ -93,6 +95,9 @@ public class login extends AppCompatActivity {
         loginbuttontext = (TextView)findViewById(R.id.loginbuttontext);
 
         revealpasswordImageButton = (ImageView) findViewById(R.id.revealpasswordimageviewbutton);
+
+        sharedPrefsXtreme =
+                SharedPrefsXtreme.getInstance(login.this);
 
         loginbutton.setOnClickListener(
 
@@ -122,14 +127,39 @@ public class login extends AppCompatActivity {
 
                             //String notification_token = retrieve_firebaseToken();
 
-                            fcm_token = MyFirebaseMessagingService.getToken(login.this);
-                            Log.e("New FCM Token", " "+ fcm_token);
+                            /*fcm_token = MyFirebaseMessagingService.getToken(login.this);
+                            Log.e("New FCM Token", " "+ fcm_token);*/
 
-                            progressindicator.setVisibility(View.VISIBLE);
-                            getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                            FirebaseMessaging.getInstance().getToken()
+                                    .addOnCompleteListener(task -> {
+                                        if (!task.isSuccessful()) {
+                                            Log.e("FCM", "Fetching FCM token failed", task.getException());
+                                            return;
+                                        }
 
-                            volleyGet();
+                                        fcm_token = task.getResult();
+                                        Log.e("New FCM Token", fcm_token);
+
+                                        sharedPrefsXtreme.saveData("fcm_token", fcm_token);
+
+                                        // Save it
+                                        getSharedPreferences("_", MODE_PRIVATE)
+                                                .edit()
+                                                .putString("fb", fcm_token)
+                                                .apply();
+
+                                        // Send to backend here
+
+                                        progressindicator.setVisibility(View.VISIBLE);
+                                        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                                                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+
+                                        volleyGet();
+
+
+                                    });
+
+
 
 
                         }
@@ -141,45 +171,8 @@ public class login extends AppCompatActivity {
 
         );
 
-        loginfacebookbutton.setOnClickListener(
-
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                        //login with facebook on press
 
 
-
-                        Intent intent =  new Intent(getApplicationContext(), login.class);
-                        startActivity(intent);
-
-
-
-                    }
-                }
-
-        );
-
-
-        logingooglebutton.setOnClickListener(
-
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        //login with google on press
-
-
-
-                        Intent intent =  new Intent(getApplicationContext(), login.class);
-                        startActivity(intent);
-
-
-
-                    }
-                }
-
-        );
 
         signuptextviewButton.setOnClickListener(
 
@@ -268,8 +261,8 @@ public class login extends AppCompatActivity {
                                 String businessname = response.getString("BUSINESS_NAME");
                                 String businessdescription = response.getString("BUSINESS_DESCRIPTION");
 
-                                SharedPrefsXtreme sharedPrefsXtreme =
-                                        SharedPrefsXtreme.getInstance(login.this);
+                                /*sharedPrefsXtreme =
+                                        SharedPrefsXtreme.getInstance(login.this);*/
 
                                 sharedPrefsXtreme.saveData("api_username", logged_api_username);
                                 sharedPrefsXtreme.saveData("api_password", loggedapi_password); // <-- FROM HEADER
@@ -294,7 +287,7 @@ public class login extends AppCompatActivity {
                                         Toast.LENGTH_SHORT).show();
 
                                 startActivity(new Intent(getApplicationContext(),
-                                        chooselogintype.class));
+                                        choosesaba.class));
 
                             } else {
                                 loginbutton.setEnabled(true);

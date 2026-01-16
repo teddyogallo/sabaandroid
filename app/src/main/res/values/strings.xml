@@ -54,4 +54,59 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
-</resources>
+
+        <string name="activity_title">Wedding Planner</string>
+        <string name="back">Back</string>
+        <string name="saba">SABA</string>
+        <string name="saba_logo">SABA Logo</string>
+        <string name="edit">Edit</string>
+        <string name="event_twin">Event Twin™</string>
+        <string name="mood_board">Mood Board</string>
+        <string name="vendors">Vendors</string>
+        <string name="timeline">Timeline</string>
+        <string name="budget">Budget</string>
+        <string name="wedding_reception">Wedding and Reception</string>
+        <string name="on_track">On Track</string>
+        <string name="expand">Expand</string>
+        <string name="days_to_go">38 days to go</string>
+        <string name="countdown_bg">Countdown Background</string>
+        <string name="metric_icon">Metric Icon</string>
+        <string name="metric_title">Metric Title</string>
+        <string name="metric_value">Value</string>
+        <string name="metric_status">Status</string>
+        <string name="status_icon">Status Icon</string>
+        <string name="check_icon">Check Icon</string>
+        <string name="timeline_health">Timeline Health</string>
+        <string name="timeline_icon">Timeline Icon</string>
+        <string name="percent_100">100%</string>
+        <string name="on_schedule">On schedule</string>
+        <string name="vendor_icon">Vendor Icon</string>
+        <string name="vendor_readiness">Vendor Readiness</string>
+        <string name="vendor_count">8 of 10 Ready</string>
+        <string name="low_risk">Low Risk</string>
+        <string name="budget_icon">Budget Icon</string>
+        <string name="budget_health">Budget Health</string>
+        <string name="budget_percent">58% Budget Used</string>
+        <string name="within_budget">Within Budget</string>
+        <string name="badge_icon">Badge Icon</string>
+        <string name="action_feed">Action Feed</string>
+        <string name="alerts">Alerts</string>
+        <string name="suggestions">Suggestions</string>
+        <string name="drafts">Drafts</string>
+        <string name="action_icon">Action Icon</string>
+        <string name="action_title">Action Title</string>
+        <string name="action_description">Action Description</string>
+        <string name="action_button">Action Button</string>
+        <string name="warning_icon">Warning Icon</string>
+        <string name="recommended_timeline">Recommended Timeline Adjustments</string>
+        <string name="timeline_description">We suggest booking your flowers sooner to get your top choice...</string>
+        <string name="fix_now">Fix Now</string>
+        <string name="draft">Draft</string>
+        <string name="draft_message">Thank you for the quote! Are you available for a call this week to discuss?</string>
+        <string name="message_vendor">Message Vendor</string>
+        <string name="lightning_icon">Lightning Icon</string>
+        <string name="speed_up_dj">Speed up DJ quotes?</string>
+        <string name="rush_description">Activate rush mode to get quotes from DJs faster.</string>
+        <string name="activate_rush">Activate Rush</string>
+        <string name="view_all">View All</string>
+    </resources>

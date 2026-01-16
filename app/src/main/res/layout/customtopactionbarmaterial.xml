@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:paddingTop="45dp"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:paddingBottom="16dp"
+
+    >
+
+    <!-- Left icon -->
+    <ImageView
+        android:id="@+id/user_icon"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/person"
+        android:tint="@color/primary_pink"
+        android:contentDescription="Profile" />
+
+    <!-- Middle logo + text -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp">
+
+        <ImageView
+            android:id="@+id/img_logo"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/saba_micro_icon"
+            android:contentDescription="@string/saba_logo"
+            android:scaleType="centerInside" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/saba"
+            android:textSize="@dimen/text_headline_large"
+            android:textColor="@color/text_primary"
+            android:textStyle="bold"
+            android:layout_marginStart="8dp" />
+
+    </LinearLayout>
+
+    <!-- Right icon -->
+    <ImageView
+        android:id="@+id/notification_icon"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/bellicon"
+        android:tint="@color/primary_pink"
+        android:backgroundTint="@color/primary_pink"
+        android:contentDescription="Notification" />
+
+</LinearLayout>

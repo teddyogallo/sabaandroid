@@ -78,6 +78,8 @@ public class sabaapp extends Application {
         sharedPrefsXtreme.saveData("isLoggedin", "");
         sharedPrefsXtreme.saveData("phonenum", "");
         sharedPrefsXtreme.saveData("token", "");
+        sharedPrefsXtreme.saveData("loginaccounttype", "");
+        sharedPrefsXtreme.saveData("fcm_token", "");
         setAppLaunched(false);
 
     }
@@ -249,6 +251,19 @@ public class sabaapp extends Application {
     public String getRecipientid()
     {
         return sharedPrefsXtreme.getData("recipient_id");
+
+    }
+
+
+    public String getLoginAccounttype()
+    {
+        return sharedPrefsXtreme.getData("loginaccounttype");
+
+    }
+
+    public String getFCMToken()
+    {
+        return sharedPrefsXtreme.getData("fcm_token");
 
     }
 

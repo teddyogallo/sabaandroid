@@ -14,7 +14,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
 
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <!-- Camera permission -->
@@ -36,6 +35,22 @@
         android:supportsRtl="true"
 
         android:usesCleartextTraffic="true" >
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/saba_micro_icon" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/purplelight" />
+
+        <service
+            android:name=".MyFirebaseMessagingService"
+            android:exported="false"
+            android:stopWithTask="false" >
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
         <activity
             android:name=".onboarding.SplashScreen"
             android:exported="true"
@@ -59,6 +74,16 @@
             android:exported="false" />
         <activity
             android:name=".onboarding.chooselogintype"
+            android:theme="@style/Theme.Saba"
+            android:exported="false" />
+
+        <activity
+            android:name=".onboarding.choosesaba"
+            android:theme="@style/Theme.Saba"
+            android:exported="false" />
+
+        <activity
+            android:name=".onboarding.loginoptionchoose"
             android:theme="@style/Theme.Saba"
             android:exported="false" />
         <activity
@@ -103,6 +128,11 @@
             android:exported="false" />
 
         <activity
+            android:name=".events.eventdashboard"
+            android:theme="@style/Theme.Saba.EventDashboard"
+            android:exported="false" />
+
+        <activity
             android:name=".vendors.addcatalogue"
             android:theme="@style/Theme.Saba"
             android:exported="false" />
@@ -119,6 +149,10 @@
 
         <activity
             android:name=".messaging.conversationactivity"
+            android:theme="@style/Theme.Saba"
+            android:exported="false" />
+        <activity
+            android:name=".messaging.initiatemessagecontactlist"
             android:theme="@style/Theme.Saba"
             android:exported="false" />
 

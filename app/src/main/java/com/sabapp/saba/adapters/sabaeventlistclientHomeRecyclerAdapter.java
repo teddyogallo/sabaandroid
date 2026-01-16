@@ -30,6 +30,7 @@ import com.sabapp.saba.R;
 import com.sabapp.saba.application.sabaapp;
 import com.sabapp.saba.data.model.sabaEventItem;
 import com.sabapp.saba.events.createevent;
+import com.sabapp.saba.events.eventdashboard;
 import com.sabapp.saba.homeclientFragment;
 
 public class sabaeventlistclientHomeRecyclerAdapter  extends RecyclerView.Adapter<sabaeventlistclientHomeRecyclerAdapter.MyViewHolder>{
@@ -158,8 +159,8 @@ public class sabaeventlistclientHomeRecyclerAdapter  extends RecyclerView.Adapte
                 }else if(productname.toLowerCase().matches("No Name")||productname.equals("no name"))
                 {
                     //start of redirect to new product
-                    /*intent =  new Intent(context, wwProductActivity.class);
-                    context.startActivity(intent);*/
+                    intent =  new Intent(context, createevent.class);
+                    context.startActivity(intent);
 
                     //end of redirect to new product
 
@@ -174,14 +175,21 @@ public class sabaeventlistclientHomeRecyclerAdapter  extends RecyclerView.Adapte
                 }
                 else{
                     // redirect to payment popup
-                    /*app.setProductselectedprice(sabaItem.getProductprice());
-                    app.setProductselectedname(productname);
-                    app.setProductimgbyte(context, sabaItem.getBytes());
+                    intent =  new Intent(context, eventdashboard.class);
+                    intent.putExtra("event_name", productname);
+                    intent.putExtra("event_id",sabaItem.getevent_Id ());
+                    intent.putExtra("event_time",sabaItem.geteventTime());
+                    intent.putExtra("event_location",sabaItem.geteventLocation());
+                    intent.putExtra("event_budget",sabaItem.geteventBudget());
+                    intent.putExtra("event_budgetspent",sabaItem.getbudgetSpent());
+                    intent.putExtra("event_setupstatus",sabaItem.getsetupStatus());
+                    intent.putExtra("event_eventstatus",sabaItem.geteventStatus());
+                    intent.putExtra("event_plannerid",sabaItem.getplannerId());
+                    intent.putExtra("image_location",sabaItem.geteventimageLocation());
+                    intent.putExtra("time_setup",sabaItem.gettime_Setup());
+                    intent.putExtra("user_id",sabaItem.geteventUserid());
 
-                    AppCompatActivity activity = (AppCompatActivity) context;
-                    requestpaymentprefilled bottomSheetFragment = new requestpaymentprefilled();
-                    bottomSheetFragment.show((activity).getSupportFragmentManager(), bottomSheetFragment.getTag());
-                    */
+                    context.startActivity(intent);
                     //End of redirect to payment popup
                 }
 
