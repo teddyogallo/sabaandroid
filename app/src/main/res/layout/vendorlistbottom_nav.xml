@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/border_light_gray" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/spacing_16"
+        android:paddingBottom="@dimen/spacing_16">
+
+        <Button
+            android:id="@+id/nav_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/nav_date"
+            android:drawableTop="@drawable/ic_calendar"
+            android:textSize="@dimen/text_size_small"
+            android:textColor="@color/text_dark_gray"
+            android:background="?attr/selectableItemBackground"
+            android:padding="@dimen/spacing_8" />
+
+        <Button
+            android:id="@+id/nav_budget"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/nav_budget"
+            android:drawableTop="@drawable/ic_budget_vendor"
+            android:textSize="@dimen/text_size_small"
+            android:textColor="@color/text_dark_gray"
+            android:background="?attr/selectableItemBackground"
+            android:padding="@dimen/spacing_8" />
+
+        <Button
+            android:id="@+id/nav_drafts"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/nav_drafts"
+            android:drawableTop="@drawable/ic_drafts"
+            android:textSize="@dimen/text_size_small"
+            android:textColor="@color/text_dark_gray"
+            android:background="?attr/selectableItemBackground"
+            android:padding="@dimen/spacing_8" />
+
+    </LinearLayout>
+
+</LinearLayout>

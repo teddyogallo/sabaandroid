@@ -58,4 +58,23 @@
         <!-- Elevation -->
         <dimen name="elevation_card">4dp</dimen>
         <dimen name="elevation_button">2dp</dimen>
+
+
+
+    <!-- for vendor list -->
+
+
+        <dimen name="spacing_8">8dp</dimen>
+        <dimen name="spacing_16">16dp</dimen>
+        <dimen name="spacing_24">24dp</dimen>
+        <dimen name="card_corner_radius">12dp</dimen>
+        <dimen name="vendor_card_image_height">150dp</dimen>
+        <dimen name="vendor_card_image_width">150dp</dimen>
+        <dimen name="badge_height">40dp</dimen>
+        <dimen name="partner_avatar_size">40dp</dimen>
+        <dimen name="text_size_small">12sp</dimen>
+        <dimen name="text_size_medium">14sp</dimen>
+        <dimen name="text_size_large">16sp</dimen>
+        <dimen name="text_size_xlarge">18sp</dimen>
+        <dimen name="tab_height">48dp</dimen>
     </resources>

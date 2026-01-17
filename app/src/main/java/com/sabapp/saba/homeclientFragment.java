@@ -79,7 +79,7 @@ public class homeclientFragment extends Fragment {
 
     ArrayList<String> user_idlist = new ArrayList<String>();
     ArrayList<String> event_namelist;
-    ArrayList<String> event_timelist;
+    ArrayList<String> event_timelist,event_timeUnixlist;
     ArrayList<String> event_locationlist;
     ArrayList<String> event_budgetlist;
     ArrayList<String> budget_spentlist;
@@ -228,6 +228,7 @@ public class homeclientFragment extends Fragment {
             item.seteventUserid(user_idlist.get(i));
 
             item.seteventTime(event_timelist.get(i));
+            item.seteventTimeUnix(event_timeUnixlist.get(i));
             item.seteventLocation(event_locationlist.get(i));
             item.seteventBudget(event_budgetlist.get(i));
             item.seteventBudget(budget_spentlist.get(i));
@@ -295,6 +296,7 @@ public class homeclientFragment extends Fragment {
         user_idlist = new ArrayList<String>();
         event_namelist  = new ArrayList<String>();
         event_timelist  = new ArrayList<String>();
+        event_timeUnixlist = new ArrayList<String>();
         event_locationlist = new ArrayList<String>();
         event_budgetlist  = new ArrayList<String>();
         budget_spentlist = new ArrayList<String>();
@@ -423,6 +425,7 @@ public class homeclientFragment extends Fragment {
                                         user_idlist.add(app.getApiusername());
                                         event_namelist.add("Add Event");
                                         event_timelist.add(null);
+                                        event_timeUnixlist.add(null);
                                         event_locationlist.add("Tap to add a new event");
                                         event_budgetlist.add(null);
                                         budget_spentlist.add(null);
@@ -446,6 +449,7 @@ public class homeclientFragment extends Fragment {
                                             item.seteventUserid(user_idlist.get(i));
 
                                             item.seteventTime(event_timelist.get(i));
+                                            item.seteventTimeUnix(event_timeUnixlist.get(i));
                                             item.seteventLocation(event_locationlist.get(i));
                                             item.seteventBudget(event_budgetlist.get(i));
                                             item.seteventBudget(budget_spentlist.get(i));
@@ -502,6 +506,7 @@ public class homeclientFragment extends Fragment {
                                             user_idlist.add(eventuserid);
                                             event_namelist.add(eventname);
                                             event_timelist.add(formattedEventTime);
+                                            event_timeUnixlist.add(eventtime);
                                             event_locationlist.add(eventlocation);
                                             event_budgetlist.add(eventbudget);
                                             budget_spentlist.add(budgetspent);
@@ -537,6 +542,7 @@ public class homeclientFragment extends Fragment {
                                             item.seteventUserid(user_idlist.get(i));
 
                                             item.seteventTime(event_timelist.get(i));
+                                            item.seteventTimeUnix(event_timeUnixlist.get(i));
                                             item.seteventLocation(event_locationlist.get(i));
                                             item.seteventBudget(event_budgetlist.get(i));
                                             item.seteventBudget(budget_spentlist.get(i));

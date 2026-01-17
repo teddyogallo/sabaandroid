@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="140dp"
+    android:background="@drawable/bg_metric_card"
+    android:layout_margin="@dimen/spacing_m"
+    android:elevation="@dimen/elevation_card"
+    android:id="@+id/eventcountdownframelayout"
+    >
+
+    <!-- Background Image (placeholder) -->
+    <ImageView
+
+        android:id="@+id/eventcountdowncountdown_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/ic_countdown_bg"
+        android:contentDescription="@string/countdown_bg"
+        android:scaleType="centerCrop"
+        android:alpha="0.3" />
+
+    <!-- Overlay Gradient -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_countdown_overlay" />
+
+    <!-- Text Content -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+
+        android:paddingStart="@dimen/padding_m"
+        android:paddingEnd="@dimen/padding_m">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:id="@+id/eventnameoveralllabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="Event Overview"
+                android:textSize="20sp"
+                android:textColor="@color/text_primary"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/eventcountdowndays_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0 Days to go"
+                android:textSize="@dimen/text_headline_large"
+                android:textColor="@color/primary_pink"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:orientation="horizontal"
+            >
+
+            <!-- Day countdown  Card -->
+            <LinearLayout
+                android:id="@+id/daycountdowncard"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+
+                android:orientation="horizontal"
+                android:padding="7dp"
+                android:background="@drawable/bg_countdowncard"
+                android:layout_margin="6dp"
+                android:elevation="@dimen/elevation_card">
+
+
+
+                <TextView
+                    android:id="@+id/dayscounttextlabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textSize="20sp"
+                    android:textColor="@color/primary_pink"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp"
+                     />
+
+                <TextView
+                    android:id="@+id/timelinehealthlabel2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Days"
+                    android:textSize="14sp"
+                    android:textColor="@color/black"
+                    android:layout_marginStart="5dp"
+
+                    />
+
+
+
+            </LinearLayout>
+
+            <!-- Hour countdown  Card -->
+            <LinearLayout
+                android:id="@+id/hourcountdowncard"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+
+                android:orientation="horizontal"
+                android:padding="7dp"
+                android:background="@drawable/bg_countdowncard"
+                android:layout_margin="6dp"
+                android:elevation="@dimen/elevation_card">
+
+
+
+                <TextView
+                    android:id="@+id/hourcountlabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textSize="20sp"
+                    android:textColor="@color/primary_pink"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp"
+                    />
+
+                <TextView
+                    android:id="@+id/hourcount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hrs"
+                    android:textSize="14sp"
+                    android:textColor="@color/black"
+                    android:layout_marginStart="5dp"
+
+                    />
+
+
+
+            </LinearLayout>
+
+            <!-- Minutes countdown  Card -->
+            <LinearLayout
+                android:id="@+id/minutecountdowncard"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+
+                android:orientation="horizontal"
+                android:padding="7dp"
+                android:background="@drawable/bg_countdowncard"
+                android:layout_margin="6dp"
+                android:elevation="@dimen/elevation_card">
+
+
+
+                <TextView
+                    android:id="@+id/minutescountlabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textSize="20sp"
+                    android:textColor="@color/primary_pink"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp"
+                    />
+
+                <TextView
+                    android:id="@+id/minuteslabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Mins"
+                    android:textSize="14sp"
+                    android:textColor="@color/black"
+                    android:layout_marginStart="5dp"
+
+                    />
+
+
+
+            </LinearLayout>
+            <!-- Seconds countdown  Card -->
+            <LinearLayout
+                android:id="@+id/secondscountdowncard"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+
+                android:orientation="horizontal"
+                android:padding="7dp"
+                android:background="@drawable/bg_countdowncard"
+                android:layout_margin="6dp"
+                android:elevation="@dimen/elevation_card">
+
+
+
+                <TextView
+                    android:id="@+id/secondscountlabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textSize="20sp"
+                    android:textColor="@color/primary_pink"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp"
+                    />
+
+                <TextView
+                    android:id="@+id/secondslabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Secs"
+                    android:textSize="14sp"
+                    android:textColor="@color/black"
+                    android:layout_marginStart="5dp"
+
+                    />
+
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</FrameLayout>

@@ -15,18 +15,31 @@
         android:orientation="horizontal"
         android:gravity="center_vertical">
 
-        <!-- Event Twin™ Tab (Active) -->
+        <!-- Overview Tab (Active) -->
         <Button
-            android:id="@+id/tab_event_twin"
+            android:id="@+id/tab_event_overview"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/button_height_small"
-            android:text="@string/event_twin"
+            android:text="Overview"
             android:textColor="@color/text_light"
             android:background="@drawable/bg_pill_button_primary"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
             android:textSize="11sp"
             android:textStyle="bold"
+            android:layout_marginEnd="6dp" />
+
+        <!-- Event Twin™ Tab (Active) -->
+        <Button
+            android:id="@+id/tab_event_twin"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/button_height_small"
+            android:text="@string/event_twin"
+            android:textColor="@color/text_primary"
+            android:background="@android:color/transparent"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:textSize="11sp"
             android:layout_marginEnd="6dp" />
 
         <!-- Other Tabs (Inactive) -->

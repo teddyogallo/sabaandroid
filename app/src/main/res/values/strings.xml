@@ -109,4 +109,26 @@
         <string name="rush_description">Activate rush mode to get quotes from DJs faster.</string>
         <string name="activate_rush">Activate Rush</string>
         <string name="view_all">View All</string>
+ <!--for vendor list -->
+
+
+        <string name="filter_button">Filter</string>
+        <string name="tab_vendor_list">Vendor List</string>
+        <string name="tab_date">Date</string>
+        <string name="tab_budget">Budget</string>
+        <string name="tab_style">Style</string>
+        <string name="tab_related">Related</string>
+        <string name="tab_chat">Chat</string>
+        <string name="filter_summary_placeholder">Showing vendors matching: June 12, Budget: $15,000, Style: Elegant, Related: Any</string>
+        <string name="vendor_name_placeholder">Vendor Name</string>
+        <string name="vendor_image">Vendor Image</string>
+        <string name="review_count_placeholder">(0)</string>
+        <string name="partner_avatar">Partner Avatar</string>
+        <string name="works_well_with">Works well with:</string>
+        <string name="chemistry_placeholder">Ⓘ Chemistry 94</string>
+        <string name="available">Available</string>
+        <string name="unavailable">Unavailable</string>
+        <string name="nav_date">Date</string>
+        <string name="nav_budget">Budget</string>
+        <string name="nav_drafts">Drafts</string>
     </resources>

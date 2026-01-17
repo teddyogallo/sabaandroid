@@ -8,6 +8,10 @@ import java.util.ArrayList;
 
 public class sabaEventItem {
 
+    //for event overview alters
+
+    String eventoverviewalertname, eventoverviewalertdescription, eventoverviewalerttype, eventoverviewalertid,eventoverviewalertimagelocation;
+
     private String product_name;
     private String product_price;
     private String product_id;
@@ -22,6 +26,8 @@ public class sabaEventItem {
     String eventUserid;
     String eventName;
     String eventTime;
+
+    String eventTimeUnix;
     String eventLocation;
 
     String eventBudget;
@@ -239,6 +245,13 @@ public class sabaEventItem {
 
     public void seteventTime(String name) {
         this.eventTime=name;
+    }
+
+
+    public String geteventTimeUnix() {return eventTimeUnix;}
+
+    public void seteventTimeUnix(String name) {
+        this.eventTimeUnix=name;
     }
     public String geteventLocation() {return eventLocation;}
 
@@ -830,6 +843,56 @@ public class sabaEventItem {
     }
 
     //end of for eventtwin notification values
+
+    //get for event overview
+
+    public String geteventoverviewalertname () {return eventoverviewalertname;}
+
+    public void seteventoverviewalertname(String name) {
+        this.eventoverviewalertname=name;
+
+
+    }
+
+    public String geteventoverviewalertdescription () {return eventoverviewalertdescription;}
+
+    public void seteventoverviewalertdescription(String name) {
+        this.eventoverviewalertdescription=name;
+
+
+    }
+
+
+    public String geteventoverviewalerttype () {return eventoverviewalerttype;}
+
+    public void seteventoverviewalerttype(String name) {
+        this.eventoverviewalerttype=name;
+
+
+    }
+
+
+    public String geteventoverviewalertid () {return eventoverviewalertid;}
+
+    public void seteventoverviewalertid(String name) {
+        this.eventoverviewalertid=name;
+
+
+    }
+
+
+
+
+
+    public String geteventoverviewalertimagelocation () {return eventoverviewalertimagelocation;}
+
+    public void seteventoverviewalertimagelocation(String name) {
+        this.eventoverviewalertimagelocation=name;
+
+
+    }
+
+    //end of get for event overview
 
 
 

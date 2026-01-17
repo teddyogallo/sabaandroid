@@ -87,6 +87,7 @@
         <color name="primary_pink">#E0178C</color>
         <color name="primary_pink_light">#F5E6F0</color>
         <color name="primary_pink_dark">#C01578</color>
+       <color name="faintpink">#fdf1f7</color>
 
         <!-- Success & Status Colors -->
         <color name="success_green">#6BA82A</color>
@@ -115,10 +116,24 @@
         <color name="text_light">#FFFFFF</color>
 
         <!-- Background Colors -->
-        <color name="bg_primary">#FCF0F7</color>
+        <color name="bg_primary">#fbe3f1</color>
         <color name="bg_secondary">#FFFFFF</color>
 
         <!-- Chart & Visual Colors -->
         <color name="chart_purple">#7B68EE</color>
         <color name="chart_yellow">#FFD700</color>
+
+
+
+    <!--for vendor list -->
+
+        <color name="green_checkmark">#4CAF50</color>
+        <color name="star_gold">#FFC107</color>
+        <color name="background_light_pink">#F5E6F0</color>
+        <color name="text_dark_gray">#333333</color>
+        <color name="border_light_gray">#E0E0E0</color>
+
+        <color name="chemistry_pink">#E91E8C</color>
+        <color name="chemistry_orange">#FF9800</color>
+        <color name="chemistry_red">#FF6B6B</color>
     </resources>

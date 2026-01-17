@@ -188,6 +188,7 @@ public class sabaeventlistclientHomeRecyclerAdapter  extends RecyclerView.Adapte
                     intent.putExtra("image_location",sabaItem.geteventimageLocation());
                     intent.putExtra("time_setup",sabaItem.gettime_Setup());
                     intent.putExtra("user_id",sabaItem.geteventUserid());
+                    intent.putExtra("event_timeunix",sabaItem.geteventTimeUnix());
 
                     context.startActivity(intent);
                     //End of redirect to payment popup

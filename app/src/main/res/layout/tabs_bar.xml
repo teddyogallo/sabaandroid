@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:scrollbars="none"
+    android:background="@color/background_light_pink">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/tab_height"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/spacing_16"
+        android:paddingEnd="@dimen/spacing_16"
+        android:gravity="center_vertical">
+
+        <Button
+            android:id="@+id/tab_vendor_list"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="@string/tab_vendor_list"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_small"
+            android:paddingStart="@dimen/spacing_16"
+            android:paddingEnd="@dimen/spacing_16"
+            android:background="@drawable/bg_tab_active"
+            android:layout_marginEnd="@dimen/spacing_8" />
+
+        <Button
+            android:id="@+id/tab_date"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/button_height_small"
+            android:text="Date"
+            android:textColor="@color/text_primary"
+            android:background="@android:color/transparent"
+            android:textSize="@dimen/text_size_small"
+            android:gravity="center"
+            android:paddingStart="@dimen/spacing_16"
+            android:paddingEnd="@dimen/spacing_16"
+            android:layout_marginEnd="@dimen/spacing_8" />
+
+        <Button
+            android:id="@+id/tab_budget"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/button_height_small"
+            android:text="Budget"
+            android:textColor="@color/text_primary"
+            android:background="@android:color/transparent"
+            android:textSize="@dimen/text_size_small"
+            android:gravity="center"
+            android:paddingStart="@dimen/spacing_16"
+            android:paddingEnd="@dimen/spacing_16"
+            android:layout_marginEnd="@dimen/spacing_8" />
+
+
+
+        <Button
+            android:id="@+id/tab_style"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/button_height_small"
+            android:text="Style"
+            android:textColor="@color/text_primary"
+            android:background="@android:color/transparent"
+            android:textSize="@dimen/text_size_small"
+            android:gravity="center"
+            android:paddingStart="@dimen/spacing_16"
+            android:paddingEnd="@dimen/spacing_16"
+            android:layout_marginEnd="@dimen/spacing_8" />
+
+        <Button
+            android:id="@+id/tab_related"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/button_height_small"
+            android:text="Related"
+            android:textColor="@color/text_primary"
+            android:background="@android:color/transparent"
+            android:textSize="@dimen/text_size_small"
+            android:gravity="center"
+            android:paddingStart="@dimen/spacing_16"
+            android:paddingEnd="@dimen/spacing_16"
+            android:layout_marginEnd="@dimen/spacing_8" />
+        <Button
+            android:id="@+id/tab_chat"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/button_height_small"
+            android:text="Chat"
+            android:textColor="@color/text_primary"
+            android:background="@android:color/transparent"
+            android:textSize="@dimen/text_size_small"
+            android:gravity="center"
+            android:paddingStart="@dimen/spacing_16"
+            android:paddingEnd="@dimen/spacing_16"
+            android:layout_marginEnd="@dimen/spacing_8" />
+
+
+    </LinearLayout>
+
+</HorizontalScrollView>

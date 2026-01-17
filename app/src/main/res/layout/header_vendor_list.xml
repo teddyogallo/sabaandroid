@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@color/background_light_pink"
+    android:padding="@dimen/spacing_16"
+    android:gravity="center_vertical"
+    android:elevation="4dp">
+
+    <TextView
+        android:id="@+id/back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:paddingEnd="@dimen/spacing_8"
+        android:textColor="@color/primary_pink"
+        android:textSize="@dimen/text_size_large"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textAlignment="center"
+        android:textColor="@color/text_dark_gray"
+        android:textSize="@dimen/text_size_xlarge"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/filter_button"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/ic_filter"
+        android:scaleType="centerInside"
+        android:background="@drawable/bg_filter_button"
+        android:contentDescription="@string/filter_button" />
+
+</LinearLayout>

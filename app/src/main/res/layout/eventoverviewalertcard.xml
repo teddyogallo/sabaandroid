@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="vertical"
+android:padding="6dp"
+android:background="@drawable/bg_metric_card"
+android:layout_margin="@dimen/spacing_m"
+android:elevation="@dimen/elevation_card">
+
+<LinearLayout
+    android:id="@+id/alertcellvalue"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:layout_marginBottom="@dimen/spacing_m">
+
+    <ImageView
+        android:id="@+id/alerttypeimage"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:src="@drawable/ic_lightning"
+        android:contentDescription="@string/lightning_icon"
+        android:tint="@color/warning_orange"
+        android:layout_marginEnd="5dp" />
+
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/alert_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:text="@string/speed_up_dj"
+            android:textColor="@color/text_primary"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/alertcontent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/rush_description"
+            android:textSize="12sp"
+            android:textColor="@color/text_secondary"
+            android:layout_marginBottom="2dp" />
+
+    </LinearLayout>
+
+
+
+    <ImageView
+        android:id="@+id/alertmoredetails"
+        android:layout_width="@dimen/icon_s"
+        android:layout_height="@dimen/icon_s"
+        android:src="@drawable/ic_arrow_right"
+        android:contentDescription="@string/expand"
+        android:tint="@color/text_tertiary" />
+
+</LinearLayout>
+
+
+
+</LinearLayout>
