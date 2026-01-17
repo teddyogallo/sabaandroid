@@ -1245,6 +1245,29 @@ public class eventdashboard extends AppCompatActivity {
         TextView minutescounttext = findViewById(R.id.minutescountlabel);
         TextView secondscounttext = findViewById(R.id.secondscountlabel);
 
+
+        TextView budgetamountText = findViewById(R.id.budgetamounttext);
+
+
+        if(event_budget!=null){
+
+
+            if(event_budgetspent!=null){
+
+                budgetamountText.setText("$"+event_budget+"/ $"+event_budgetspent);
+
+
+            }else{
+
+                budgetamountText.setText("$"+event_budget+"/ $ 0");
+
+
+            }
+        }else{
+
+            budgetamountText.setText("$0 / $ 0");
+        }
+
         //component status
 
 
