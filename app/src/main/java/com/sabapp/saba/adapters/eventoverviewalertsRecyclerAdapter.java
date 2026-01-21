@@ -22,6 +22,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.sabapp.saba.R;
 import com.sabapp.saba.application.sabaapp;
 import com.sabapp.saba.data.model.sabaEventItem;
+import com.sabapp.saba.events.OnOverviewAlertClickListener;
 import com.sabapp.saba.events.eventdashboard;
 
 import java.util.List;
@@ -38,6 +39,8 @@ public class eventoverviewalertsRecyclerAdapter extends RecyclerView.Adapter<eve
 
     private Activity activity;
     private eventdashboard pulse;
+
+    OnOverviewAlertClickListener listener;
 
     /*public void setData(List<sabaEventItem> data) {
         items.clear();
@@ -57,41 +60,66 @@ public class eventoverviewalertsRecyclerAdapter extends RecyclerView.Adapter<eve
         sabaEventItem item = items.get(position);
 
 
-        if(item.getvendorname()==null || item.getvendorname().equals(""))
+        if(item.geteventoverviewalertname()==null || item.geteventoverviewalertname().equals(""))
         {
             //holder.eventtitle.setVisibility(View.GONE);
-            holder.title.setText("Not Valid");
+            holder.title.setText("No new notification");
         }
         else
         {
-            holder.title.setText(item.getvendorname());
+            holder.title.setText(item.geteventoverviewalertname());
         }
 
 
-        if(item.getvendorserviceimagelocation()!=null)
+        if(item.geteventoverviewalertdescription()==null || item.geteventoverviewalertdescription().equals(""))
         {
+            //holder.eventtitle.setVisibility(View.GONE);
+            holder.alertytpevalue.setText("No alert details");
+        }
+        else
+        {
+            holder.alertytpevalue.setText(item.geteventoverviewalertdescription());
+        }
 
+
+
+
+        if(item.geteventoverviewalerttype()!=null)
+        {
 
             int radius = 15; // corner radius in pixels
 
             RequestOptions requestOptions = new RequestOptions();
             requestOptions = requestOptions.transform(new RoundedCorners(radius));
-            try{
 
-                Glide.with(context)
-                        .load(item.getvendorserviceimagelocation())
-                        .placeholder(R.drawable.defaultimage)
-                        .apply(requestOptions)
-                        .into(holder.alerttype_image);
+            if(item.geteventoverviewalerttype().equalsIgnoreCase("service_budget")){
 
-            } catch (Exception e) {
+                Glide.with(context).load(R.drawable.addeventbudget).apply(requestOptions).into(holder.alerttype_image);
 
-                Log.e("LOAD IMAGE ERROR: ",""+e);
+            }else if(item.geteventoverviewalerttype().equalsIgnoreCase("add_vendor")) {
+
+                Glide.with(context).load(R.drawable.addplanner).apply(requestOptions).into(holder.alerttype_image);
+
+
+        }else if(item.geteventoverviewalerttype().equalsIgnoreCase("service_add")) {
+
+                Glide.with(context).load(R.drawable.addeventserviceicon).apply(requestOptions).into(holder.alerttype_image);
+
+        }else if(item.geteventoverviewalerttype().equalsIgnoreCase("send_message")) {
+
+                Glide.with(context).load(R.drawable.sendmessagealerticon).apply(requestOptions).into(holder.alerttype_image);
+
+            }else if(item.geteventoverviewalerttype().equalsIgnoreCase("approve_payment")) {
+
+                Glide.with(context).load(R.drawable.approvepaymenticon).apply(requestOptions).into(holder.alerttype_image);
+            }else if(item.geteventoverviewalerttype().equalsIgnoreCase("add_payment")) {
+
+                Glide.with(context).load(R.drawable.addpaymenticon).apply(requestOptions).into(holder.alerttype_image);
+
+            }else{
 
                 Glide.with(context).load(R.drawable.defaultimage).apply(requestOptions).into(holder.alerttype_image);
-
             }
-
 
 
 
@@ -117,8 +145,13 @@ public class eventoverviewalertsRecyclerAdapter extends RecyclerView.Adapter<eve
                 //String productname = sabaItem.geteventName();
                 final Intent intent;
 
-                /*intent =  new Intent(context, createevent.class);
-                context.startActivity(intent);*/
+
+                holder.vendoritem.setOnClickListener(v -> {
+                    if (listener != null) {
+                        listener.onAlertClicked(item.geteventoverviewalerttype());
+                    }
+                });
+
 
 
             }
@@ -151,10 +184,11 @@ public class eventoverviewalertsRecyclerAdapter extends RecyclerView.Adapter<eve
         }
     }
 
-    public eventoverviewalertsRecyclerAdapter(List<sabaEventItem> items, Context context, eventdashboard pulse, sabaapp app) {
+    public eventoverviewalertsRecyclerAdapter(List<sabaEventItem> items, Context context, eventdashboard pulse, OnOverviewAlertClickListener listener, sabaapp app) {
         this.items = items;
         this.context=context;
         this.pulse=pulse;
+        this.listener = listener;
         this.app = app;
     }
 }

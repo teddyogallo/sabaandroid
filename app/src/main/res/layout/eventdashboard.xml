@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/bg_primary">
 
     <LinearLayout
@@ -122,8 +123,8 @@
                                 android:layout_height="@dimen/icon_l"
                                 android:src="@drawable/ic_clock"
                                 android:contentDescription="@string/timeline_icon"
-                                android:tint="@color/chart_yellow"
-                                android:layout_marginBottom="@dimen/spacing_m" />
+                                android:layout_marginBottom="@dimen/spacing_m"
+                                app:tint="@color/chart_yellow" />
 
                             <TextView
                                 android:id="@+id/servicesbookedlabel"
@@ -144,6 +145,7 @@
                             android:orientation="horizontal">
 
                             <TextView
+                                android:id="@+id/servicesbookedoverviewtotaltext"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="4"
@@ -153,6 +155,7 @@
                                 />
 
                             <TextView
+                                android:id="@+id/servicestotaloverviewtext"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="5dp"
@@ -192,14 +195,14 @@
                                 android:layout_height="@dimen/icon_l"
                                 android:src="@drawable/ic_vendor"
                                 android:contentDescription="@string/timeline_icon"
-                                android:tint="@color/chart_yellow"
-                                android:layout_marginBottom="@dimen/spacing_m" />
+                                android:layout_marginBottom="@dimen/spacing_m"
+                                app:tint="@color/chart_yellow" />
 
                             <TextView
                                 android:id="@+id/vendorscontactedlabel"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Vendors Contacted"
+                                android:text="Vendors Contracted"
                                 android:textSize="12sp"
                                 android:textColor="@color/text_primary"
                                 android:textStyle="bold"
@@ -214,6 +217,7 @@
                             android:orientation="horizontal">
 
                             <TextView
+                                android:id="@+id/vendorscontractedctedtotaltext"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="4"
@@ -223,6 +227,7 @@
                                 />
 
                             <TextView
+                                android:id="@+id/vendorstotaltext"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="5dp"
@@ -259,8 +264,8 @@
                                 android:layout_height="@dimen/icon_l"
                                 android:src="@drawable/ic_budget"
                                 android:contentDescription="@string/timeline_icon"
-                                android:tint="@color/chart_yellow"
-                                android:layout_marginBottom="@dimen/spacing_m" />
+                                android:layout_marginBottom="@dimen/spacing_m"
+                                app:tint="@color/chart_yellow" />
 
                             <TextView
                                 android:id="@+id/budgetamounttext"
@@ -281,6 +286,7 @@
                             android:orientation="horizontal">
 
                             <TextView
+                                android:id="@+id/budgetamountpercentagetext"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="60%"
@@ -723,7 +729,7 @@
 
 
                     <!-- Item 1: Timeline Adjustment -->
-                    <LinearLayout
+                    <!--<LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
@@ -784,9 +790,10 @@
                             android:textStyle="bold" />
 
                     </LinearLayout>
+                    -->
 
                     <!-- Item 2: Draft Quote -->
-                    <LinearLayout
+                    <!--<LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
@@ -838,10 +845,10 @@
                             android:textSize="@dimen/text_body_large"
                             android:textStyle="bold" />
 
-                    </LinearLayout>
+                    </LinearLayout>-->
 
                     <!-- Item 3: DJ Rush Mode -->
-                    <LinearLayout
+                   <!-- <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
@@ -901,7 +908,8 @@
                             android:textSize="@dimen/text_body_large"
                             android:textStyle="bold" />
 
-                    </LinearLayout>
+                    </LinearLayout> -->
+
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/event_twin_recycler"
@@ -986,7 +994,9 @@
             android:layout_height="550dp"
             android:paddingStart="@dimen/spacing_8"
             android:paddingEnd="@dimen/spacing_8"
-            android:clipToPadding="false" />
+            android:clipToPadding="false"
+
+            />
 
             </LinearLayout>
         </ScrollView>
@@ -1027,6 +1037,89 @@
             android:background="@color/bg_primary"
             android:visibility="gone"
             >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="480dp"
+                android:orientation="vertical"
+                tools:ignore="ExtraText">
+
+            <LinearLayout
+                android:id="@+id/capabilitylistlayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/rw7l0julb6a"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/rrfklra49nms"
+                        android:textColor="#25131A"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="10dp"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:text="Select Services Needed"
+                        />
+                    <TextView
+                        android:id="@+id/rinla7ljd1u"
+                        android:textColor="#8B8688"
+                        android:textSize="14sp"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:text="Please check off the services needed for the event"
+                        />
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/selectableoptions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="vertical"
+
+                    />
+
+                <LinearLayout
+                    android:id="@+id/nextbuttonlayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:background="@drawable/cr10lr270cd01a2891161"
+                    android:paddingVertical="16dp"
+                    android:layout_marginBottom="40dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/nextbuttontext"
+                        android:textColor="#FFFFFF"
+                        android:textSize="16sp"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:text="Next"
+                        />
+                </LinearLayout>
+
+            </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/budgetoptionsrecycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="vertical"
+
+                    android:visibility="gone"
+                    />
+
+            </LinearLayout>
 
         </FrameLayout>
 

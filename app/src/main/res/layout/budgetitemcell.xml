@@ -8,7 +8,7 @@
     >
 
     <LinearLayout
-        android:id="@+id/ry43byz2gaar"
+        android:id="@+id/eventlayoutvalues"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/cr5bffffff"
@@ -40,7 +40,7 @@
                 android:layout_weight="1"
                 />
             <TextView
-                android:id="@+id/rtee82ebzncn"
+                android:id="@+id/capabilitybudgettextamount"
                 android:textColor="#000000"
                 android:textSize="14sp"
                 android:textStyle="bold"
@@ -49,17 +49,20 @@
                 android:text="$0"
                 />
         </LinearLayout>
-        <LinearLayout
-            android:id="@+id/refk8jqr09ic"
+
+        <SeekBar
+            android:id="@+id/budgetamountvalue"
             android:layout_width="match_parent"
-            android:layout_height="4dp"
-            android:background="#8B8688"
-            android:layout_marginBottom="3dp"
-            android:layout_marginStart="20dp"
-            android:orientation="vertical">
-        </LinearLayout>
+            android:layout_height="wrap_content"
+            android:max="100"
+            android:progress="0"
+            android:progressTint="@color/purplelight"
+            android:splitTrack="false"
+            android:thumbTint="@color/brandcolorpurple" />
+
+
         <TextView
-            android:id="@+id/ryip3c5nl2bl"
+            android:id="@+id/spenttrackertext"
             android:textColor="#000000"
             android:textSize="14sp"
             android:textStyle="bold"

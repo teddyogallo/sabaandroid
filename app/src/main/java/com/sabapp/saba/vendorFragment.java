@@ -36,6 +36,7 @@ import com.sabapp.saba.data.model.sabaEventItem;
 import com.sabapp.saba.events.createevent;
 import com.sabapp.saba.messaging.messagestartactivity;
 import com.sabapp.saba.vendors.addcatalogue;
+import com.sabapp.saba.vendors.availabilitycalender;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import org.json.JSONArray;
@@ -419,6 +420,11 @@ public class vendorFragment extends Fragment {
             // Action when layout is clicked
             // For example, open a new fragment or show a toast
             Toast.makeText(getContext(), "Fevorites quicklink Selected", Toast.LENGTH_SHORT).show();
+
+            Intent intent = new Intent(getActivity(), availabilitycalender.class);
+            intent.putExtra("createadrad", "gotowhatsappbotmaker");
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            startActivity(intent);
 
 
         });

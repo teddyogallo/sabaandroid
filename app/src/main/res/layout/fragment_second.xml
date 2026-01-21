@@ -6,6 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#FFFFFF"
     android:id="@+id/fragment_container"
+    android:theme="@style/Theme.Saba.EventDashboard"
     >
 
     <ScrollView
@@ -47,14 +48,42 @@
                         android:scaleType="fitXY"
                         />
                 </LinearLayout>
-                <TextView
-                    android:id="@+id/r4clmgz9opk9"
-                    android:textColor="#000000"
-                    android:textSize="24sp"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:text="New Payment"
-                    />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/accountbalancetextlabel"
+                        android:layout_width="180dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="16dp"
+                        android:text="$ 0.00"
+                        android:textColor="#000000"
+                        android:textSize="24sp" />
+
+                    <Button
+                        android:id="@+id/withdrawbutton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="2dp"
+                        android:layout_marginEnd="3dp"
+                        android:layout_toEndOf="@+id/accountbalancetextlabel"
+                        android:background="@drawable/cr8lr270a7be2e80d7f40a80"
+                        android:text="Withdraw" />
+
+                    <TextView
+                        android:id="@+id/textView5"
+                        android:layout_width="91dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="0dp"
+                        android:text="Balance" />
+
+
+                </RelativeLayout>
+
             </LinearLayout>
 
 
@@ -94,7 +123,7 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recentactivitiesrecycler"
+                android:id="@+id/paymentlistrecycler"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
                 android:layout_gravity="center_horizontal"

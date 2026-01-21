@@ -23,7 +23,7 @@ android:elevation="@dimen/elevation_card">
         android:layout_height="35dp"
         android:src="@drawable/ic_lightning"
         android:contentDescription="@string/lightning_icon"
-        android:tint="@color/warning_orange"
+
         android:layout_marginEnd="5dp" />
 
     <LinearLayout

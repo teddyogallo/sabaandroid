@@ -267,6 +267,20 @@ public class sabaapp extends Application {
 
     }
 
+    public void setAvailablebudget(String timeStamp)
+    {
+        sharedPrefsXtreme.saveData("availablebudget", timeStamp);
+    }
+
+
+    public String getAvailablebudget()
+    {
+        return sharedPrefsXtreme.getData("availablebudget");
+
+    }
+
+
+
 
 
     @Override

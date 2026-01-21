@@ -14,12 +14,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.sabapp.saba.application.sabaapp;
 import com.sabapp.saba.data.model.sabaEventItem;
 
 import java.util.ArrayList;
 import java.util.List;
 import com.sabapp.saba.R;
+import com.sabapp.saba.events.OnOverviewAlertClickListener;
 import com.sabapp.saba.events.createevent;
 import com.sabapp.saba.events.eventdashboard;
 import com.sabapp.saba.homeclientFragment;
@@ -29,12 +31,14 @@ public class EventTwinBottomAdapter extends RecyclerView.Adapter<EventTwinBottom
 
     sabaapp app;
     int selected_position = 0;
-    private List<sabaEventItem> bitmapList;
+
     private List<Boolean> selected;
     private Context context;
 
     private Activity activity;
     private eventdashboard pulse;
+
+    OnOverviewAlertClickListener listener;
 
     /*public void setData(List<sabaEventItem> data) {
         items.clear();
@@ -54,14 +58,201 @@ public class EventTwinBottomAdapter extends RecyclerView.Adapter<EventTwinBottom
         sabaEventItem item = items.get(position);
 
 
-        if(item.geteventtwin_notificationtitle()==null || item.geteventtwin_notificationtitle().equals(""))
+        if(item.geteventoverviewalertname()==null || item.geteventoverviewalertname().equals(""))
         {
             //holder.eventtitle.setVisibility(View.GONE);
             holder.title.setText("No Value ");
+
+
+
+
         }
         else
         {
-            holder.title.setText(item.geteventtwin_notificationtitle());
+            holder.title.setText(item.geteventoverviewalertname());
+        }
+
+
+        if(item.geteventoverviewalertdescription()==null || item.geteventoverviewalertdescription().equals(""))
+        {
+            //holder.eventtitle.setVisibility(View.GONE);
+            holder.eventalertvalue.setText("No alert detail has been set");
+
+
+        }
+        else
+        {
+            holder.eventalertvalue.setText(item.geteventoverviewalertdescription());
+        }
+
+        if(item.geteventoverviewalerttype()==null || item.geteventoverviewalerttype().equals(""))
+        {
+            //holder.eventtitle.setVisibility(View.GONE);
+            holder.eventtwincellbutton.setVisibility(View.GONE);
+            Glide.with(context).load(R.drawable.saba_micro_icon).into(holder.alerttypeimage);
+
+            holder.eventtwincellbutton.setText("No Action");
+
+            holder.eventtwincellbutton.setTextColor(
+                    holder.itemView.getContext().getResources()
+                            .getColor(R.color.text_light)
+            );
+
+            // background drawable
+            holder.eventtwincellbutton.setBackground(
+                    holder.itemView.getContext().getResources()
+                            .getDrawable(R.drawable.bg_pill_button_primary)
+            );
+
+            holder.eventtwincellbutton.setVisibility(View.GONE);
+
+
+        }else if(item.geteventoverviewalerttype()!=null ){
+
+            if(item.geteventoverviewalerttype().equalsIgnoreCase("no_alert"))
+            {
+                //holder.eventtitle.setVisibility(View.GONE);
+                holder.eventtwincellbutton.setVisibility(View.GONE);
+
+                Glide.with(context).load(R.drawable.notificationbell).into(holder.alerttypeimage);
+
+                holder.eventtwincellbutton.setText("No Action");
+
+                holder.eventtwincellbutton.setTextColor(
+                        holder.itemView.getContext().getResources()
+                                .getColor(R.color.text_light)
+                );
+
+                // background drawable
+                holder.eventtwincellbutton.setBackground(
+                        holder.itemView.getContext().getResources()
+                                .getDrawable(R.drawable.bg_pill_button_primary)
+                );
+
+                holder.eventtwincellbutton.setVisibility(View.GONE);
+            }
+            if(item.geteventoverviewalerttype().equalsIgnoreCase("alerts"))
+            {
+                //holder.eventtitle.setVisibility(View.GONE);
+                holder.eventtwincellbutton.setVisibility(View.GONE);
+
+                Glide.with(context).load(R.drawable.ic_warning).into(holder.alerttypeimage);
+
+                holder.eventtwincellbutton.setText("Fix now");
+
+                holder.eventtwincellbutton.setTextColor(
+                        holder.itemView.getContext().getResources()
+                                .getColor(R.color.text_light)
+                );
+
+                // background drawable
+                holder.eventtwincellbutton.setBackground(
+                        holder.itemView.getContext().getResources()
+                                .getDrawable(R.drawable.bg_pill_button_primary)
+                );
+
+                holder.eventtwincellbutton.setVisibility(View.VISIBLE);
+
+            }
+            else if( item.geteventoverviewalerttype().equalsIgnoreCase("send_message"))
+            {
+                //holder.eventtitle.setVisibility(View.GONE);
+                holder.eventtwincellbutton.setVisibility(View.VISIBLE);
+
+                Glide.with(context).load(R.drawable.message).into(holder.alerttypeimage);
+
+                holder.eventtwincellbutton.setText("Send a Message");
+
+                holder.eventtwincellbutton.setTextColor(
+                        holder.itemView.getContext().getResources()
+                                .getColor(R.color.text_light)
+                );
+
+                // background drawable
+                holder.eventtwincellbutton.setBackground(
+                        holder.itemView.getContext().getResources()
+                                .getDrawable(R.drawable.bg_pill_button_secondary)
+                );
+
+                holder.eventtwincellbutton.setVisibility(View.VISIBLE);
+
+
+            }
+            else if( item.geteventoverviewalerttype().equalsIgnoreCase("service_budget"))
+            {
+                //holder.eventtitle.setVisibility(View.GONE);
+                holder.eventtwincellbutton.setVisibility(View.VISIBLE);
+
+                Glide.with(context).load(R.drawable.addbasket_icon).into(holder.alerttypeimage);
+
+                holder.eventtwincellbutton.setText("Setup Budget");
+
+                holder.eventtwincellbutton.setTextColor(
+                        holder.itemView.getContext().getResources()
+                                .getColor(R.color.text_light)
+                );
+
+                // background drawable
+                holder.eventtwincellbutton.setBackground(
+                        holder.itemView.getContext().getResources()
+                                .getDrawable(R.drawable.bg_pill_button_primary)
+                );
+
+                holder.eventtwincellbutton.setVisibility(View.VISIBLE);
+            }
+            else if(item.geteventoverviewalerttype().equalsIgnoreCase("add_vendor"))
+            {
+                //holder.eventtitle.setVisibility(View.GONE);
+                holder.eventtwincellbutton.setVisibility(View.VISIBLE);
+
+                Glide.with(context).load(R.drawable.janja_icons_storelocator).into(holder.alerttypeimage);
+
+                holder.eventtwincellbutton.setText("Add Vendor");
+
+                holder.eventtwincellbutton.setTextColor(
+                        holder.itemView.getContext().getResources()
+                                .getColor(R.color.text_light)
+                );
+
+                // background drawable
+                holder.eventtwincellbutton.setBackground(
+                        holder.itemView.getContext().getResources()
+                                .getDrawable(R.drawable.bg_pill_button_primary)
+                );
+
+                holder.eventtwincellbutton.setVisibility(View.VISIBLE);
+
+            }else{
+
+                holder.eventtwincellbutton.setVisibility(View.VISIBLE);
+
+                Glide.with(context).load(R.drawable.iconbutton).into(holder.alerttypeimage);
+
+                holder.eventtwincellbutton.setText("Continue");
+
+                holder.eventtwincellbutton.setTextColor(
+                        holder.itemView.getContext().getResources()
+                                .getColor(R.color.text_light)
+                );
+
+                // background drawable
+                holder.eventtwincellbutton.setBackground(
+                        holder.itemView.getContext().getResources()
+                                .getDrawable(R.drawable.bg_pill_button_primary)
+                );
+
+                holder.eventtwincellbutton.setVisibility(View.VISIBLE);
+            }
+
+
+
+        }
+        else
+        {
+
+            Glide.with(context).load(R.drawable.saba_micro_icon).into(holder.alerttypeimage);
+            holder.eventtwincellbutton.setVisibility(View.GONE);
+
         }
 
 
@@ -102,10 +293,11 @@ public class EventTwinBottomAdapter extends RecyclerView.Adapter<EventTwinBottom
         }
     }
 
-    public EventTwinBottomAdapter(List<sabaEventItem> bitmapList, Context context, eventdashboard pulse, sabaapp app) {
-        this.bitmapList = bitmapList;
+    public EventTwinBottomAdapter(List<sabaEventItem> bitmapList, Context context, eventdashboard pulse,OnOverviewAlertClickListener listener, sabaapp app) {
+        this.items = bitmapList;
         this.context=context;
         this.pulse=pulse;
+        this.listener=listener;
         this.app = app;
     }
 }

@@ -10,7 +10,7 @@ public class sabaEventItem {
 
     //for event overview alters
 
-    String eventoverviewalertname, eventoverviewalertdescription, eventoverviewalerttype, eventoverviewalertid,eventoverviewalertimagelocation;
+    String eventoverviewalertname, eventoverviewalertdescription, eventoverviewalerttype, eventoverviewalertid,eventoverviewalertimagelocation,eventoverview_capabilityid;
 
     private String product_name;
     private String product_price;
@@ -110,6 +110,10 @@ public class sabaEventItem {
 
     //for eventtwin recommendations
     String eventtwin_notificationtitle, eventtwin_notificationcontent, eventtwin_notificationtype,eventtwin_notificationtypevalue;
+
+
+    //eventbudgetites
+    String budget_event_id,budget_capability_id,budget_allocated_amount,budget_amount_paid,budget_currency,budget_payment_status,budget_last_payment_date,budget_planner_id;
 
     public void setMessage(String message) {
         this.message=message;
@@ -854,6 +858,16 @@ public class sabaEventItem {
 
     }
 
+    public String geteventoverview_capabilityid () {return eventoverview_capabilityid;}
+
+    public void seteventoverview_capabilityid(String name) {
+        this.eventoverview_capabilityid=name;
+
+
+    }
+
+
+
     public String geteventoverviewalertdescription () {return eventoverviewalertdescription;}
 
     public void seteventoverviewalertdescription(String name) {
@@ -876,6 +890,72 @@ public class sabaEventItem {
 
     public void seteventoverviewalertid(String name) {
         this.eventoverviewalertid=name;
+
+
+    }
+
+
+    public String getbudget_event_id () {return budget_event_id;}
+
+    public void setbudget_event_id(String name) {
+        this.budget_event_id=name;
+
+
+    }
+    public String getbudget_capability_id () {return budget_capability_id;}
+
+    public void setbudget_capability_id(String name) {
+        this.budget_capability_id=name;
+
+
+    }
+
+    public String getbudget_allocated_amount () {return budget_allocated_amount;}
+
+    public void setbudget_allocated_amount(String name) {
+        this.budget_allocated_amount=name;
+
+
+    }
+
+    public String getbudget_amount_paid () {return budget_amount_paid;}
+
+    public void setbudget_amount_paid(String name) {
+        this.budget_amount_paid=name;
+
+
+    }
+
+    public String getbudget_currency () {return budget_currency;}
+
+    public void setbudget_currency(String name) {
+        this.budget_currency=name;
+
+
+    }
+
+    public String getbudget_payment_status () {return budget_payment_status;}
+
+    public void setbudget_payment_status(String name) {
+        this.budget_payment_status=name;
+
+
+    }
+
+
+    public String getbudget_last_payment_date () {return budget_last_payment_date;}
+
+    public void setbudget_last_payment_date(String name) {
+        this.budget_last_payment_date=name;
+
+
+    }
+
+
+    public String getbudget_planner_id () {return budget_planner_id;}
+
+    public void setbudget_planner_id(String name) {
+        this.budget_planner_id=name;
 
 
     }

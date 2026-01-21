@@ -1,0 +1,445 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:theme="@style/Theme.Saba.EventDashboard"
+    >
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+
+        android:padding="10dp"
+        android:visibility="visible">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:visibility="visible">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <TextView
+                    android:id="@+id/tabtitle"
+                    style="@style/FontMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="Top up with mobile money"
+
+
+                    android:textColor="@color/black"
+                    android:textSize="12dp">
+
+                </TextView>
+            </RelativeLayout>
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:visibility="visible">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <TextView
+                    android:id="@+id/businesstitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginBottom="10dp"
+
+                    android:textSize="10sp"
+                    android:text="Choose a mobile payment option and you will get a popup to authorize payment"
+                    android:textColor="@color/black">
+
+                </TextView>
+            </RelativeLayout>
+        </RelativeLayout>
+
+
+
+
+        <RelativeLayout
+            android:id="@+id/addbusinessaddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:visibility="visible">
+
+
+            <ImageView
+                android:id="@+id/placename"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+
+                android:layout_marginEnd="10dp"
+
+                android:src="@drawable/tick">
+
+            </ImageView>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@+id/placename">
+
+
+                <TextView
+                    android:id="@+id/businessaddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="3dp"
+                    android:text="Enter payment description"
+
+                    android:textColor="@color/black"
+                    android:textSize="10sp">
+
+                </TextView>
+            </RelativeLayout>
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/addopeninghours"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:visibility="gone">
+
+
+            <ImageView
+                android:id="@+id/clockwise"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:backgroundTint="@color/darkblue"
+                android:src="@drawable/access_time"
+                app:tint="@color/darkblue">
+
+            </ImageView>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@+id/clockwise">
+
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginBottom="10dp"
+
+
+                    android:text="Add Opening Hours"
+                    android:textColor="@color/grey"
+                    android:textStyle="bold">
+
+                </TextView>
+            </RelativeLayout>
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <ImageView
+                android:id="@+id/calling"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/tick">
+
+            </ImageView>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@+id/calling">
+
+
+                <TextView
+                    android:id="@+id/faqentrytext"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="3dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="Enter customer mobile payment number"
+
+                    android:textColor="@color/black"
+                    android:textSize="10sp">
+
+                </TextView>
+            </RelativeLayout>
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <ImageView
+                android:id="@+id/mailoutline"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/tick">
+
+            </ImageView>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@+id/mailoutline">
+
+
+                <TextView
+                    android:id="@+id/numbertosavetext"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="3dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="Include the country code in the mobile number"
+
+                    android:textColor="@color/black"
+                    android:textSize="10sp">
+
+                </TextView>
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+
+            <com.wang.avi.AVLoadingIndicatorView
+                android:id="@+id/signinprogress"
+
+                style="@style/AVLoadingIndicatorView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:layout_marginStart="192dp"
+                android:visibility="gone"
+                android:layout_marginTop="4dp"
+                android:gravity="center"
+                app:indicatorColor="@color/purplethemelight"
+                app:indicatorName="BallTrianglePathIndicator"
+
+                />
+
+
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/rtk9dvcjwlzf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:background="@drawable/s8b868833sw1cr10"
+            android:paddingHorizontal="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginHorizontal="20dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/rhbrotd6j775"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="10dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/userplaceholder" />
+            <EditText
+                android:inputType="text"
+                android:hint="Enter Mobile Number"
+                android:background="@null"
+                android:id="@+id/paymentnumbertextautocomplete"
+                android:textColor="#25131A"
+                android:textSize="14sp"
+                android:layout_marginEnd="4dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingVertical="18dp"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/rtk9dvcjwlzf23232"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:background="@drawable/s8b868833sw1cr10"
+            android:paddingHorizontal="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginHorizontal="20dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/rhbrotd6j775333"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="10dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/userplaceholder" />
+            <EditText
+                android:inputType="text"
+                android:hint="Enter Amount"
+                android:background="@null"
+                android:id="@+id/amountrequestedtext"
+                android:textColor="#25131A"
+                android:textSize="14sp"
+                android:layout_marginEnd="4dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingVertical="18dp"
+                />
+        </LinearLayout>
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="12dp"
+            android:padding="3dp"
+
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/rbhdwobsz90n34"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/s8b868833sw1cr10"
+                    android:paddingHorizontal="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/r9he5pczrmt34"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginEnd="10dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/userplaceholder" />
+
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:id="@+id/paymentsystem_menuspinner"
+
+                        android:layout_gravity="center"
+                        android:animateLayoutChanges="true"
+                        android:overScrollMode="never"
+                        android:soundEffectsEnabled="true"
+                        android:spinnerMode="dropdown"
+                        android:textColor="#25131A"
+                        android:textSize="14sp"
+                        android:layout_marginEnd="4dp"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingVertical="18dp"
+                        >
+
+                    </androidx.appcompat.widget.AppCompatSpinner>
+
+                </LinearLayout>
+
+
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/requestinstantpaymentbutton"
+                android:layout_width="220dp"
+                android:layout_height="60dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+
+
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginEnd="5dp"
+                android:inputType="textCapCharacters"
+                android:text="Mobile money top up"
+                android:background="@drawable/cr10lr270cd01a2891161"
+
+
+                android:textColor="@color/white"
+                android:textSize="13dp"
+                android:textStyle="bold"
+
+
+                app:cornerRadius="15dp">
+
+            </com.google.android.material.button.MaterialButton>
+
+        </RelativeLayout>
+
+
+
+
+
+    </LinearLayout>
+</ScrollView>

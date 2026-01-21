@@ -47,11 +47,12 @@ public class sabaeventlistclientHomeRecyclerAdapter  extends RecyclerView.Adapte
         public TextView title;
         public TextView locationaddress, datevalues, eventstatus;
 
-        public LinearLayout cardView;
+        public LinearLayout cardView,eventlayout;
 
         public MyViewHolder(View view) {
             super(view);
             view.setOnClickListener(this);
+            eventlayout = view.findViewById(R.id.eventlayoutvalues);
             cardView=view.findViewById(R.id.eventstatuslayout);
             thumbnail= view.findViewById(R.id.serviceimage);
             title= view.findViewById(R.id.eventtitle);
@@ -141,7 +142,7 @@ public class sabaeventlistclientHomeRecyclerAdapter  extends RecyclerView.Adapte
 
 
 
-        holder.thumbnail.setOnClickListener(new View.OnClickListener() {
+        holder.eventlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String productname = sabaItem.geteventName();

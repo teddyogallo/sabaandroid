@@ -4,7 +4,10 @@
     android:layout_height="match_parent"
     tools:context=".homeclientFragment"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#FFFFFF">
+    android:background="#FFFFFF"
+    android:theme="@style/Theme.Saba.EventDashboard"
+
+    >
 
     <ScrollView
         android:id="@+id/rwkt7uatih28"

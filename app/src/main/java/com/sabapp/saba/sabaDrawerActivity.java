@@ -31,7 +31,17 @@ public class sabaDrawerActivity extends AppCompatActivity {
         Fragment thirdFragment = new FirstFragment();
         Fragment messageFragment = new messageFragment();
 
-        setCurrentFragment(firstFragment);
+        String fragmentToOpen = getIntent().getStringExtra("open_fragment");
+
+        if ("messages".equalsIgnoreCase(fragmentToOpen)) {
+            setCurrentFragment(messageFragment);
+            bottomNavigationView.setSelectedItemId(R.id.messages);
+        }else if ("payment".equalsIgnoreCase(fragmentToOpen)) {
+            setCurrentFragment(secondFragment);
+            bottomNavigationView.setSelectedItemId(R.id.businesschatbot);
+        }else {
+            setCurrentFragment(firstFragment); // default
+        }
 
         /*MaterialToolbar toolbar = findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);

@@ -67,6 +67,8 @@ public class setupbudgets extends AppCompatActivity {
 
     List<SelectedCapabilityItem> capabilityList;
 
+    double budgetamountvaluedouble;
+
     String eventBudgetvalue;
 
 
@@ -138,7 +140,7 @@ public class setupbudgets extends AppCompatActivity {
 
                 // Set up RecyclerView
                 budgetlistRecycler.setLayoutManager(new LinearLayoutManager(this));
-                SelectedCapabilityAdapter adapter = new SelectedCapabilityAdapter(capabilityList, this);
+                SelectedCapabilityAdapter adapter = new SelectedCapabilityAdapter(capabilityList, this, budgetamountvaluedouble);
                 budgetlistRecycler.setAdapter(adapter);
 
 
@@ -184,7 +186,16 @@ public class setupbudgets extends AppCompatActivity {
                     valuededicatedversusspent.setText("$0/ $0 Spent");
                 } else {
                     valuededicatedversusspent.setText("$"+typedValue + "/ $0 ");
+
+                    try{
+                        budgetamountvaluedouble = Double.parseDouble(typedValue);
+                    } catch (Exception e) {
+
+                        budgetamountvaluedouble =0;
+                    }
                 }
+
+
             }
         });
 

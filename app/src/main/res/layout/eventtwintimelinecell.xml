@@ -25,7 +25,7 @@
             android:layout_height="@dimen/icon_m"
             android:src="@drawable/ic_warning"
             android:contentDescription="@string/warning_icon"
-            android:tint="@color/warning_orange"
+
             android:layout_marginEnd="@dimen/spacing_m" />
 
         <TextView
