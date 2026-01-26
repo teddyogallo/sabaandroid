@@ -238,10 +238,10 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:hint="Select event date"
-                        android:focusable="false"
                         android:clickable="true"
-                        android:inputType="none"
+                        android:focusable="false"
+                        android:hint="Select event date"
+                        android:inputType="datetime"
                         android:paddingVertical="18dp"
                         android:textSize="14sp" />
                 </LinearLayout>

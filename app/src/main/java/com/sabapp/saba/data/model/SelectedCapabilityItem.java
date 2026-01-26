@@ -10,10 +10,13 @@ public class SelectedCapabilityItem implements Serializable {
     private double availablebudget;
 
     private int selectedValue; // value from SeekBar
+    private double allocatedAmount;   // FINAL money value
 
     public SelectedCapabilityItem(String code, String name) {
         this.code = code;
         this.name = name;
+        this.selectedValue = 0;
+        this.allocatedAmount = 0;
     }
 
     public String getCode() {
@@ -24,9 +27,15 @@ public class SelectedCapabilityItem implements Serializable {
         return name;
     }
 
+
     public int getSelectedValue() { return selectedValue; }
     public void setSelectedValue(int selectedValue) {
         this.selectedValue = selectedValue;
+    }
+
+    public double getAllocatedAmount() { return allocatedAmount; }
+    public void setAllocatedAmount(double allocatedAmount) {
+        this.allocatedAmount = allocatedAmount;
     }
 
 

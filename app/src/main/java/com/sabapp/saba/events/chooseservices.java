@@ -220,6 +220,16 @@ public class chooseservices extends AppCompatActivity {
                             JSONObject paymentinfo = null;
                             JSONObject jsonObj = null;
 
+
+                            capability_codeList.clear();
+                            capability_nameList.clear();
+                            categoryList.clear();
+                            capability_imageidList.clear();
+                            capability_image_locationList.clear();
+                            eventwholearray.clear();
+
+
+
                             try {
                                 jsonObj = new JSONObject(response.toString());
                                 String message =jsonObj.getString("STATUS");

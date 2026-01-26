@@ -1,0 +1,145 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tvDate"
+        android:text="Date"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        />
+
+    <TextView
+        android:id="@+id/availabledatesvalues"
+        android:text=""
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+
+    <TextView
+        android:id="@+id/startdatelable"
+        android:text="Tap to select start Date/Time"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:id="@+id/rtk9dvcjwlzf"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:background="@drawable/s8b868833sw1cr10"
+        android:paddingHorizontal="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginHorizontal="20dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/rhbrotd6j775"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="10dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/userplaceholder" />
+
+        <EditText
+            android:id="@+id/etStartTime"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingVertical="18dp"
+            android:hint="Start time"
+            android:textColor="#25131A"
+            android:focusable="false"
+            android:clickable="true"
+
+            android:inputType="time"/>
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/enddatelabel"
+        android:text="Tap to select End Date/Time"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:id="@+id/rtk9dvcjwlzf3434"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:background="@drawable/s8b868833sw1cr10"
+        android:paddingHorizontal="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginHorizontal="20dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/rhbrotd6j775444"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="10dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/userplaceholder" />
+
+        <EditText
+            android:id="@+id/etEndTime"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingVertical="18dp"
+            android:hint="End time"
+            android:focusable="false"
+            android:textColor="#25131A"
+            android:clickable="true"
+            android:inputType="time"/>
+
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+
+
+
+        <com.wang.avi.AVLoadingIndicatorView
+            android:id="@+id/progressBar"
+
+            style="@style/AVLoadingIndicatorView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_marginStart="192dp"
+            android:visibility="gone"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            app:indicatorColor="@color/purplethemelight"
+            app:indicatorName="BallTrianglePathIndicator"
+
+            />
+
+
+
+    </RelativeLayout>
+
+
+
+
+
+    <Spinner
+        android:id="@+id/spinnerType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        />
+
+</LinearLayout>

@@ -198,7 +198,7 @@ public class eventdashboard extends AppCompatActivity implements OnOverviewAlert
 
     budgetlisteditRecyclerAdapter budgetadapter;
 
-    LinearLayout capabilitylistlayout, capabilitynextbutton;
+    LinearLayout capabilitylistlayout, capabilitynextbutton, updatebudgetnextbutton;
 
     List<SelectedCapabilityItem> draftbudgetcapabilityList;
 
@@ -261,6 +261,9 @@ public class eventdashboard extends AppCompatActivity implements OnOverviewAlert
         progressindicator = (AVLoadingIndicatorView) findViewById(R.id.progressbar);
 
         backbuttontitlelayout = (LinearLayout)findViewById(R.id.btn_back);
+
+
+
 
         Intent intent=getIntent();
 
@@ -387,6 +390,7 @@ public class eventdashboard extends AppCompatActivity implements OnOverviewAlert
                 }
 
                 budgetselectedrecycler.setVisibility(View.VISIBLE);
+                updatebudgetnextbutton.setVisibility(View.VISIBLE);
                 capabilitylistlayout.setVisibility(View.GONE);
 
                 capabilitiesselected.setVisibility(View.GONE);
@@ -412,6 +416,16 @@ public class eventdashboard extends AppCompatActivity implements OnOverviewAlert
             startActivity(intent2);*/
 
 
+        });
+
+
+        updatebudgetnextbutton.setOnClickListener(v -> {
+            //start of budget next button
+
+            sendupdatedbudgetPost();
+
+
+         //end of budget next button
         });
 
 
@@ -579,42 +593,42 @@ public class eventdashboard extends AppCompatActivity implements OnOverviewAlert
 
                 vendortab_vendor_list.setBackgroundResource(R.drawable.bg_pill_button_primary);
                 vendortab_vendor_list.setTextColor(getResources().getColor(R.color.text_light));
-                getEventTwinList("vendor");
+                getVendorbottomtabList("vendor");
                 break;
             case "date":
 
                 ventortab_date.setBackgroundResource(R.drawable.bg_pill_button_primary);
                 ventortab_date.setTextColor(getResources().getColor(R.color.text_light));
-                getEventTwinList("alerts");
+                getVendorbottomtabList("alerts");
                 break;
             case "budget":
 
                 ventortab_budget.setBackgroundResource(R.drawable.bg_pill_button_primary);
                 ventortab_budget.setTextColor(getResources().getColor(R.color.text_light));
-                getEventTwinList("suggestions");
+                getVendorbottomtabList("suggestions");
                 break;
             case "style":
 
                 vendortab_style.setBackgroundResource(R.drawable.bg_pill_button_primary);
                 vendortab_style.setTextColor(getResources().getColor(R.color.text_light));
-                getEventTwinList("drafts");
+                getVendorbottomtabList("drafts");
                 break;
             case "related":
 
                 vendortab_related.setBackgroundResource(R.drawable.bg_pill_button_primary);
                 vendortab_related.setTextColor(getResources().getColor(R.color.text_light));
-                getEventTwinList("suggestions");
+                getVendorbottomtabList("suggestions");
                 break;
             case "chat":
 
                 vendortab_chat.setBackgroundResource(R.drawable.bg_pill_button_primary);
                 vendortab_chat.setTextColor(getResources().getColor(R.color.text_light));
-                getEventTwinList("drafts");
+                getVendorbottomtabList("drafts");
                 break;
             default:
                 vendortab_vendor_list.setBackgroundResource(R.drawable.bg_pill_button_primary);
                 vendortab_vendor_list.setTextColor(getResources().getColor(R.color.text_light));
-                getEventTwinList("action");
+                getVendorbottomtabList("action");
                 break;
         }
 
@@ -682,6 +696,8 @@ public class eventdashboard extends AppCompatActivity implements OnOverviewAlert
 
 
         budgetselectedrecycler = findViewById(R.id.budgetoptionsrecycler);
+
+        updatebudgetnextbutton = (LinearLayout)findViewById(R.id.budgetnextbuttonlayout);
 
         budgetwholearray = new ArrayList<sabaEventItem>();
 
@@ -756,6 +772,191 @@ public class eventdashboard extends AppCompatActivity implements OnOverviewAlert
                     hideProgressBar();
                     Log.d("EVENT_TWIN_RESPONSE", response.toString());
                     JSONObject jsonObj = null;
+
+                    eventoverview_alertname.clear();
+                    eventoverview_capabilityid.clear();
+                    eventoverview_alertid.clear();
+                    eventoverview_alerttype.clear();
+                    eventoverview_alertcontent.clear();
+                    eventoverview_alertimagelocation.clear();
+
+                    try {
+                        String status = response.getString("STATUS");
+
+                        if (!status.equalsIgnoreCase("success")) {
+                            Log.e("EVENT_TWIN", "API returned non-success");
+                            return;
+                        }
+
+                        JSONArray dataArray = response.getJSONArray("DATA");
+
+                        // Clear existing data BEFORE adding new
+                        eventTwinArray.clear();
+
+                        if (dataArray.length() == 0) {
+                            // Optional: Empty-state placeholder
+
+
+                            eventoverview_alertname.add("No new notification");
+                            eventoverview_capabilityid.add(null);
+                            eventoverview_alertid.add(null);
+                            eventoverview_alerttype.add(null);
+                            eventoverview_alertcontent.add("No alerts");
+                            eventoverview_alertimagelocation.add(null);
+
+
+
+                            sabaEventItem item=new sabaEventItem();
+                            item.seteventoverviewalertid(null);
+                            item.seteventoverviewalertname("No new notification");
+                            item.seteventoverviewalertdescription("No alerts");
+                            item.seteventoverviewalerttype(null);
+                            item.seteventoverview_capabilityid(null);
+                            item.seteventoverviewalertimagelocation(null);
+
+                            eventTwinArray.add(item);
+
+                            eventalertadapter.notifyDataSetChanged();
+
+
+                        } else {
+
+
+                            for (int i = 0; i < dataArray.length(); i++) {
+
+                                jsonObj = dataArray.getJSONObject(i);
+
+
+                                String capability_id = jsonObj.optString("id", null);
+                                String alerttype = jsonObj.optString("type", null);
+
+
+                                String alertname = jsonObj.optString("name", null);
+                                String alertmessage = jsonObj.optString("message", null);
+
+                                String alertid = jsonObj.optString("event_id", null);
+
+
+
+                                /*eventoverview_alertnameTwin.add(alertname);
+                                eventoverview_capabilityidTwin.add(capability_id);
+                                eventoverview_alertidTwin.add(alertid);
+                                eventoverview_alerttypeTwin.add(alerttype);
+                                eventoverview_alertcontentTwin.add(alertmessage);
+                                eventoverview_alertimagelocationTwin.add(null);*/
+
+                                sabaEventItem item=new sabaEventItem();
+
+
+                                item.seteventoverviewalertid(alertid);
+                                item.seteventoverviewalertname(alertname);
+                                item.seteventoverview_capabilityid(capability_id);
+                                item.seteventoverviewalertdescription(alertmessage);
+                                item.seteventoverviewalerttype(alerttype);
+                                item.seteventoverviewalertimagelocation(null);
+
+
+
+                                //setImagebitmap
+                                eventTwinArray.add(item);
+
+
+                                Log.d("Added the alert", alertname + " added");
+                            }
+
+                            // Notify adapter ONCE
+                            eventTwinAdapter.notifyDataSetChanged();
+
+
+
+                            /*for(Integer i=0; i<eventoverview_alertnameTwin.size(); i++)
+                            {
+                                sabaEventItem item=new sabaEventItem();
+
+
+                                item.seteventoverviewalertid(eventoverview_alertidTwin.get(i));
+                                item.seteventoverviewalertname(eventoverview_alertnameTwin.get(i));
+                                item.seteventoverview_capabilityid(eventoverview_capabilityidTwin.get(i));
+                                item.seteventoverviewalertdescription(eventoverview_alertcontentTwin.get(i));
+                                item.seteventoverviewalerttype(eventoverview_alerttypeTwin.get(i));
+                                item.seteventoverviewalertimagelocation(eventoverview_alertimagelocationTwin.get(i));
+
+
+
+                                //setImagebitmap
+                                eventTwinArray.add(item);
+
+                            }*/
+
+
+
+                        }
+
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Log.e("EVENT_TWIN_PARSE", e.getMessage());
+                    }
+
+                },
+                error -> {
+                    hideProgressBar();
+                    Log.e("EVENT_TWIN_ERROR", error.toString());
+                }
+        ) {
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+
+                String creds = String.format("%s:%s",
+                        app.getApiusername(),
+                        app.getApipassword()
+                );
+
+                String auth = "Basic " +
+                        Base64.encodeToString(creds.getBytes(), Base64.NO_WRAP);
+
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Content-Type", "application/json");
+                headers.put("Accept", "application/json");
+                headers.put("Authorization", auth);
+
+                return headers;
+            }
+        };
+
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                80000,
+                1,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+        ));
+
+        Volley.newRequestQueue(this).add(request);
+    }
+
+    private void getVendorbottomtabList(String type) {
+
+        showProgressBar();
+
+        String endpoint = "https://api.sabaapp.co/v0/event_twin?type=" + type;
+
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.GET,
+                endpoint,
+                null,
+                response -> {
+
+                    hideProgressBar();
+                    Log.d("EVENT_TWIN_RESPONSE", response.toString());
+                    JSONObject jsonObj = null;
+
+                    eventoverview_alertname.clear();
+                    eventoverview_capabilityid.clear();
+                    eventoverview_alertid.clear();
+                    eventoverview_alerttype.clear();
+                    eventoverview_alertcontent.clear();
+                    eventoverview_alertimagelocation.clear();
 
                     try {
                         String status = response.getString("STATUS");
@@ -847,7 +1048,7 @@ public class eventdashboard extends AppCompatActivity implements OnOverviewAlert
 
                             }
 
-                            for (int i = 0; i < dataArray.length(); i++) {
+                            /*for (int i = 0; i < dataArray.length(); i++) {
 
                                 JSONObject obj = dataArray.getJSONObject(i);
 
@@ -861,7 +1062,7 @@ public class eventdashboard extends AppCompatActivity implements OnOverviewAlert
 
                                 // Add to list
                                 eventTwinArray.add(item);
-                            }
+                            }*/
 
 
                         }
@@ -961,6 +1162,13 @@ public class eventdashboard extends AppCompatActivity implements OnOverviewAlert
                             JSONObject accountdetails = null;
                             JSONObject paymentinfo = null;
                             JSONObject jsonObj = null;
+
+                            eventoverview_alertname.clear();
+                            eventoverview_capabilityid.clear();
+                            eventoverview_alertid.clear();
+                            eventoverview_alerttype.clear();
+                            eventoverview_alertcontent.clear();
+                            eventoverview_alertimagelocation.clear();
 
                             try {
                                 jsonObj = new JSONObject(response.toString());
@@ -1301,12 +1509,30 @@ public class eventdashboard extends AppCompatActivity implements OnOverviewAlert
                     public void onResponse(JSONObject response) {
                         Log.e("response", "ALL Vendors: "+response.toString());
                         hideProgressBar();
+
+
+
                         if (!response.equals(null)) {
                             Log.e("response", "response "+response.toString());
                             JSONObject merchant_profile = null;
                             JSONObject accountdetails = null;
                             JSONObject paymentinfo = null;
                             JSONObject jsonObj = null;
+
+                            base_pricelist.clear();
+                            capability_detailslist.clear();
+                            capability_idlist.clear();
+                            eventwholearray.clear();
+
+                            vendorserviceimage_idList.clear();
+                            vendorserviceimagelocationList.clear();
+                            vendoridList.clear();
+
+                            vendornameList.clear();
+                            vendorcapabilitynameList.clear();
+                            vendorlocationList.clear();
+
+
 
                             try {
                                 jsonObj = new JSONObject(response.toString());
@@ -1583,6 +1809,15 @@ public class eventdashboard extends AppCompatActivity implements OnOverviewAlert
                             JSONObject paymentinfo = null;
                             JSONObject jsonObj = null;
 
+                            budget_event_id.clear();
+                            budget_capability_id.clear();
+                            budget_allocated_amount.clear();
+                            budget_amount_paid.clear();
+                            budget_currency.clear();
+                            budget_payment_status.clear();
+                            budget_last_payment_date.clear();
+                            budget_planner_id.clear();
+
                             try {
                                 jsonObj = new JSONObject(response.toString());
                                 String message =jsonObj.getString("STATUS");
@@ -1598,6 +1833,7 @@ public class eventdashboard extends AppCompatActivity implements OnOverviewAlert
                                     if (dataobj==null){
 
                                         budgetselectedrecycler.setVisibility(View.GONE);
+                                        updatebudgetnextbutton.setVisibility(View.GONE);
 
                                         capabilitylistlayout.setVisibility(View.VISIBLE);
                                         capabilitiesselected.setVisibility(View.VISIBLE);
@@ -1612,6 +1848,7 @@ public class eventdashboard extends AppCompatActivity implements OnOverviewAlert
                                         Log.d("Msg:",messageerror);
 
                                         budgetselectedrecycler.setVisibility(View.GONE);
+                                        updatebudgetnextbutton.setVisibility(View.GONE);
 
                                         capabilitylistlayout.setVisibility(View.VISIBLE);
                                         capabilitiesselected.setVisibility(View.VISIBLE);
@@ -1702,6 +1939,7 @@ public class eventdashboard extends AppCompatActivity implements OnOverviewAlert
                                         }
 
                                         budgetselectedrecycler.setVisibility(View.VISIBLE);
+                                        updatebudgetnextbutton.setVisibility(View.VISIBLE);
                                         capabilitylistlayout.setVisibility(View.GONE);
 
                                         capabilitiesselected.setVisibility(View.GONE);
@@ -1727,6 +1965,7 @@ public class eventdashboard extends AppCompatActivity implements OnOverviewAlert
                                 {
 
                                     budgetselectedrecycler.setVisibility(View.GONE);
+                                    updatebudgetnextbutton.setVisibility(View.GONE);
 
                                     capabilitylistlayout.setVisibility(View.VISIBLE);
 
@@ -1755,6 +1994,7 @@ public class eventdashboard extends AppCompatActivity implements OnOverviewAlert
                             } catch (JSONException e) {
 
                                 budgetselectedrecycler.setVisibility(View.GONE);
+                                updatebudgetnextbutton.setVisibility(View.GONE);
                                 capabilitylistlayout.setVisibility(View.VISIBLE);
 
                                 capabilitiesselected.setVisibility(View.VISIBLE);
@@ -1767,6 +2007,7 @@ public class eventdashboard extends AppCompatActivity implements OnOverviewAlert
                             hideProgressBar();
 
                             budgetselectedrecycler.setVisibility(View.GONE);
+                            updatebudgetnextbutton.setVisibility(View.GONE);
                             capabilitylistlayout.setVisibility(View.VISIBLE);
 
                             capabilitiesselected.setVisibility(View.VISIBLE);
@@ -1781,6 +2022,7 @@ public class eventdashboard extends AppCompatActivity implements OnOverviewAlert
                 hideProgressBar();
 
                 budgetselectedrecycler.setVisibility(View.GONE);
+                updatebudgetnextbutton.setVisibility(View.GONE);
 
                 capabilitiesselected.setVisibility(View.VISIBLE);
 
@@ -1865,6 +2107,12 @@ public class eventdashboard extends AppCompatActivity implements OnOverviewAlert
                             JSONObject accountdetails = null;
                             JSONObject paymentinfo = null;
                             JSONObject jsonObj = null;
+
+                            event_capability_codeList.clear();
+                            event_capability_nameList.clear();
+                            event_categoryList.clear();
+                            event_capability_imageidList.clear();
+                            event_capability_image_locationList.clear();
 
                             try {
                                 jsonObj = new JSONObject(response.toString());
@@ -2290,6 +2538,193 @@ public class eventdashboard extends AppCompatActivity implements OnOverviewAlert
 
         // Load default tab
         getBudgetvalue();
+
+
+    }
+
+
+    private void sendupdatedbudgetPost()
+    {
+        //continuetonextbutton.setText("Uploading to your store...");
+        showProgressBar();
+
+
+        JSONObject payload = new JSONObject();
+
+        try {
+            // =============================
+            // ROOT PAYLOAD
+            // =============================
+            //payload.put("event_amountspent", "0");
+            payload.put("eventid", EventId);
+            //payload.put("event_budget", event_budget);
+
+            // =============================
+            // BUILD event_budgetitems ARRAY
+            // =============================
+            JSONArray budgetItemsArray = new JSONArray();
+
+            for (SelectedCapabilityItem item : draftbudgetcapabilityList) {
+
+                // ❗ Skip items with zero allocation if desired
+                //if (item.getAllocatedAmount() <= 0) continue;
+
+                JSONObject budgetItem = new JSONObject();
+                budgetItem.put("capability_id", item.getCode());
+                budgetItem.put("allocated_amount", item.getAllocatedAmount());
+                budgetItem.put("amount_paid", 0);
+                budgetItem.put("currency", "USD");
+                budgetItem.put("payment_status", "pending");
+                budgetItem.put("last_payment_date", null);
+                budgetItem.put("notes", JSONObject.NULL);
+
+                budgetItemsArray.put(budgetItem);
+            }
+
+            payload.put("items", budgetItemsArray);
+            Log.d("SENDING WHOLE BUDGET PAYLOAD", "JSON: "+payload);
+
+        } catch (JSONException e) {
+            hideProgressBar();
+            e.printStackTrace();
+            return;
+        }
+
+
+
+        String paymentsendpoint="https://api.sabaapp.co/v0/events/budget/items";
+
+
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, paymentsendpoint, payload,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("response", "Submit budget response : "+response.toString());
+                        hideProgressBar();
+                        if (!response.equals(null)) {
+                            Log.e("response", "response "+response.toString());
+                            JSONObject merchant_profile = null;
+                            JSONObject accountdetails = null;
+                            JSONObject paymentinfo = null;
+                            JSONObject jsonObj = null;
+
+                            try {
+                                jsonObj = new JSONObject(response.toString());
+                                String message =jsonObj.getString("STATUS");
+                                String messagedetails =jsonObj.getString("message");
+                                if(message.toLowerCase().matches("success"))
+                                {
+
+
+                                    Log.d("EVENT ID", EventId);
+
+
+                                    AlertDialog ad = new AlertDialog.Builder(eventdashboard.this)
+                                            .create();
+                                    ad.setCancelable(true);
+                                    ad.setTitle("Request Completed");
+                                    ad.setMessage(messagedetails);
+                                    ad.setButton(getApplicationContext().getString(R.string.ok_text), new DialogInterface.OnClickListener() {
+
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+
+                                            getBudgetvalue();
+                                        }
+                                    });
+                                    ad.show();
+
+
+
+
+                                }
+                                else
+                                {
+                                    String messageerror="There was an Error";
+                                    Log.d("Msg:",messageerror);
+
+                                    AlertDialog ad = new AlertDialog.Builder(eventdashboard.this)
+                                            .create();
+                                    ad.setCancelable(true);
+                                    ad.setTitle("Request Failed");
+                                    ad.setMessage(messagedetails);
+                                    ad.setButton(getApplicationContext().getString(R.string.ok_text), new DialogInterface.OnClickListener() {
+
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                        }
+                                    });
+                                    ad.show();
+
+                                }
+
+
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                Log.e("errorIs", "error"+e.getMessage());
+                            }
+                            hideProgressBar();
+
+                        } else {
+                            hideProgressBar();
+                            Log.e("Your Array Response", "Data Null");
+                        }
+
+                    }
+
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                hideProgressBar();
+                //continuetonextbutton.setText("Upload to your store");
+                Log.e("Menu list error is ", "" + error);
+
+                if (error == null || error.networkResponse == null) {
+                    return;
+                }
+
+                String body;
+                //get status code here
+                final String statusCode = String.valueOf(error.networkResponse.statusCode);
+                //Log.e("error st_code ", "" + statusCode);
+                //get response body and parse with appropriate encoding
+                try {
+                    body = new String(error.networkResponse.data,"UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    //Log.e("encoding is ", "" + e.getMessage());
+                    // exception
+                }
+
+            }
+        }) {
+
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+
+
+                String creds = String.format("%s:%s",app.getApiusername(),app.getApipassword());
+                Log.e("Login with API username", "" + app.getApiusername()+" , And API passwrod"+app.getApipassword());
+                String auth = "Basic " + Base64.encodeToString(creds.getBytes(), Base64.DEFAULT);
+
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/json");
+                params.put("Accept", "application/json");
+                params.put("Authorization",auth);
+                return params;
+            }
+
+
+        };
+        RequestQueue queue = Volley.newRequestQueue(context);
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                80000,
+                1,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        queue.add(request);
 
 
     }

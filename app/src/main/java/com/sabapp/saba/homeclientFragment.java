@@ -409,6 +409,24 @@ public class homeclientFragment extends Fragment {
                             JSONObject paymentinfo = null;
                             JSONObject jsonObj = null;
 
+                            user_idlist.clear();
+                            event_namelist.clear();
+                            event_timelist.clear();
+                            event_timeUnixlist.clear();
+                            event_locationlist.clear();
+                            event_budgetlist.clear();
+                            budget_spentlist.clear();
+                            setup_statuslist.clear();
+                            event_statuslist.clear();
+                            planner_idlist.clear();
+                            event_image_idlist.clear();
+                            event_image_locationlist.clear();
+                            image_encodedlist.clear();
+                            time_setuplist.clear();
+                            event_idlist.clear();
+
+                            eventwholearray.clear();
+
                             try {
                                 jsonObj = new JSONObject(response.toString());
                                 String message =jsonObj.getString("STATUS");
@@ -416,6 +434,8 @@ public class homeclientFragment extends Fragment {
                                 if(message.toLowerCase().matches("success"))
                                 {
                                     dataobj = jsonObj.getJSONArray("DATA");
+
+
 
                                     if(dataobj.length()==0){
                                         // their are not values to add
@@ -438,7 +458,7 @@ public class homeclientFragment extends Fragment {
                                         time_setuplist.add(null);
                                         event_idlist.add(null);
 
-                                        eventwholearray.clear();
+                                        //eventwholearray.clear();
 
                                         for(Integer i=0; i<event_namelist.size(); i++)
                                         {
@@ -452,7 +472,7 @@ public class homeclientFragment extends Fragment {
                                             item.seteventTimeUnix(event_timeUnixlist.get(i));
                                             item.seteventLocation(event_locationlist.get(i));
                                             item.seteventBudget(event_budgetlist.get(i));
-                                            item.seteventBudget(budget_spentlist.get(i));
+                                            item.setbudgetSpent(budget_spentlist.get(i));
                                             item.seteventStatus(setup_statuslist.get(i));
                                             item.seteventStatus(event_statuslist.get(i));
                                             item.setplannerId(planner_idlist.get(i));
@@ -545,7 +565,7 @@ public class homeclientFragment extends Fragment {
                                             item.seteventTimeUnix(event_timeUnixlist.get(i));
                                             item.seteventLocation(event_locationlist.get(i));
                                             item.seteventBudget(event_budgetlist.get(i));
-                                            item.seteventBudget(budget_spentlist.get(i));
+                                            item.setbudgetSpent(budget_spentlist.get(i));
                                             item.seteventStatus(setup_statuslist.get(i));
                                             item.seteventStatus(event_statuslist.get(i));
                                             item.setplannerId(planner_idlist.get(i));

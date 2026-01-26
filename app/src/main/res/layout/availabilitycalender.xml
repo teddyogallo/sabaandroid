@@ -120,7 +120,7 @@
 
 
                 <LinearLayout
-                    android:id="@+id/acceptproposallayoutbutton"
+                    android:id="@+id/addavailabilitylayoutbutton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
@@ -137,11 +137,11 @@
                         android:textSize="16sp"
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
-                        android:text="Setup new date range"
+                        android:text="Add availability range"
                         />
                 </LinearLayout>
                 <LinearLayout
-                    android:id="@+id/rejectproposallayoutbutton"
+                    android:id="@+id/removeavailabilitylayoutbutton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
@@ -158,7 +158,7 @@
                         android:textSize="16sp"
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
-                        android:text="Edit Date Range"
+                        android:text="Delete Availability Range"
                         />
                 </LinearLayout>
             </LinearLayout>

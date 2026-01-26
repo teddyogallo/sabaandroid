@@ -87,6 +87,8 @@ public class SelectedCapabilityAdapter extends RecyclerView.Adapter<SelectedCapa
                     double percentage = (double) progress / 100;
                     double doubleamountallocated = availableBudget * percentage;
 
+                    item.setAllocatedAmount(doubleamountallocated);
+
                     holder.valueText.setText("Allocate $"+doubleamountallocated+"/ $ "+availableBudget+" available");
 
                     holder.lineitemamount.setText("$"+doubleamountallocated);
