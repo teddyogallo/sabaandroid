@@ -448,7 +448,7 @@ public class vendorFragment extends Fragment {
         paramsotpu.put("username", app.getApiusername());
 
 
-        String paymentsendpoint="https://api.sabaapp.co/v0/vendor/assignments";
+        String paymentsendpoint="https://api.getabirio.com/v0/vendor/assignments";
 
 
 
@@ -836,7 +836,7 @@ public class vendorFragment extends Fragment {
         paramsotpu.put("username", app.getApiusername());
 
 
-        String paymentsendpoint="https://api.sabaapp.co/v0/vendor/proposals";
+        String paymentsendpoint="https://api.getabirio.com/v0/vendor/proposals";
 
 
 

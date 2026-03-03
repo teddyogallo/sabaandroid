@@ -311,7 +311,7 @@ public class chooselogintype extends AppCompatActivity {
         paramsotpu.put("zipcode",  postalcodeText.getText().toString());
 
 
-        String loginuserendpoint="https://api.sabaapp.co/v0/account/updateuser";
+        String loginuserendpoint="https://api.getabirio.com/v0/account/updateuser";
 
         Log.e("Request Payload", String.valueOf(new JSONObject(paramsotpu)));
 

@@ -23,6 +23,8 @@ import com.sabapp.saba.R;
 import com.sabapp.saba.application.sabaapp;
 import com.sabapp.saba.data.model.sabaEventItem;
 import com.sabapp.saba.events.eventdashboard;
+import com.sabapp.saba.messaging.conversationactivity;
+import com.sabapp.saba.vendors.vendorproposrequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +32,8 @@ import java.util.List;
 public class vendorlisteventRecyclerAdapter extends RecyclerView.Adapter<vendorlisteventRecyclerAdapter.ViewHolder> {
     //private List<sabaEventItem> items = new ArrayList<>();
     private List<sabaEventItem> items;
+
+
 
     sabaapp app;
     int selected_position = 0;
@@ -118,8 +122,24 @@ public class vendorlisteventRecyclerAdapter extends RecyclerView.Adapter<vendorl
                 //String productname = sabaItem.geteventName();
                 final Intent intent;
 
-                /*intent =  new Intent(context, createevent.class);
-                context.startActivity(intent);*/
+
+
+                intent =  new Intent(activity, vendorproposrequest.class);
+                intent.putExtra("event_id", "");
+                intent.putExtra("vendor_id", item.getvendorid());
+                intent.putExtra("event_name", "Event");
+                intent.putExtra("budget_amount", "");
+                intent.putExtra("budget_spent", "");
+                intent.putExtra("vendor_name", item.getvendorname());
+                intent.putExtra("vendor_location", item.getvendorlocation());
+                intent.putExtra("availability", "Available");
+                intent.putExtra("base_price", item.getvendorbase_price());
+                intent.putExtra("rating", 1);
+                intent.putExtra("chemistry_score", 0);
+                intent.putExtra("vendor_image", item.getvendorserviceimagelocation());
+
+                intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);
+                activity.startActivity(intent);
 
 
             }
@@ -161,10 +181,13 @@ public class vendorlisteventRecyclerAdapter extends RecyclerView.Adapter<vendorl
         }
     }
 
-    public vendorlisteventRecyclerAdapter(List<sabaEventItem> items, Context context, eventdashboard pulse, sabaapp app) {
+    public vendorlisteventRecyclerAdapter(Activity activity,List<sabaEventItem> items, Context context, eventdashboard pulse, sabaapp app) {
+        this.activity = activity;
         this.items = items;
         this.context=context;
         this.pulse=pulse;
         this.app = app;
     }
+
+
 }

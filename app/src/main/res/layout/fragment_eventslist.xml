@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".eventslistFragment">
+
+    <!-- Scrollable content -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="56dp"
+        android:clipToPadding="false">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+
+                <com.wang.avi.AVLoadingIndicatorView
+                    android:id="@+id/progressbar"
+
+                    style="@style/AVLoadingIndicatorView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="192dp"
+                    android:visibility="gone"
+                    android:layout_marginTop="4dp"
+                    android:gravity="center"
+                    app:indicatorColor="@color/purplethemelight"
+                    app:indicatorName="BallTrianglePathIndicator"
+
+                    />
+
+
+
+            </RelativeLayout>
+            <!-- start of layout for recent events -->
+            <LinearLayout
+                android:id="@+id/myeventhorizontallistfragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:layout_marginBottom="19dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:id="@+id/r4vauu1uy32j2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="1dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/r7yahn8j8k8k2"
+                        android:textColor="#25131A"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:text="My Events"
+                        />
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/eventslistrecycler"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+
+                    android:layout_marginTop="2dp">
+
+                </androidx.recyclerview.widget.RecyclerView>
+            </LinearLayout>
+            <!-- end of layout for recent events -->
+
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</FrameLayout>

@@ -2,7 +2,9 @@ package com.sabapp.saba;
 
 import static com.gun0912.tedpermission.provider.TedPermissionProvider.context;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -16,7 +18,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -32,8 +36,10 @@ import com.sabapp.saba.adapters.sabaeventlistclientHomeRecyclerAdapter;
 import com.sabapp.saba.adapters.servicesOfferedRecyclerAdapter;
 import com.sabapp.saba.adapters.vendorassignmentsRecyclerAdapter;
 import com.sabapp.saba.application.sabaapp;
+import com.sabapp.saba.data.model.SelectedCapabilityItem;
 import com.sabapp.saba.data.model.sabaEventItem;
 import com.sabapp.saba.events.createevent;
+import com.sabapp.saba.events.eventdashboard;
 import com.sabapp.saba.messaging.messagestartactivity;
 import com.wang.avi.AVLoadingIndicatorView;
 
@@ -125,6 +131,24 @@ public class homeclientFragment extends Fragment {
 
     Context context;
 
+    FrameLayout countdownlayout;
+
+    TextView countdownloadlabel;
+
+    TextView countdowncardtext;
+
+    TextView dayscounttext;
+    TextView hourscounttext;
+    TextView minutescounttext;
+    TextView secondscounttext;
+
+    TextView timelinepercent,vendorpercentagevalue, budgetpercentagevalue, timelinehealthtext,vendorsvaluestext;
+
+    int daysDifference;
+    int hoursDifference;
+    int minutesDifference;
+    int secondsDifference;
+
 
 
     /**
@@ -148,6 +172,7 @@ public class homeclientFragment extends Fragment {
     public homeclientFragment() {
         // Required empty public constructor
     }
+
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -194,6 +219,7 @@ public class homeclientFragment extends Fragment {
         setUpRecycler();
         getEventslist();
         getServicesList();
+        getBudgetvalue();
         //loadTemplateImagesBottom();
 
         //save number of times user has logged in
@@ -286,6 +312,22 @@ public class homeclientFragment extends Fragment {
         fevoritesquicklink = view.findViewById(R.id.fevoritesquicklinkbutton);
         eventlistrecyclerview= view.findViewById(R.id.eventslistrecycler);
         servicesofferedrecycler = view.findViewById(R.id.recentactivitiesrecycler);
+
+        countdownlayout = view.findViewById(R.id.eventcountdownframelayout);
+        countdownloadlabel = view.findViewById(R.id.eventnameoveralllabel);
+
+        countdowncardtext = view.findViewById(R.id.eventcountdowndays_text);
+
+        timelinepercent = view.findViewById(R.id.timelinehealthtext);
+        vendorsvaluestext = view.findViewById(R.id.vendorstotaltext);
+        vendorpercentagevalue = view.findViewById(R.id.vendorreadinessvaluetext);
+        budgetpercentagevalue = view.findViewById(R.id.budgetamountpercentagetext);
+        timelinehealthtext = view.findViewById(R.id.timelinehealthdetailtext);
+
+        dayscounttext = view.findViewById(R.id.dayscounttextlabel);
+        hourscounttext = view.findViewById(R.id.hourcountlabel);
+        minutescounttext = view.findViewById(R.id.minutescountlabel);
+        secondscounttext = view.findViewById(R.id.secondscountlabel);
 
         progressBar = view.findViewById(R.id.progressbar);
         hideProgressBar();
@@ -392,7 +434,7 @@ public class homeclientFragment extends Fragment {
         paramsotpu.put("username", app.getApiusername());
 
 
-        String paymentsendpoint="https://api.sabaapp.co/v0/events";
+        String paymentsendpoint="https://api.getabirio.com/v0/events";
 
 
 
@@ -692,7 +734,7 @@ public class homeclientFragment extends Fragment {
         paramsotpu.put("username", app.getApiusername());
 
 
-        String paymentsendpoint="https://api.sabaapp.co/v0/vendor/capabilities";
+        String paymentsendpoint="https://api.getabirio.com/v0/vendor/capabilities";
 
 
 
@@ -939,5 +981,363 @@ public class homeclientFragment extends Fragment {
             return null;
         }
     }
+
+    public static class TimeDiff {
+        public int days;
+        public int hours;
+        public int minutes;
+        public int seconds;
+    }
+
+
+    public static TimeDiff getSignedTimeDifference(String unixTimestampStr) {
+        TimeDiff result = new TimeDiff();
+
+        if (unixTimestampStr == null || unixTimestampStr.isEmpty()) {
+            return result; // all zeros
+        }
+
+        long inputTime;
+        try {
+            inputTime = Long.parseLong(unixTimestampStr);
+        } catch (NumberFormatException e) {
+            return result;
+        }
+
+        // Detect seconds vs milliseconds
+        if (unixTimestampStr.length() <= 10) {
+            inputTime *= 1000;
+        }
+
+        long now = System.currentTimeMillis();
+        long diffMillis = inputTime - now;
+
+        int sign = Long.compare(diffMillis, 0); // -1, 0, or 1
+        long diff = Math.abs(diffMillis);
+
+        long days = diff / (24 * 60 * 60 * 1000);
+        diff %= (24 * 60 * 60 * 1000);
+
+        long hours = diff / (60 * 60 * 1000);
+        diff %= (60 * 60 * 1000);
+
+        long minutes = diff / (60 * 1000);
+        diff %= (60 * 1000);
+
+        long seconds = diff / 1000;
+
+        result.days = (int) days * sign;
+        result.hours = (int) hours * sign;
+        result.minutes = (int) minutes * sign;
+        result.seconds = (int) seconds * sign;
+
+        return result;
+    }
+
+
+    private void getBudgetvalue()
+    {
+        //continuetonextbutton.setText("Uploading to your store...");
+        showProgressBar();
+
+
+        String paymentsendpoint="https://api.sabaapp.co/v0/events/budget/overview";
+
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, paymentsendpoint, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.e("response", "GET SINGLE EVENT AT BUDGET: "+response.toString());
+                        hideProgressBar();
+                        if (!response.equals(null)) {
+                            Log.e("response", "response "+response.toString());
+                            JSONObject merchant_profile = null;
+                            JSONObject accountdetails = null;
+                            JSONObject paymentinfo = null;
+                            JSONObject jsonObj = null;
+
+
+                            try {
+                                jsonObj = new JSONObject(response.toString());
+                                String message =jsonObj.getString("STATUS");
+
+                                if(message.equalsIgnoreCase("SUCCESS")) {
+
+                                    JSONObject dataObject = jsonObj.optJSONObject("DATA");
+
+                                    if(dataObject == null){
+                                        return;
+                                    }
+
+                                    JSONObject globalsummaryObj = dataObject.optJSONObject("summary");
+
+                                    if(globalsummaryObj != null){
+                                        double total_allocated = globalsummaryObj.optDouble("total_allocated");
+                                        double total_spent = globalsummaryObj.optDouble("total_spent");
+
+                                        double budget_health = globalsummaryObj.optDouble("budget_health");
+                                        double health_score = globalsummaryObj.optDouble("health_score");
+                                        double percentage_spent = globalsummaryObj.optDouble("percentage_spent");
+                                        double remaining = globalsummaryObj.optDouble("remaining");
+
+                                        double total_deposited = globalsummaryObj.optDouble("total_deposited");
+
+                                        double vendor_score = globalsummaryObj.optDouble("vendor_score");
+                                        double vendors_allocated = globalsummaryObj.optInt("vendors_allocated",0);
+                                        double vendors_not_allocated = globalsummaryObj.optInt("vendors_not_allocated",0);
+
+                                        double vendorstotal = vendors_allocated + vendors_not_allocated;
+
+
+                                        timelinepercent.setText(health_score+"%");
+                                        vendorpercentagevalue.setText(vendor_score+"%");
+                                        budgetpercentagevalue.setText(budget_health+"%");
+
+                                        if(health_score<=80){
+                                            timelinehealthtext.setText("No services scheduled");
+
+                                        }else{
+
+                                            timelinehealthtext.setText("On Schedule");
+                                        }
+
+                                        vendorsvaluestext.setText((int)vendors_allocated+"/"+(int)vendorstotal+" Assigned");
+
+
+
+                                        Log.d("SUMMARY",
+                                                " Total: "+total_allocated+" Vendor allocated: "+vendors_allocated+" Vendor Unallocated: "+vendors_not_allocated+" Total allocated: "+vendorstotal);
+                                    }
+
+                                    JSONObject latestEvent = dataObject.optJSONObject("latest_event");
+
+                                    if(latestEvent != null){
+                                        String latest_event_id = latestEvent.optString("event_id");
+                                        String latest_event_name = latestEvent.optString("event_name");
+                                        String event_time = latestEvent.optString("event_time");
+
+                                        if(isValidUnixTimestamp(event_time)){
+
+                                            TimeDiff diff = getSignedTimeDifference(event_time);
+
+
+                                            daysDifference = diff.days;
+                                            hoursDifference = diff.hours;
+                                            minutesDifference = diff.minutes;
+                                            secondsDifference = diff.seconds;
+
+                                            if(daysDifference!=0 || hoursDifference!=0|| minutesDifference!=0 || secondsDifference!=0){
+
+                                                if(daysDifference!=0){
+
+                                                    countdowncardtext.setText(daysDifference+" Days to Go");
+
+                                                }else if(hoursDifference!=0){
+
+                                                    countdowncardtext.setText(hoursDifference+" Hours to Go");
+
+                                                }else if(minutesDifference!=0){
+
+                                                    countdowncardtext.setText(minutesDifference+" Minutes to Go");
+
+                                                }else {
+
+                                                    countdowncardtext.setText(secondsDifference+" Seconds to Go");
+
+                                                }
+
+
+                                                dayscounttext.setText(""+daysDifference);
+                                                hourscounttext.setText(""+hoursDifference);
+                                                minutescounttext.setText(""+minutesDifference);
+                                                secondscounttext.setText(""+secondsDifference);
+
+
+                                            }
+
+
+                                        }else {
+
+                                            countdowncardtext.setText("No Days to Go");
+                                        }
+
+                                        countdownloadlabel.setText(latest_event_name);
+                                    }
+
+                                    JSONArray servicesArray = dataObject.optJSONArray("services_booked");
+
+                                    if(servicesArray != null){
+                                        for(int i = 0; i < servicesArray.length(); i++){
+
+                                            JSONObject serviceObj = servicesArray.getJSONObject(i);
+
+                                            String event_id = serviceObj.optString("event_id");
+                                            String capability_id = serviceObj.optString("capability_id");
+                                            String status = serviceObj.optString("status");
+
+                                        }
+                                    }
+
+                                    JSONArray eventsArray = dataObject.optJSONArray("events");
+
+                                    if(eventsArray == null || eventsArray.length() == 0){
+                                        // No events
+                                        return;
+                                    }
+
+                                    for (int i = 0; i < eventsArray.length(); i++) {
+
+                                        JSONObject eventObj = eventsArray.getJSONObject(i);
+
+                                        String event_id = eventObj.optString("event_id");
+                                        String event_name = eventObj.optString("event_name");
+
+                                        // 🔹 Parse items array
+                                        JSONArray itemsArray = eventObj.optJSONArray("items");
+
+                                        if(itemsArray != null){
+                                            for(int j = 0; j < itemsArray.length(); j++){
+
+                                                JSONObject itemObj = itemsArray.getJSONObject(j);
+
+                                                double allocated_amount = itemObj.optDouble("allocated_amount");
+                                                double amount_paid = itemObj.optDouble("amount_paid");
+                                                String name = itemObj.optString("name");
+                                                double percentage_spent = itemObj.optDouble("percentage_spent");
+
+                                                Log.d("ITEM",
+                                                        "Event: "+event_name+
+                                                                " Item: "+name+
+                                                                " Allocated: "+allocated_amount);
+                                            }
+                                        }
+
+                                        // 🔹 Parse summary
+                                        JSONObject summaryObj = eventObj.optJSONObject("summary");
+
+                                        if(summaryObj != null){
+                                            double total_allocated = summaryObj.optDouble("total_allocated");
+                                            double total_spent = summaryObj.optDouble("total_spent");
+
+                                            double budget_health = summaryObj.optDouble("budget_health");
+                                            double health_score = summaryObj.optDouble("health_score");
+                                            double percentage_spent = summaryObj.optDouble("percentage_spent");
+                                            double remaining = summaryObj.optDouble("remaining");
+
+                                            double total_deposited = summaryObj.optDouble("total_deposited");
+
+                                            double vendor_score = summaryObj.optDouble("vendor_score");
+                                            double vendors_allocated = summaryObj.optInt("vendors_allocated");
+                                            double vendors_not_allocated = summaryObj.optInt("vendors_not_allocated");
+
+
+
+
+                                            Log.d("SUMMARY",
+                                                    "Event: "+event_name);
+                                        }
+
+                                    }
+                                }
+                                else
+                                {
+
+
+                                    String messageerror="There was an Error";
+                                    Log.d("Msg:",messageerror);
+
+                                    AlertDialog ad = new AlertDialog.Builder(getContext())
+                                            .create();
+                                    ad.setCancelable(true);
+                                    ad.setTitle("Request Failed");
+                                    ad.setMessage("Could not event overview  items");
+                                    ad.setButton("Ok", new DialogInterface.OnClickListener() {
+
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                        }
+                                    });
+                                    ad.show();
+
+                                }
+
+
+
+
+                            } catch (JSONException e) {
+
+
+                                e.printStackTrace();
+                                Log.e("errorIs", "error"+e.getMessage());
+                            }
+                            hideProgressBar();
+
+                        } else {
+                            hideProgressBar();
+
+
+                            Log.e("Your Array Response", "Data Null");
+                        }
+
+                    }
+
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                hideProgressBar();
+
+
+                //continuetonextbutton.setText("Upload to your store");
+                Log.e("Menu list error is ", "" + error);
+
+                if (error == null || error.networkResponse == null) {
+                    return;
+                }
+
+                String body;
+                //get status code here
+                final String statusCode = String.valueOf(error.networkResponse.statusCode);
+                //Log.e("error st_code ", "" + statusCode);
+                //get response body and parse with appropriate encoding
+                try {
+                    body = new String(error.networkResponse.data,"UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    //Log.e("encoding is ", "" + e.getMessage());
+                    // exception
+                }
+
+            }
+        }) {
+
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+
+
+                String creds = String.format("%s:%s",app.getApiusername(),app.getApipassword());
+                Log.e("Login with API username", "" + app.getApiusername()+" , And API passwrod"+app.getApipassword());
+                String auth = "Basic " + Base64.encodeToString(creds.getBytes(), Base64.DEFAULT);
+
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/json");
+                params.put("Accept", "application/json");
+                params.put("Authorization",auth);
+                return params;
+            }
+
+
+        };
+        RequestQueue queue = Volley.newRequestQueue(context);
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                80000,
+                1,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        queue.add(request);
+
+
+    }
+
+
 
 }

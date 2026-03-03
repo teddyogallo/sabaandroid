@@ -113,7 +113,149 @@ public class sabaEventItem {
 
 
     //eventbudgetites
-    String budget_event_id,budget_capability_id,budget_allocated_amount,budget_amount_paid,budget_currency,budget_payment_status,budget_last_payment_date,budget_planner_id;
+    String budgetitemname,budgetlistamounttotal, budget_event_id,budget_capability_id,budget_allocated_amount,budget_amount_paid,budget_currency,budget_payment_status,budget_last_payment_date,budget_planner_id;
+    //for payments
+
+    private String paymentAmount;
+    private String paymentCurrency;
+    private String paymentDescription;
+    private String paymentFees;
+    private String payingUserId;
+    private String paymentStatus;
+    private String paymentType;
+    private String providerReference;
+    private String paymentRecNum;
+    private String paymentStatusDescription;
+    private String paymentTaxAmount;
+    private String paymentTimePaid;
+    private String paymentTimestamp;
+    private String paymentTransactionNumber;
+    private String paymentUserId;
+
+    // ===== GETTERS AND SETTERS =====
+
+    public String getpaymentAmount() {
+        return paymentAmount;
+    }
+
+    public void setpaymentAmount(String paymentAmount) {
+        this.paymentAmount = paymentAmount;
+    }
+
+    public String getpaymentCurrency() {
+        return paymentCurrency;
+    }
+
+    public void setpaymentCurrency(String paymentCurrency) {
+        this.paymentCurrency = paymentCurrency;
+    }
+
+    public String getpaymentDescription() {
+        return paymentDescription;
+    }
+
+    public void setpaymentDescription(String paymentDescription) {
+        this.paymentDescription = paymentDescription;
+    }
+
+    public String getpaymentFees() {
+        return paymentFees;
+    }
+
+    public void setpaymentFees(String paymentFees) {
+        this.paymentFees = paymentFees;
+    }
+
+    public String getPayingUserId() {
+        return payingUserId;
+    }
+
+    public void setPayingUserId(String payingUserId) {
+        this.payingUserId = payingUserId;
+    }
+
+    public String getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(String paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
+
+    public String getPaymentType() {
+        return paymentType;
+    }
+
+    public void setPaymentType(String paymentType) {
+        this.paymentType = paymentType;
+    }
+
+    public String getProviderReference() {
+        return providerReference;
+    }
+
+    public void setProviderReference(String providerReference) {
+        this.providerReference = providerReference;
+    }
+
+    public String getpaymentRecNum() {
+        return paymentRecNum;
+    }
+
+    public void setpaymentRecNum(String paymentRecNum) {
+        this.paymentRecNum = paymentRecNum;
+    }
+
+    public String getpaymentStatusDescription() {
+        return paymentStatusDescription;
+    }
+
+    public void setpaymentStatusDescription(String paymentStatusDescription) {
+        this.paymentStatusDescription = paymentStatusDescription;
+    }
+
+    public String getpaymentTaxAmount() {
+        return paymentTaxAmount;
+    }
+
+    public void setpaymentTaxAmount(String paymentTaxAmount) {
+        this.paymentTaxAmount = paymentTaxAmount;
+    }
+
+    public String getpaymentTimePaid() {
+        return paymentTimePaid;
+    }
+
+    public void setpaymentTimePaid(String paymentTimePaid) {
+        this.paymentTimePaid = paymentTimePaid;
+    }
+
+    public String getpaymentTimestamp() {
+        return paymentTimestamp;
+    }
+
+    public void setpaymentTimestamp(String paymentTimestamp) {
+        this.paymentTimestamp = paymentTimestamp;
+    }
+
+    public String getpaymentTransactionNumber() {
+        return paymentTransactionNumber;
+    }
+
+    public void setpaymentTransactionNumber(String paymentTransactionNumber) {
+        this.paymentTransactionNumber = paymentTransactionNumber;
+    }
+
+    public String getpaymentUserId() {
+        return paymentUserId;
+    }
+
+    public void setpaymentUserId(String paymentUserId) {
+        this.paymentUserId = paymentUserId;
+    }
+
+
+
 
     public void setMessage(String message) {
         this.message=message;
@@ -899,6 +1041,22 @@ public class sabaEventItem {
 
     public void setbudget_event_id(String name) {
         this.budget_event_id=name;
+
+
+    }
+
+    public String getbudget_itemname () {return budgetitemname;}
+
+    public void setbudget_itemname(String name) {
+        this.budgetitemname=name;
+
+
+    }
+
+    public String getbudgetlisttotal_budget() {return budgetlistamounttotal;}
+
+    public void setbudgetlisttotal_budget(String name) {
+        this.budgetlistamounttotal=name;
 
 
     }

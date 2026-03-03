@@ -603,7 +603,7 @@ public class conversationactivity extends AppCompatActivity {
         paramsotpu.put("username", app.getApiusername());
         paramsotpu.put("active_user", app.getActiveChatuser());
 
-        String loginuserendpoint="https://api.sabaapp.co/v0/messages/retrieveusermessages?active_user="+app.getActiveChatuser();
+        String loginuserendpoint="https://api.getabirio.com/v0/messages/retrieveusermessages?active_user="+app.getActiveChatuser();
 
         Log.d("GET all chat Active user", app.getActiveChatuser() + "");
 
@@ -939,7 +939,7 @@ public class conversationactivity extends AppCompatActivity {
         paramsotpu.put("recipient_id", app.getActiveChatuser());
         paramsotpu.put("message", responsemessage);
 
-        String loginuserendpoint="https://api.sabaapp.co/v0/messages/sendsupportmsg";
+        String loginuserendpoint="https://api.getabirio.com/v0/messages/sendsupportmsg";
 
         Log.d("GET all chat Active user", app.getActiveChatuser() + "");
         Log.d("SENDING MESSAGE: ", responsemessage + "");

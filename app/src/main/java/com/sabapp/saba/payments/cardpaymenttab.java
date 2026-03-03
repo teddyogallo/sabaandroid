@@ -187,7 +187,7 @@ public class cardpaymenttab extends Fragment {
 
 
 
-        String paymentsendpoint = "https://api.sabaapp.co/v0/payment/paystack/initiate";
+        String paymentsendpoint = "https://api.getabirio.com/v0/payment/paystack/initiate";
 
         Log.e("response", "response "+amountrequestedtext);
 

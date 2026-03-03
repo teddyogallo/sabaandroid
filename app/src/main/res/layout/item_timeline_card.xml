@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp">
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="2dp"
+        android:layout_height="0dp"
+        android:background="#D1D1D1"
+        app:layout_constraintStart_toStartOf="@+id/timeNode"
+        app:layout_constraintEnd_toEndOf="@+id/timeNode"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <TextView
+        android:id="@+id/timeLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="12:00 PM"
+        android:textSize="12sp"
+        app:layout_constraintTop_toTopOf="@+id/cardContainer"
+        app:layout_constraintBottom_toBottomOf="@+id/cardContainer"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <View
+        android:id="@+id/timeNode"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/circle_progress"
+        app:layout_constraintStart_toEndOf="@id/timeLabel"
+        app:layout_constraintTop_toTopOf="@id/timeLabel"
+        app:layout_constraintBottom_toBottomOf="@id/timeLabel" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="2dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/timeNode"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="12dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/statusBadge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#E8F5E9"
+                android:paddingHorizontal="8dp"
+                android:text="Booked"
+                android:textColor="#2E7D32"
+                android:textSize="10sp" />
+            <TextView
+                android:id="@+id/eventTitleInCard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:paddingHorizontal="8dp"
+                android:text=""
+                android:textColor="@color/black"
+                android:layout_marginStart="25dp"/>
+        </LinearLayout>
+
+            <TextView
+                android:id="@+id/vendorName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Flora &amp; Bloom"
+                android:textStyle="bold"
+                android:textSize="16sp" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <Button
+                    android:id="@+id/btnCall"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Call Vendor"
+                    android:textColor="#6A5ACD" />
+                <Button
+                    android:id="@+id/btnAddVendor"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add Vendor"
+                    android:textColor="#6A5ACD"
+                    android:layout_marginStart="10dp"
+
+                    />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

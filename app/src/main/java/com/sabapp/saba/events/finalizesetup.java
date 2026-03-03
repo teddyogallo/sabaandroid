@@ -433,7 +433,7 @@ public class finalizesetup extends AppCompatActivity {
         }
 
 
-        String paymentsendpoint="https://api.sabaapp.co/v0/events/finalize";
+        String paymentsendpoint="https://api.getabirio.com/v0/events/finalize";
 
 
         Log.e("response", "response ");

@@ -17,7 +17,7 @@
             android:id="@+id/tab_vendor_list"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:text="@string/tab_vendor_list"
+            android:text="Suggestions"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_small"
             android:paddingStart="@dimen/spacing_16"
@@ -26,10 +26,10 @@
             android:layout_marginEnd="@dimen/spacing_8" />
 
         <Button
-            android:id="@+id/tab_date"
+            android:id="@+id/tab_proposals"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/button_height_small"
-            android:text="Date"
+            android:text="Proposals"
             android:textColor="@color/text_primary"
             android:background="@android:color/transparent"
             android:textSize="@dimen/text_size_small"
@@ -39,10 +39,10 @@
             android:layout_marginEnd="@dimen/spacing_8" />
 
         <Button
-            android:id="@+id/tab_budget"
+            android:id="@+id/tab_accepted"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/button_height_small"
-            android:text="Budget"
+            android:text="Accepted"
             android:textColor="@color/text_primary"
             android:background="@android:color/transparent"
             android:textSize="@dimen/text_size_small"
@@ -54,10 +54,10 @@
 
 
         <Button
-            android:id="@+id/tab_style"
+            android:id="@+id/tab_confirmedvendor"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/button_height_small"
-            android:text="Style"
+            android:text="Confirmed"
             android:textColor="@color/text_primary"
             android:background="@android:color/transparent"
             android:textSize="@dimen/text_size_small"
@@ -67,10 +67,10 @@
             android:layout_marginEnd="@dimen/spacing_8" />
 
         <Button
-            android:id="@+id/tab_related"
+            android:id="@+id/tab_deliveredvendor"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/button_height_small"
-            android:text="Related"
+            android:text="Delivered"
             android:textColor="@color/text_primary"
             android:background="@android:color/transparent"
             android:textSize="@dimen/text_size_small"
@@ -79,10 +79,10 @@
             android:paddingEnd="@dimen/spacing_16"
             android:layout_marginEnd="@dimen/spacing_8" />
         <Button
-            android:id="@+id/tab_chat"
+            android:id="@+id/tab_completedvendor"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/button_height_small"
-            android:text="Chat"
+            android:text="Completed"
             android:textColor="@color/text_primary"
             android:background="@android:color/transparent"
             android:textSize="@dimen/text_size_small"

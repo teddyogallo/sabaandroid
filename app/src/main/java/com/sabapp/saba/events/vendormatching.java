@@ -272,7 +272,7 @@ public class vendormatching extends AppCompatActivity {
 
 
 
-        String paymentsendpoint="https://api.sabaapp.co/v0/events/vendors";
+        String paymentsendpoint="https://api.getabirio.com/v0/events/vendors";
 
         Log.d("SENDING MATCH PAYLOAD", String.valueOf(payload));
 

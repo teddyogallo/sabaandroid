@@ -443,7 +443,7 @@ public class addcatalogue extends AppCompatActivity {
         }
 
 
-        String paymentsendpoint="https://api.sabaapp.co/v0/vendor/capability";
+        String paymentsendpoint="https://api.getabirio.com/v0/vendor/capability";
 
 
         Log.e("response", "response ");
@@ -594,7 +594,7 @@ public class addcatalogue extends AppCompatActivity {
         paramsotpu.put("username", app.getApiusername());
 
 
-        String paymentsendpoint="https://api.sabaapp.co/v0/vendors/capabilities";
+        String paymentsendpoint="https://api.getabirio.com/v0/vendors/capabilities";
 
 
 

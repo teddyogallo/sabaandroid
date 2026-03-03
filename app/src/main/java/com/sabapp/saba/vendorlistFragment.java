@@ -1,0 +1,1244 @@
+package com.sabapp.saba;
+
+import static com.gun0912.tedpermission.provider.TedPermissionProvider.context;
+
+import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import android.text.TextUtils;
+import android.util.Base64;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.sabapp.saba.adapters.eventoverviewalertsRecyclerAdapter;
+import com.sabapp.saba.adapters.messagefragmentRecyclerAdapter;
+import com.sabapp.saba.adapters.sabaeventlistclientHomeRecyclerAdapter;
+import com.sabapp.saba.adapters.vendoreventlistRecycler;
+import com.sabapp.saba.adapters.vendorfragmentlistRecycler;
+import com.sabapp.saba.adapters.vendorlisteventRecyclerAdapter;
+import com.sabapp.saba.application.sabaapp;
+import com.sabapp.saba.data.model.SelectedCapabilityItem;
+import com.sabapp.saba.data.model.sabaEventItem;
+import com.sabapp.saba.events.eventdashboard;
+import com.wang.avi.AVLoadingIndicatorView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+
+/**
+ * A simple {@link Fragment} subclass.
+ * Use the {@link vendorlistFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ */
+public class vendorlistFragment extends Fragment {
+
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
+
+    // TODO: Rename and change types of parameters
+    private String mParam1;
+    private String mParam2;
+
+    Context context;
+    sabaapp app;
+    TextView filtersummarytext;
+
+    AVLoadingIndicatorView progressBar;
+
+    //for vendor list
+
+    ArrayList<String> capability_codeList;
+
+    ArrayList<String> base_pricelist;
+    ArrayList<JSONObject> capability_detailslist;
+    ArrayList<String> capability_idlist;
+    ArrayList<String> service_image_locationlist;
+
+
+    ArrayList<String> vendorserviceimage_idList;
+    ArrayList<String> vendorserviceimagelocationList;
+    ArrayList<String> vendoridList;
+
+    ArrayList<String> vendornameList;
+    ArrayList<String> vendorcapabilitynameList;
+    ArrayList<String> vendorlocationList;
+
+    ArrayList<sabaEventItem> eventwholearray;
+
+    ArrayList<sabaEventItem> eventalertsholearrey;
+
+    vendorfragmentlistRecycler sabaeventsadapter;
+
+    vendoreventlistRecycler sabaeventslistadapter;
+
+
+
+    eventoverviewalertsRecyclerAdapter eventalertadapter;
+
+    RecyclerView servicesselected,capabilitiesselected,budgetselectedrecycler;
+    RecyclerView eventlistrecyclerview;
+
+    RecyclerView eventoverviewalertrecycler;
+
+    ArrayList<SelectedCapabilityItem> capabilityList;
+
+    JSONArray dataobj;
+
+    RecyclerView timelinerecyclerView;
+
+    private BroadcastReceiver mRegistrationBroadcastReceiver;
+    int chat_number = 0;
+    int allnotifications_number = 0;
+
+    String EventId, event_budget, event_time,event_name;
+
+    private Button vendortab_suggestions, ventortab_proposals, ventortab_accepted,vendortab_confirmed, vendortab_delivered,vendortab_completed;
+
+
+    //for event list
+    JSONArray dataobjeventlist;
+    //eventlist values
+
+
+    ArrayList<String> user_idlist = new ArrayList<String>();
+    ArrayList<String> event_namelist;
+    ArrayList<String> event_timelist,event_timeUnixlist;
+    ArrayList<String> event_locationlist;
+    ArrayList<String> event_budgetlist;
+    ArrayList<String> budget_spentlist;
+    ArrayList<String> setup_statuslist;
+    ArrayList<String> event_statuslist;
+    ArrayList<String> planner_idlist;
+    ArrayList<String> event_image_idlist;
+    ArrayList<String> event_image_locationlist;
+    ArrayList<String> image_encodedlist;
+    ArrayList<String> time_setuplist;
+    ArrayList<String> event_idlist;
+
+    String globalapiusername, globalapipassword;
+
+    ArrayList<sabaEventItem> eventlistwholearray;
+
+
+
+    public vendorlistFragment() {
+        // Required empty public constructor
+    }
+
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment vendorlistFragment.
+     */
+    // TODO: Rename and change types and number of parameters
+    public static vendorlistFragment newInstance(String param1, String param2) {
+        vendorlistFragment fragment = new vendorlistFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.context = context; // now you can safely use it
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        app = (sabaapp) requireActivity().getApplication();
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+
+        // register new push message receiver
+        // by doing this, the activity will be notified each time a new message arrives
+
+        //Objects.requireNonNull(((sabaDrawerActivity) requireActivity()).getSupportActionBar()).setDisplayHomeAsUpEnabled(false);
+        //Objects.requireNonNull(((sabaDrawerActivity) requireActivity()).getSupportActionBar()).setHomeButtonEnabled(false);
+
+        setUpRecycler();
+        initVendorContainer();
+
+
+        LocalBroadcastManager.getInstance(context).registerReceiver(mRegistrationBroadcastReceiver,
+                new IntentFilter("CHAT_BROADCAST"));
+
+        LocalBroadcastManager.getInstance(context).registerReceiver(mRegistrationBroadcastReceiver,
+                new IntentFilter("PAYMENT_BROADCAST"));
+
+        LocalBroadcastManager.getInstance(context).registerReceiver(mRegistrationBroadcastReceiver,
+                new IntentFilter("ORDER_BROADCAST"));
+
+        LocalBroadcastManager.getInstance(context).registerReceiver(mRegistrationBroadcastReceiver,
+                new IntentFilter("NOTIFICATION_LOCAL_BROADCAST"));
+
+
+
+        /*LocalBroadcastManager.getInstance(context).registerReceiver(mRegistrationBroadcastReceiver,
+                new IntentFilter("CHAT_BROADCAST"));
+
+        LocalBroadcastManager.getInstance(context).registerReceiver(mRegistrationBroadcastReceiver,
+                new IntentFilter("PAYMENT_BROADCAST"));
+
+        LocalBroadcastManager.getInstance(context).registerReceiver(mRegistrationBroadcastReceiver,
+                new IntentFilter("ORDER_BROADCAST"));
+        LocalBroadcastManager.getInstance(context).registerReceiver(mRegistrationBroadcastReceiver,
+                new IntentFilter("NOTIFICATION_LOCAL_BROADCAST"));*/
+
+    }
+
+    private void setUpRecycler()
+    {
+
+
+        base_pricelist = new ArrayList<String>();
+        capability_detailslist = new ArrayList<JSONObject>();
+        capability_idlist = new ArrayList<String>();
+        service_image_locationlist = new ArrayList<String>();
+        eventwholearray = new ArrayList<sabaEventItem>();
+
+
+        vendorserviceimage_idList = new ArrayList<String>();
+        vendorserviceimagelocationList = new ArrayList<String>();
+        vendoridList = new ArrayList<String>();
+
+        vendornameList = new ArrayList<String>();
+        vendorcapabilitynameList = new ArrayList<String>();
+        vendorlocationList = new ArrayList<String>();
+
+
+        servicesselected.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
+
+        sabaeventsadapter=new vendorfragmentlistRecycler(eventwholearray,context, vendorlistFragment.this, app);
+        servicesselected.setAdapter(sabaeventsadapter);
+
+    }
+
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+
+        View view =  inflater.inflate(R.layout.fragment_vendorlist, container, false);
+
+        filtersummarytext = view.findViewById(R.id.filter_summary_text);
+        progressBar = view.findViewById(R.id.progressbar);
+        servicesselected = view.findViewById(R.id.recyclerView_vendors);
+
+        vendortab_suggestions = view.findViewById(R.id.tab_vendor_list);
+        ventortab_proposals = view.findViewById(R.id.tab_proposals);
+        ventortab_accepted = view.findViewById(R.id.tab_accepted);
+        vendortab_confirmed = view.findViewById(R.id.tab_confirmedvendor);
+        vendortab_delivered = view.findViewById(R.id.tab_deliveredvendor);
+        vendortab_completed = view.findViewById(R.id.tab_completedvendor);
+        eventlistrecyclerview = view.findViewById(R.id.eventslistrecycler);
+
+        user_idlist = new ArrayList<String>();
+        event_namelist  = new ArrayList<String>();
+        event_timelist  = new ArrayList<String>();
+        event_timeUnixlist = new ArrayList<String>();
+        event_locationlist = new ArrayList<String>();
+        event_budgetlist  = new ArrayList<String>();
+        budget_spentlist = new ArrayList<String>();
+        setup_statuslist= new ArrayList<String>();
+        event_statuslist = new ArrayList<String>();
+        planner_idlist = new ArrayList<String>();
+        event_image_idlist = new ArrayList<String>();
+        event_image_locationlist = new ArrayList<String>();
+        image_encodedlist = new ArrayList<String>();
+        time_setuplist = new ArrayList<String>();
+        event_idlist  = new ArrayList<String>();
+        eventlistwholearray = new ArrayList<sabaEventItem>();
+
+        eventlistrecyclerview.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+
+
+        sabaeventslistadapter=new vendoreventlistRecycler(eventlistwholearray,context, vendorlistFragment.this, app);
+        eventlistrecyclerview.setAdapter(sabaeventslistadapter);
+
+
+
+
+
+        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+
+                // checking for type intent filter
+                if (intent.getAction().equals("NOTIFICATION_LOCAL_BROADCAST")) {
+                    // new push notification is received
+                    int payment_numberlocal = app.getPaymentNumber();
+                    int ordernumber_local = app.getOrderNumber();
+                    int generalnumber_local = app.getGeneralNotificationsNumber();
+
+
+                    int currentgeneral_notifications = payment_numberlocal + ordernumber_local + generalnumber_local;
+
+                    allnotifications_number =1 + currentgeneral_notifications;
+
+                    generalnumber_local = generalnumber_local + 1;
+
+                    String notification_title = app.getCurrentNotificationtitle();
+
+                    String notification_message = app.getCurrentNotificationmessage();
+
+                    String notification_type = app.getCurrentNotificationtype();
+
+                    String notification_id = app.getCurrentNotificationid();
+
+                    //save to shared preferences here
+                    SharedPrefsXtreme sharedPrefsXtreme = SharedPrefsXtreme.getInstance(context);
+
+                    sharedPrefsXtreme.saveIntData("general_notifications_num", generalnumber_local);
+                    //sharedPrefsXtreme.saveData("current_notificationtitle", notification_title);
+
+                    //sharedPrefsXtreme.saveData("current_notification_message", notification_message);
+
+                    //sharedPrefsXtreme.saveData("current_notification_type", notification_type);
+
+                    //sharedPrefsXtreme.saveData("current_notification_id", notification_id);
+
+
+
+                    //end of save to shared preferences here
+
+                    /*AppCompatActivity activity = (AppCompatActivity) messagestartactivity.this;
+                    popupnotification bottomSheetFragment = new popupnotification();
+                    bottomSheetFragment.show((activity).getSupportFragmentManager(), bottomSheetFragment.getTag());*/
+
+
+
+                }
+                else if (intent.getAction().equals("CHAT_BROADCAST")) {
+                    // new push notification is received
+
+                    /*chat_number = app.getChatNumber();
+
+                    chat_number =1 + chat_number;
+
+                    //save to shared preferences here
+                    SharedPrefsXtreme sharedPrefsXtreme = SharedPrefsXtreme.getInstance(context);
+
+                    sharedPrefsXtreme.saveIntData("chat_notifications_num", chat_number);*/
+
+                    String social_id = intent.getStringExtra("social_id");
+                    if(TextUtils.isEmpty(social_id)||social_id.equals("null")||social_id==null){
+                        social_id = "testuserid";
+
+                    }
+
+                    String sendernames =  intent.getStringExtra("firstname");
+                    if(TextUtils.isEmpty(sendernames)||sendernames.equals("null")||sendernames==null){
+                        sendernames = "TEST User";
+
+                    }
+
+                    String social_details = sendernames;
+                    String message_type =  intent.getStringExtra("type");
+                    if(TextUtils.isEmpty(message_type)||message_type.equals("null")||message_type==null){
+                        message_type = "INCOMING";
+
+                    }
+
+                    String messagecontent =  intent.getStringExtra("chat_message");
+                    if(TextUtils.isEmpty(messagecontent)||messagecontent.equals("null")||messagecontent==null){
+                        messagecontent = "Message does not have content";
+
+                    }
+
+                    String timestamp =  intent.getStringExtra("time");
+                    if(TextUtils.isEmpty(timestamp)||timestamp.equals("null")||timestamp==null){
+                        //timestamp = "Message does not have content";
+                        Long tsLong = System.currentTimeMillis()/1000;
+                        timestamp = tsLong.toString();
+
+                    }
+
+                    if(sendernames.equals("")){
+
+                        social_details= social_id;
+                    }
+
+                    String notification_title = intent.getStringExtra("title");
+
+                    String notification_message = intent.getStringExtra("body");
+
+                    String notification_type = intent.getStringExtra("type");
+
+                    String notification_id = intent.getStringExtra("social_id");
+
+
+
+
+
+                    //getFevorites();
+
+                    //end of save to shared preferences here
+                    /*AppCompatActivity activity = (AppCompatActivity) messagestartactivity.this;
+                    popupnotification bottomSheetFragment = new popupnotification();
+                    bottomSheetFragment.show((activity).getSupportFragmentManager(), bottomSheetFragment.getTag());*/
+
+                }
+
+                else if (intent.getAction().equals("PAYMENT_BROADCAST")) {
+                    // new push notification is received
+                    int payment_numberlocal = app.getPaymentNumber();
+                    int ordernumber_local = app.getOrderNumber();
+                    int generalnumber_local = app.getGeneralNotificationsNumber();
+
+
+                    int currentgeneral_notifications = payment_numberlocal + ordernumber_local + generalnumber_local;
+
+                    allnotifications_number =1 + currentgeneral_notifications;
+
+                    String notification_title = intent.getStringExtra("title");
+
+                    String notification_message = intent.getStringExtra("body");
+
+                    String notification_type = intent.getStringExtra("type");
+
+                    String notification_id = intent.getStringExtra("social_id");
+
+                    //save to shared preferences here
+                    payment_numberlocal = payment_numberlocal + 1;
+                    SharedPrefsXtreme sharedPrefsXtreme = SharedPrefsXtreme.getInstance(context);
+
+                    sharedPrefsXtreme.saveIntData("payment_notifications_num", payment_numberlocal);
+
+
+                    //end of save to shared preferences here
+
+                    /*AppCompatActivity activity = (AppCompatActivity) messagestartactivity.this;
+                    popupnotification bottomSheetFragment = new popupnotification();
+                    bottomSheetFragment.show((activity).getSupportFragmentManager(), bottomSheetFragment.getTag());*/
+
+                }
+
+            }
+        };
+
+
+
+        return view;
+    }
+
+    private void initVendorContainer() {
+
+
+        //Showing vendors matching: June 12, Budget: $15,000, Style: Elegant, Related: Any
+
+        String valuetext = "";
+
+
+        if(event_name!=null){
+
+            valuetext = "Showing Vendors matching : "+event_name+", On";
+
+
+            if(event_time!=null){
+
+                valuetext = valuetext+","+event_time;
+            }
+
+            if(event_budget!=null){
+
+                valuetext = valuetext+", Budget : "+event_budget;
+
+            }
+
+            filtersummarytext.setText(valuetext);
+        }else{
+
+            filtersummarytext.setText("Event title");
+        }
+
+
+
+
+
+        // Load default tab
+        getEventslist();
+        initVendortopTabs();
+
+
+    }
+
+    private void getEventslist()
+    {
+        //continuetonextbutton.setText("Uploading to your store...");
+        showProgressBar();
+
+
+        String request_username = app.getApiusername();
+
+
+        HashMap<String, String> paramsotpu = new HashMap<String, String>();
+
+        paramsotpu.put("username", app.getApiusername());
+
+
+        String paymentsendpoint="https://api.getabirio.com/v0/events";
+
+
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, paymentsendpoint, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.e("response", "ALL Products: "+response.toString());
+                        hideProgressBar();
+                        if (!response.equals(null)) {
+                            Log.e("response", "response "+response.toString());
+                            JSONObject merchant_profile = null;
+                            JSONObject accountdetails = null;
+                            JSONObject paymentinfo = null;
+                            JSONObject jsonObj = null;
+
+                            user_idlist.clear();
+                            event_namelist.clear();
+                            event_timelist.clear();
+                            event_timeUnixlist.clear();
+                            event_locationlist.clear();
+                            event_budgetlist.clear();
+                            budget_spentlist.clear();
+                            setup_statuslist.clear();
+                            event_statuslist.clear();
+                            planner_idlist.clear();
+                            event_image_idlist.clear();
+                            event_image_locationlist.clear();
+                            image_encodedlist.clear();
+                            time_setuplist.clear();
+                            event_idlist.clear();
+
+                            eventlistwholearray.clear();
+
+                            try {
+                                jsonObj = new JSONObject(response.toString());
+                                String message =jsonObj.getString("STATUS");
+                                String messagedetails =jsonObj.getString("MESSAGE");
+                                if(message.toLowerCase().matches("success"))
+                                {
+                                    dataobjeventlist = jsonObj.getJSONArray("DATA");
+
+
+
+                                    if(dataobjeventlist.length()==0){
+                                        // their are not values to add
+                                        String messageerror="There was Zero products retrieved";
+                                        Log.d("Msg:",messageerror);
+
+                                        user_idlist.add(app.getApiusername());
+                                        event_namelist.add("Add Event");
+                                        event_timelist.add(null);
+                                        event_timeUnixlist.add(null);
+                                        event_locationlist.add("Tap to add a new event");
+                                        event_budgetlist.add(null);
+                                        budget_spentlist.add(null);
+                                        setup_statuslist.add(null);
+                                        event_statuslist.add("draft");
+                                        planner_idlist.add(null);
+                                        event_image_idlist.add(null);
+                                        event_image_locationlist.add(null);
+                                        image_encodedlist.add(null);
+                                        time_setuplist.add(null);
+                                        event_idlist.add(null);
+
+                                        //eventwholearray.clear();
+
+                                        for(Integer i=0; i<event_namelist.size(); i++)
+                                        {
+                                            sabaEventItem item=new sabaEventItem();
+
+                                            item.seteventName(event_namelist.get(i));
+
+                                            item.seteventUserid(user_idlist.get(i));
+
+                                            item.seteventTime(event_timelist.get(i));
+                                            item.seteventTimeUnix(event_timeUnixlist.get(i));
+                                            item.seteventLocation(event_locationlist.get(i));
+                                            item.seteventBudget(event_budgetlist.get(i));
+                                            item.setbudgetSpent(budget_spentlist.get(i));
+                                            item.seteventStatus(setup_statuslist.get(i));
+                                            item.seteventStatus(event_statuslist.get(i));
+                                            item.setplannerId(planner_idlist.get(i));
+                                            item.seteventimageId(event_image_idlist.get(i));
+                                            item.seteventimageLocation(event_image_locationlist.get(i));
+                                            item.seteventimageEncoded(image_encodedlist.get(i));
+                                            item.settime_Setup(time_setuplist.get(i));
+                                            item.setevent_Id(event_idlist.get(i));
+
+
+                                            //setImagebitmap
+                                            eventlistwholearray.add(item);
+
+                                        }
+                                        sabaeventslistadapter.notifyDataSetChanged();
+
+
+
+                                        //end of their are no values to add
+                                    }else{
+
+                                        for (int i = 0; i < dataobjeventlist.length(); i++) {
+                                            jsonObj = dataobjeventlist.getJSONObject(i);
+
+                                            String eventuserid = jsonObj.getString("user_id");
+                                            String eventname = jsonObj.getString("event_name");
+                                            String eventtime= jsonObj.getString("event_time");
+                                            String formattedEventTime = null;
+
+                                            if (isValidUnixTimestamp(eventtime)) {
+                                                formattedEventTime = convertUnixToDateTime(eventtime);
+                                            } else {
+                                                Log.w("EVENT_TIME", "Invalid Unix timestamp: " + eventtime);
+                                            }
+                                            String eventlocation = jsonObj.getString("event_location");
+
+                                            String eventbudget =jsonObj.getString("event_budget");
+                                            String budgetspent =jsonObj.getString("budget_spent");
+
+                                            String setupstatus =jsonObj.getString("setup_status");
+                                            String eventstatus =jsonObj.getString("event_status");
+                                            String plannerid =jsonObj.getString("planner_id");
+
+                                            String eventimageid =jsonObj.getString("event_image_id");
+                                            String eventimagelocation=jsonObj.getString("event_image_location");
+                                            String eventimageencoded =jsonObj.getString("image_encoded");
+                                            String time_setup =jsonObj.getString("time_setup");
+                                            String event_id =jsonObj.getString("event_id");
+
+
+                                            user_idlist.add(eventuserid);
+                                            event_namelist.add(eventname);
+                                            event_timelist.add(formattedEventTime);
+                                            event_timeUnixlist.add(eventtime);
+                                            event_locationlist.add(eventlocation);
+                                            event_budgetlist.add(eventbudget);
+                                            budget_spentlist.add(budgetspent);
+                                            setup_statuslist.add(setupstatus);
+                                            event_statuslist.add(eventstatus);
+                                            planner_idlist.add(plannerid);
+                                            event_image_idlist.add(eventimageid);
+                                            event_image_locationlist.add(eventimagelocation);
+                                            image_encodedlist.add(eventimageencoded);
+                                            time_setuplist.add(time_setup);
+                                            event_idlist.add(event_id);
+
+                                            EventId = event_id;
+                                            event_name = eventname;
+                                            event_budget =eventbudget;
+
+
+
+                                            //for
+
+                                            Log.d("Added Item", eventname + " To products array list");
+                                        }
+
+
+
+                                        eventlistwholearray.clear();
+
+
+                                        //Integer i=0; i<event_namelist.size(); i++
+
+                                        for(int i = event_namelist.size() - 1; i >= 0; i--)
+                                        {
+                                            sabaEventItem item=new sabaEventItem();
+
+                                            item.seteventName(event_namelist.get(i));
+
+                                            item.seteventUserid(user_idlist.get(i));
+
+                                            item.seteventTime(event_timelist.get(i));
+                                            item.seteventTimeUnix(event_timeUnixlist.get(i));
+                                            item.seteventLocation(event_locationlist.get(i));
+                                            item.seteventBudget(event_budgetlist.get(i));
+                                            item.setbudgetSpent(budget_spentlist.get(i));
+                                            item.seteventStatus(setup_statuslist.get(i));
+                                            item.seteventStatus(event_statuslist.get(i));
+                                            item.setplannerId(planner_idlist.get(i));
+                                            item.seteventimageId(event_image_idlist.get(i));
+                                            item.seteventimageLocation(event_image_locationlist.get(i));
+                                            item.seteventimageEncoded(image_encodedlist.get(i));
+                                            item.settime_Setup(time_setuplist.get(i));
+                                            item.setevent_Id(event_idlist.get(i));
+
+
+                                            //setImagebitmap
+                                            eventlistwholearray.add(item);
+
+                                        }
+                                        sabaeventslistadapter.notifyDataSetChanged();
+
+                                        app.setSabaEventlist( eventlistwholearray);
+
+
+                                        //WayaWayaItem item = new WayaWayaItem();
+                                        //item.setproductListMain(productnameList);
+
+                                        for ( String singleRecord : event_namelist)
+                                        {
+                                            Log.d("Event Name value--", singleRecord.toString());
+                                        }
+
+
+                                        //adaptertwo.notifyDataSetChanged();
+
+                                        getVendorList("suggestions");
+
+                                    }
+
+                                }
+                                else
+                                {
+                                    String messageerror="There was an Error";
+                                    Log.d("Msg:",messageerror);
+
+                                }
+
+
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                Log.e("errorIs", "error"+e.getMessage());
+                            }
+                            hideProgressBar();
+
+                        } else {
+                            hideProgressBar();
+                            Log.e("Your Array Response", "Data Null");
+                        }
+
+                    }
+
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                hideProgressBar();
+                //continuetonextbutton.setText("Upload to your store");
+                Log.e("Menu list error is ", "" + error);
+
+                if (error == null || error.networkResponse == null) {
+                    return;
+                }
+
+                String body;
+                //get status code here
+                final String statusCode = String.valueOf(error.networkResponse.statusCode);
+                //Log.e("error st_code ", "" + statusCode);
+                //get response body and parse with appropriate encoding
+                try {
+                    body = new String(error.networkResponse.data,"UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    //Log.e("encoding is ", "" + e.getMessage());
+                    // exception
+                }
+
+            }
+        }) {
+
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                String apiusername = globalapiusername;
+                String apipassword = globalapipassword;
+
+
+                String creds = String.format("%s:%s",app.getApiusername(),app.getApipassword());
+                Log.e("Login with API username", "" + app.getApiusername()+" , And API passwrod"+app.getApipassword());
+                String auth = "Basic " + Base64.encodeToString(creds.getBytes(), Base64.DEFAULT);
+
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/json");
+                params.put("Accept", "application/json");
+                params.put("Authorization",auth);
+                return params;
+            }
+
+
+        };
+        RequestQueue queue = Volley.newRequestQueue(context);
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                80000,
+                1,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        queue.add(request);
+
+
+    }
+
+    private void getVendorList(String filter)
+    {
+        //continuetonextbutton.setText("Uploading to your store...");
+        showProgressBar();
+
+
+        JSONObject payload = new JSONObject();
+
+        try {
+            // =============================
+            // ROOT PAYLOAD
+            // =============================
+            payload.put("event_amountspent", "0");
+            payload.put("event_id", EventId);
+            payload.put("event_budget", event_budget);
+
+            // =============================
+            // BUILD event_budgetitems ARRAY
+            // =============================
+            /*JSONArray capabilityCodesArray = new JSONArray();
+            for (SelectedCapabilityItem item : capabilityList) {
+                capabilityCodesArray.put(item.getCode());
+            }*/
+
+            //payload.put("event_capabilities", capabilityCodesArray);
+
+        } catch (JSONException e) {
+            hideProgressBar();
+            e.printStackTrace();
+            return;
+        }
+
+
+
+        String paymentsendpoint="https://api.getabirio.com/v0/events/vendors";
+
+        Log.d("SENDING MATCH PAYLOAD", String.valueOf(payload));
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, paymentsendpoint, payload,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.e("response", "ALL Vendors: "+response.toString());
+                        hideProgressBar();
+
+
+
+                        if (!response.equals(null)) {
+                            Log.e("response", "response "+response.toString());
+                            JSONObject merchant_profile = null;
+                            JSONObject accountdetails = null;
+                            JSONObject paymentinfo = null;
+                            JSONObject jsonObj = null;
+
+                            base_pricelist.clear();
+                            capability_detailslist.clear();
+                            capability_idlist.clear();
+                            eventwholearray.clear();
+
+                            vendorserviceimage_idList.clear();
+                            vendorserviceimagelocationList.clear();
+                            vendoridList.clear();
+
+                            vendornameList.clear();
+                            vendorcapabilitynameList.clear();
+                            vendorlocationList.clear();
+
+
+
+                            try {
+                                jsonObj = new JSONObject(response.toString());
+                                String message =jsonObj.getString("STATUS");
+                                String messagedetails =jsonObj.getString("MESSAGE");
+                                if(message.toLowerCase().matches("success"))
+                                {
+
+
+
+
+                                    dataobj = jsonObj.getJSONArray("DATA");
+
+                                    Log.d("Receive VENDOR DATA", String.valueOf(dataobj));
+
+                                    if(dataobj.length()==0){
+                                        // their are not values to add
+                                        String messageerror="There was Zero products retrieved";
+                                        Log.d("Msg:",messageerror);
+
+
+
+                                        base_pricelist.add(null);
+                                        capability_detailslist.add(null);
+                                        capability_idlist.add(null);
+                                        service_image_locationlist.add(null);
+                                        eventwholearray.add(null);
+
+                                        vendorserviceimage_idList.add(null);
+                                        vendorserviceimagelocationList.add(null);
+                                        vendoridList.add(null);
+
+                                        vendornameList.add("No vendor loaded");
+                                        vendorcapabilitynameList.add(null);
+                                        vendorlocationList.add("Please try later");
+
+
+                                        eventwholearray.clear();
+
+                                        sabaEventItem item=new sabaEventItem();
+                                        item.setcapability_code(null);
+                                        item.setcapability_name("No services");
+                                        item.setcapability_category(null);
+                                        item.setcapability_imageid(null);
+                                        item.setcapability_image_location(null);
+
+                                        eventwholearray.add(item);
+
+                                        sabaeventsadapter.notifyDataSetChanged();
+
+
+                                        //end of their are no values to add
+                                    }
+                                    else{
+
+                                        for (int i = 0; i < dataobj.length(); i++) {
+
+                                            jsonObj = dataobj.getJSONObject(i);
+
+                                            String base_price = jsonObj.optString("base_price", null);
+                                            String capability_id = jsonObj.optString("capability_code", null);
+                                            String service_image_location = jsonObj.optString("capability_image_location", null);
+                                            String capabilitname = jsonObj.optString("capability_name", null);
+                                            String vendorname = jsonObj.optString("vendor_name", null);
+                                            String vendorlocation = jsonObj.optString("location", null);
+                                            String vendorserviceimageid = jsonObj.optString("capability_imageid", null);
+                                            String vendorid = jsonObj.optString("vendor_id", null);
+
+                                            JSONObject capability_details = jsonObj.optJSONObject("capability_details");
+
+                                            base_pricelist.add(base_price);
+                                            capability_idlist.add(capability_id);
+                                            service_image_locationlist.add(service_image_location);
+                                            vendorserviceimage_idList.add(vendorserviceimageid);
+                                            vendoridList.add(vendorid);
+                                            vendornameList.add(vendorname);
+                                            vendorcapabilitynameList.add(capabilitname);
+                                            vendorlocationList.add(vendorlocation);
+
+
+                                            capability_detailslist.add(capability_details);
+
+
+                                            Log.d("Added Capability", vendorname + " added");
+                                        }
+
+
+
+
+                                        eventwholearray.clear();
+
+                                        for(Integer i=0; i<capability_idlist.size(); i++)
+                                        {
+                                            sabaEventItem item=new sabaEventItem();
+
+
+                                            item.setvendorbase_price(base_pricelist.get(i));
+                                            item.setvendorcapability_details(capability_detailslist.get(i));
+                                            item.setvendorcapability_id(capability_idlist.get(i));
+                                            item.setvendorserviceimage_id(vendorserviceimage_idList.get(i));
+                                            item.setvendorserviceimagelocation(service_image_locationlist.get(i));
+                                            item.setvendorid(vendoridList.get(i));
+
+                                            item.setvendorname(vendornameList.get(i));
+                                            item.setvendorcapabilityname(vendorcapabilitynameList.get(i));
+                                            item.setvendorlocation(vendorlocationList.get(i));
+
+
+
+
+                                            //setImagebitmap
+                                            eventwholearray.add(item);
+
+                                        }
+                                        sabaeventsadapter.notifyDataSetChanged();
+
+                                        app.setCapabilitylist( eventwholearray);
+
+
+                                        //WayaWayaItem item = new WayaWayaItem();
+                                        //item.setproductListMain(productnameList);
+
+                                        for ( String singleRecord : capability_idlist)
+                                        {
+
+
+                                            try{
+                                                Log.d("Event Name value--", singleRecord.toString());
+
+                                            } catch (Exception e) {
+
+                                                Log.e("Exception printing values in vendors", String.valueOf(e));
+
+                                            }
+                                        }
+
+
+                                        //adaptertwo.notifyDataSetChanged();
+
+                                    }
+
+
+
+
+                                }
+                                else
+                                {
+                                    String messageerror="There was an Error";
+                                    Log.d("Msg:",messageerror);
+
+                                    AlertDialog ad = new AlertDialog.Builder(context)
+                                            .create();
+                                    ad.setCancelable(true);
+                                    ad.setTitle("Vendor fetch failed");
+                                    ad.setMessage(messagedetails);
+                                    ad.setButton(context.getString(R.string.ok_text), new DialogInterface.OnClickListener() {
+
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                        }
+                                    });
+                                    ad.show();
+
+                                }
+
+
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                Log.e("errorIs", "error"+e.getMessage());
+                            }
+                            hideProgressBar();
+
+                        } else {
+                            hideProgressBar();
+                            Log.e("Your Array Response", "Data Null");
+                        }
+
+                    }
+
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                hideProgressBar();
+                //continuetonextbutton.setText("Upload to your store");
+                Log.e("Menu list error is ", "" + error);
+
+                if (error == null || error.networkResponse == null) {
+                    return;
+                }
+
+                String body;
+                //get status code here
+                final String statusCode = String.valueOf(error.networkResponse.statusCode);
+                //Log.e("error st_code ", "" + statusCode);
+                //get response body and parse with appropriate encoding
+                try {
+                    body = new String(error.networkResponse.data,"UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    //Log.e("encoding is ", "" + e.getMessage());
+                    // exception
+                }
+
+            }
+        }) {
+
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+
+
+                String creds = String.format("%s:%s",app.getApiusername(),app.getApipassword());
+                Log.e("Login with API username", "" + app.getApiusername()+" , And API passwrod"+app.getApipassword());
+                String auth = "Basic " + Base64.encodeToString(creds.getBytes(), Base64.DEFAULT);
+
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/json");
+                params.put("Accept", "application/json");
+                params.put("Authorization",auth);
+                return params;
+            }
+
+
+        };
+        RequestQueue queue = Volley.newRequestQueue(context);
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                80000,
+                1,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        queue.add(request);
+
+
+    }
+
+    private void initVendortopTabs() {
+
+
+
+
+        // Default data
+        showVendorbottomTab("action");
+
+        vendortab_suggestions.setOnClickListener(v -> showVendorbottomTab("suggestions"));
+        ventortab_proposals.setOnClickListener(v -> showVendorbottomTab("proposals"));
+        ventortab_accepted.setOnClickListener(v -> showVendorbottomTab("accepted"));
+        vendortab_confirmed.setOnClickListener(v -> showVendorbottomTab("confirmed"));
+
+
+        vendortab_delivered.setOnClickListener(v -> showVendorbottomTab("delivered"));
+        vendortab_completed.setOnClickListener(v -> showVendorbottomTab("completed"));
+    }
+
+    private void showVendorbottomTab(String tab) {
+        // Reset styles
+
+
+        Button[] subTabs = {vendortab_suggestions, ventortab_proposals, ventortab_accepted , vendortab_confirmed,vendortab_delivered,vendortab_completed};
+        for (Button b : subTabs) {
+            if (b == null) continue;
+
+            b.setBackgroundColor(Color.TRANSPARENT);
+            b.setTextColor(getResources().getColor(R.color.text_primary));
+        }
+
+
+        switch(tab) {
+            case "suggestions":
+
+                vendortab_suggestions.setBackgroundResource(R.drawable.bg_pill_button_primary);
+                vendortab_suggestions.setTextColor(getResources().getColor(R.color.text_light));
+                getVendorList("suggestions");
+                break;
+            case "proposals":
+
+                ventortab_proposals.setBackgroundResource(R.drawable.bg_pill_button_primary);
+                ventortab_proposals.setTextColor(getResources().getColor(R.color.text_light));
+                getVendorList("proposals");
+                break;
+            case "accepted":
+
+                ventortab_accepted.setBackgroundResource(R.drawable.bg_pill_button_primary);
+                ventortab_accepted.setTextColor(getResources().getColor(R.color.text_light));
+                getVendorList("accepted");
+                break;
+            case "confirmed":
+
+                vendortab_confirmed.setBackgroundResource(R.drawable.bg_pill_button_primary);
+                vendortab_confirmed.setTextColor(getResources().getColor(R.color.text_light));
+                getVendorList("confirmed");
+                break;
+            case "delivered":
+                vendortab_delivered.setBackgroundResource(R.drawable.bg_pill_button_primary);
+                vendortab_delivered.setTextColor(getResources().getColor(R.color.text_light));
+                getVendorList("delivered");
+                break;
+            case "completed":
+
+                vendortab_completed.setBackgroundResource(R.drawable.bg_pill_button_primary);
+                vendortab_completed.setTextColor(getResources().getColor(R.color.text_light));
+                getVendorList("completed");
+                break;
+            default:
+                vendortab_suggestions.setBackgroundResource(R.drawable.bg_pill_button_primary);
+                vendortab_suggestions.setTextColor(getResources().getColor(R.color.text_light));
+                getVendorList("suggestions");
+                break;
+        }
+
+
+    }
+
+
+    public void showProgressBar()
+    {
+        progressBar.smoothToShow();
+    }
+    public void hideProgressBar()
+    {
+        progressBar.smoothToHide();
+    }
+
+    private boolean isValidUnixTimestamp(String value) {
+        if (value == null) return false;
+        if (!value.matches("\\d+")) return false;
+
+        return value.length() == 10 || value.length() == 13;
+    }
+
+    private String convertUnixToDateTime(String timestamp) {
+        try {
+            long time = Long.parseLong(timestamp);
+
+            // If seconds → convert to milliseconds
+            if (timestamp.length() == 10) {
+                time *= 1000;
+            }
+
+            Date date = new Date(time);
+
+            SimpleDateFormat sdf =
+                    new SimpleDateFormat("HH:mm dd-MM-yyyy ", Locale.getDefault());
+
+            return sdf.format(date);
+
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+}

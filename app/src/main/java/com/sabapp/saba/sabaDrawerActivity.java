@@ -1,10 +1,12 @@
 package com.sabapp.saba;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -15,20 +17,25 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.sabapp.saba.R;
+import com.sabapp.saba.application.sabaapp;
+import com.sabapp.saba.onboarding.loginoptionchoose;
 
 public class sabaDrawerActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
+    sabaapp app;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sabadashboardactivity);
+        app = (sabaapp) getApplicationContext();
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
         Fragment firstFragment = new homeclientFragment();
         Fragment secondFragment = new SecondFragment();
-        Fragment thirdFragment = new FirstFragment();
+        Fragment vendorFragment = new vendorlistFragment();
+        Fragment eventlistFragment = new eventslistFragment();
         Fragment messageFragment = new messageFragment();
 
         String fragmentToOpen = getIntent().getStringExtra("open_fragment");
@@ -79,7 +86,40 @@ public class sabaDrawerActivity extends AppCompatActivity {
 
 // Click listeners
         userIcon.setOnClickListener(v -> {
-            Toast.makeText(this, "User clicked", Toast.LENGTH_SHORT).show();
+
+            PopupMenu popupMenu = new PopupMenu(this, v);
+            popupMenu.getMenuInflater().inflate(R.menu.user_menu, popupMenu.getMenu());
+
+            popupMenu.setOnMenuItemClickListener(item -> {
+
+                int id = item.getItemId();
+
+                if (id == R.id.dashboard_menu_settings) {
+                    Toast.makeText(this, "Settings clicked", Toast.LENGTH_SHORT).show();
+                    return true;
+
+                } else if (id == R.id.dashboard_menu_logout) {
+                    Toast.makeText(this, "Logout clicked", Toast.LENGTH_SHORT).show();
+                    app.logOutPreliminaries(); // clear session, prefs, tokens, etc.
+
+                    Intent intent = new Intent(this, loginoptionchoose.class);
+                    intent.putExtra("createadrad", "gotowhatsappbotmaker");
+
+                    // CLEAR entire activity stack
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+                    startActivity(intent);
+                    finish(); // optional but safe
+
+                    return true;
+
+                }
+
+                return false;
+
+            });
+
+            popupMenu.show();
         });
 
         notificationIcon.setOnClickListener(v -> {
@@ -95,9 +135,9 @@ public class sabaDrawerActivity extends AppCompatActivity {
                 if (id == R.id.dashboard) {
                     setCurrentFragment(firstFragment);
                 } else if (id == R.id.events) {
-                    setCurrentFragment(thirdFragment);
+                    setCurrentFragment(vendorFragment);
                 } else if (id == R.id.requestpay) {
-                    setCurrentFragment(thirdFragment);
+                    setCurrentFragment(eventlistFragment);
                 } else if (id == R.id.messages) {
                     setCurrentFragment(messageFragment);
                 } else if (id == R.id.businesschatbot) {

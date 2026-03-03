@@ -395,7 +395,7 @@ public class signupaccount extends AppCompatActivity {
         //start new request que
         RequestQueue queue = Volley.newRequestQueue(signupaccount.this);
 
-        String registeruserendpoint="https://api.sabaapp.co/v0/registeraccount/createenduser";
+        String registeruserendpoint="https://api.getabirio.com/v0/registeraccount/createenduser";
 
         Log.e("SIGNUP EMAIL", emailaddressText.getText().toString());
 

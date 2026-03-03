@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@+id/serviceselectedlayout"
+    android:layout_width="73dp"
+    android:layout_height="73dp"
+    android:layout_alignParentEnd="true"
+    android:layout_centerVertical="true"
+    android:layout_marginEnd="4dp"
+    android:background="@drawable/circlebordercolour"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/selectedradioview"
+        android:layout_width="67dp"
+        android:layout_height="67dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        app:cardCornerRadius="50dp">
+
+        <!-- Use RelativeLayout inside CardView -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/budgetspentText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="$0"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true" />
+
+            <!-- Paid TextView -->
+            <TextView
+                android:id="@+id/paidText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Paid"
+                android:textColor="#000000"
+                android:textSize="12sp"
+                android:layout_below="@id/budgetspentText"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="2dp" />
+
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>

@@ -425,15 +425,7 @@ public class eventvendoroverview extends AppCompatActivity {
 
         });
 
-        messagesbuttonlayout.setOnClickListener(v -> {
-            // Action when layout is clicked
-            // For example, open a new fragment or show a toast
-            //Toast.makeText(chooseservices.this, "Messages link clicked", Toast.LENGTH_SHORT).show();
 
-
-
-
-        });
 
         rejectproposallayout.setOnClickListener(v -> {
             // Action when layout is clicked

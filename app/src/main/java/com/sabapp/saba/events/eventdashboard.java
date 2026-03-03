@@ -2,25 +2,41 @@ package com.sabapp.saba.events;
 
 import static com.gun0912.tedpermission.provider.TedPermissionProvider.context;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
+import android.util.TypedValue;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.palette.graphics.Palette;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -31,18 +47,30 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.normal.TedPermission;
 import com.sabapp.saba.R;
 import com.sabapp.saba.adapters.EventTwinBottomAdapter;
+import com.sabapp.saba.adapters.MasonryAdapter;
+import com.sabapp.saba.adapters.PaletteAdapter;
 import com.sabapp.saba.adapters.SelectedCapabilityAdapter;
+import com.sabapp.saba.adapters.TimelineAdapter;
+import com.sabapp.saba.adapters.VendorColorAdapter;
 import com.sabapp.saba.adapters.budgetlisteditRecyclerAdapter;
 import com.sabapp.saba.adapters.capabilityRecyclerAdapter;
 import com.sabapp.saba.adapters.dashboardclientcapabilityselectRecycler;
 import com.sabapp.saba.adapters.eventoverviewalertsRecyclerAdapter;
 import com.sabapp.saba.adapters.vendorlisteventRecyclerAdapter;
+import com.sabapp.saba.adapters.TimelineAdapter.ViewHolder.OnTimelineActionListener;
 import com.sabapp.saba.adapters.vendormatchingRecyclerAdapter;
 import com.sabapp.saba.application.sabaapp;
+import com.sabapp.saba.data.model.EventItem;
+import com.sabapp.saba.data.model.ImageItem;
 import com.sabapp.saba.data.model.SelectedCapabilityItem;
+import com.sabapp.saba.data.model.VendorMatch;
 import com.sabapp.saba.data.model.sabaEventItem;
+import com.sabapp.saba.homeclientFragment;
+import com.sabapp.saba.messaging.messagestartactivity;
 import com.sabapp.saba.sabaDrawerActivity;
 import com.wang.avi.AVLoadingIndicatorView;
 
@@ -50,6 +78,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
@@ -60,7 +90,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class eventdashboard extends AppCompatActivity implements OnOverviewAlertClickListener {
+public class eventdashboard extends AppCompatActivity implements OnOverviewAlertClickListener, OnTimelineActionListener, PaletteAdapter.OnPaletteClickListener,
+        VendorColorAdapter.OnVendorActionListener{
 
     // Top tabs
     private Button tabEventOverview,tabEventTwin, tabMoodBoard, tabVendors, tabTimeline, tabBudget;
@@ -70,7 +101,9 @@ public class eventdashboard extends AppCompatActivity implements OnOverviewAlert
 
     private Button tabActionFeed, tabAlerts, tabSuggestions, tabDrafts;
 
-    private Button vendortab_vendor_list, ventortab_date, ventortab_budget,vendortab_style, vendortab_related,vendortab_chat;
+
+
+    private Button vendortab_suggestions, ventortab_proposals, ventortab_accepted,vendortab_confirmed, vendortab_delivered,vendortab_completed;
 
     private ArrayList<sabaEventItem> eventTwinArray = new ArrayList<>();
     private EventTwinBottomAdapter eventTwinAdapter;
@@ -126,6 +159,8 @@ public class eventdashboard extends AppCompatActivity implements OnOverviewAlert
     ArrayList<String> budget_last_payment_date ;
     ArrayList<String> budget_planner_id;
 
+    ArrayList<String> budgetitemnamelist;
+
     //for vendor list
 
     ArrayList<String> capability_codeList;
@@ -159,6 +194,8 @@ public class eventdashboard extends AppCompatActivity implements OnOverviewAlert
     ArrayList<SelectedCapabilityItem> capabilityList;
 
     JSONArray dataobj;
+
+    RecyclerView timelinerecyclerView;
 
     //get event time
 
@@ -203,6 +240,72 @@ public class eventdashboard extends AppCompatActivity implements OnOverviewAlert
     List<SelectedCapabilityItem> draftbudgetcapabilityList;
 
     double budgetamountvaluedouble;
+
+    private TimelineAdapter adapter;
+    private List<EventItem> eventList;
+
+
+    //for mood board
+
+    private RecyclerView masonryRecycler, paletteRecycler, vendorRecycler;
+
+    MasonryAdapter masonryAdapter;
+    PaletteAdapter paletteAdapter;
+
+    VendorColorAdapter vendorAdapter;
+    private List<Integer> extractedPalette = new ArrayList<>();
+    private boolean isDropperActive = false;
+
+    Button EditButton;
+
+
+
+    // Data Lists (Declare here)
+    private List<ImageItem> imageList;
+    private List<VendorMatch> vendorList;
+
+    private PermissionListener permissionlistener;
+
+    private String Document_img1="";
+
+    private String encodedImage; // For Base64 storage
+
+
+    double total_allocated = 0.00;
+    double total_spent = 0.00;
+
+    double budget_health = 0.00;
+    double health_score = 0.00;
+    double percentage_spent = 0.00;
+    double remaining = 0.00;
+
+    double total_deposited = 0.00;
+
+    double vendor_score = 0.00;
+    double vendors_allocated = 0.00;
+    double vendors_not_allocated = 0.00;
+
+    double total_services = 0;
+
+    double total_services_booked = 0;
+
+    TextView timelinehealth,vendorraedinesscountertext,budgethealthcountertext,timelinehealthsecondary;
+
+
+    @Override
+    public void onColorSelected(int color) {
+        showColorSpecs(color); // Show the Dialog
+        refreshVendorMatches(color); // Run the math and update the list
+    }
+
+
+    @Override
+    public void onRequestSample(VendorMatch vendor) {
+        // This logic runs when the "Request Sample" button is clicked
+        Toast.makeText(this, "Sample requested from: " + vendor.name, Toast.LENGTH_SHORT).show();
+
+        // Here you would typically trigger an API call to notify the vendor
+    }
 
     @Override
     public void onAlertClicked(String alertType) {
@@ -348,6 +451,28 @@ public class eventdashboard extends AppCompatActivity implements OnOverviewAlert
         budgetContainer = findViewById(R.id.container_budget);
         eventOverviewContainer =findViewById(R.id.container_event_overview);
 
+        //for event twin
+
+        timelinehealth = findViewById(R.id.timelinehealthtext);
+
+        vendorraedinesscountertext = findViewById(R.id.vendorreadinesscardvalue);
+        budgethealthcountertext = findViewById(R.id.budgethealthtextvalue);
+
+        timelinehealthsecondary = findViewById(R.id.timelinehealthschedulestatustext);
+
+        EditButton = findViewById(R.id.btn_edit);
+
+        EditButton.setVisibility(View.GONE);
+        budgetamountTextoverview = findViewById(R.id.budgetamounttext);
+        servicesbookedoverviewtotaltextoverview = findViewById(R.id.servicesbookedoverviewtotaltext);
+        servicestotaloverviewtextoverview = findViewById(R.id.servicestotaloverviewtext);
+        vendorscontractedctedtotaltextoverview = findViewById(R.id.vendorscontractedctedtotaltext);
+        vendorstotaltextoverview = findViewById(R.id.vendorstotaltext);
+        budgetamountpercentagetextoverview = findViewById(R.id. budgetamountpercentagetext);
+
+
+
+
         //initiate event twin controller
 
         setupEventoverviewAlertListRecycler();
@@ -358,6 +483,12 @@ public class eventdashboard extends AppCompatActivity implements OnOverviewAlert
         setupBudgetListRecycler();
 
         setupBudgetCapabilityListRecycler();
+
+        setupTimelineListRecycler();
+        initMoodboardViews();
+        getEventoverviewvalues();
+
+
 
         // Default: show Event Twin
         showTab("overview");
@@ -461,6 +592,7 @@ public class eventdashboard extends AppCompatActivity implements OnOverviewAlert
                 moodBoardContainer.setVisibility(View.VISIBLE);
                 tabMoodBoard.setBackgroundResource(R.drawable.bg_pill_button_primary);
                 tabMoodBoard.setTextColor(getResources().getColor(R.color.text_light));
+                initMoodContainer();
                 break;
             case "vendors":
                 vendorsContainer.setVisibility(View.VISIBLE);
@@ -472,12 +604,19 @@ public class eventdashboard extends AppCompatActivity implements OnOverviewAlert
                 timelineContainer.setVisibility(View.VISIBLE);
                 tabTimeline.setBackgroundResource(R.drawable.bg_pill_button_primary);
                 tabTimeline.setTextColor(getResources().getColor(R.color.text_light));
+                initTimelineContainer();
                 break;
             case "budget":
                 budgetContainer.setVisibility(View.VISIBLE);
                 tabBudget.setBackgroundResource(R.drawable.bg_pill_button_primary);
                 tabBudget.setTextColor(getResources().getColor(R.color.text_light));
                 initBudgetContainer();
+                break;
+            default:
+                eventOverviewContainer.setVisibility(View.VISIBLE);
+                tabEventOverview.setBackgroundResource(R.drawable.bg_pill_button_primary);
+                tabEventOverview.setTextColor(getResources().getColor(R.color.text_light));
+                initOverviewContainer();
                 break;
         }
     }
@@ -511,25 +650,25 @@ public class eventdashboard extends AppCompatActivity implements OnOverviewAlert
 
     private void initVendortopTabs() {
 
-        vendortab_vendor_list = findViewById(R.id.tab_vendor_list);
-        ventortab_date = findViewById(R.id.tab_date);
-        ventortab_budget = findViewById(R.id.tab_budget);
-        vendortab_style = findViewById(R.id.tab_style);
-        vendortab_related = findViewById(R.id.tab_related);
-        vendortab_chat = findViewById(R.id.tab_chat);
+        vendortab_suggestions = findViewById(R.id.tab_vendor_list);
+        ventortab_proposals = findViewById(R.id.tab_proposals);
+        ventortab_accepted = findViewById(R.id.tab_accepted);
+        vendortab_confirmed = findViewById(R.id.tab_confirmedvendor);
+        vendortab_delivered = findViewById(R.id.tab_deliveredvendor);
+        vendortab_completed = findViewById(R.id.tab_completedvendor);
 
 
         // Default data
         showVendorbottomTab("action");
 
-        vendortab_vendor_list.setOnClickListener(v -> showVendorbottomTab("vendor"));
-        ventortab_date.setOnClickListener(v -> showVendorbottomTab("date"));
-        ventortab_budget.setOnClickListener(v -> showVendorbottomTab("budget"));
-        vendortab_style.setOnClickListener(v -> showVendorbottomTab("style"));
+        vendortab_suggestions.setOnClickListener(v -> showVendorbottomTab("suggestions"));
+        ventortab_proposals.setOnClickListener(v -> showVendorbottomTab("proposals"));
+        ventortab_accepted.setOnClickListener(v -> showVendorbottomTab("accepted"));
+        vendortab_confirmed.setOnClickListener(v -> showVendorbottomTab("confirmed"));
 
 
-        vendortab_related.setOnClickListener(v -> showVendorbottomTab("related"));
-        vendortab_chat.setOnClickListener(v -> showVendorbottomTab("chat"));
+        vendortab_delivered.setOnClickListener(v -> showVendorbottomTab("delivered"));
+        vendortab_completed.setOnClickListener(v -> showVendorbottomTab("completed"));
     }
 
     private void showEventTwinTab(String tab) {
@@ -579,7 +718,8 @@ public class eventdashboard extends AppCompatActivity implements OnOverviewAlert
     private void showVendorbottomTab(String tab) {
         // Reset styles
 
-        Button[] subTabs = {vendortab_vendor_list, ventortab_date, ventortab_budget, vendortab_style,vendortab_related,vendortab_chat};
+
+        Button[] subTabs = {vendortab_suggestions, ventortab_proposals, ventortab_accepted , vendortab_confirmed,vendortab_delivered,vendortab_completed};
         for (Button b : subTabs) {
             if (b == null) continue;
 
@@ -589,45 +729,44 @@ public class eventdashboard extends AppCompatActivity implements OnOverviewAlert
 
 
         switch(tab) {
-            case "vendor":
+            case "suggestions":
 
-                vendortab_vendor_list.setBackgroundResource(R.drawable.bg_pill_button_primary);
-                vendortab_vendor_list.setTextColor(getResources().getColor(R.color.text_light));
+                vendortab_suggestions.setBackgroundResource(R.drawable.bg_pill_button_primary);
+                vendortab_suggestions.setTextColor(getResources().getColor(R.color.text_light));
                 getVendorbottomtabList("vendor");
                 break;
-            case "date":
+            case "proposals":
 
-                ventortab_date.setBackgroundResource(R.drawable.bg_pill_button_primary);
-                ventortab_date.setTextColor(getResources().getColor(R.color.text_light));
+                ventortab_proposals.setBackgroundResource(R.drawable.bg_pill_button_primary);
+                ventortab_proposals.setTextColor(getResources().getColor(R.color.text_light));
                 getVendorbottomtabList("alerts");
                 break;
-            case "budget":
+            case "accepted":
 
-                ventortab_budget.setBackgroundResource(R.drawable.bg_pill_button_primary);
-                ventortab_budget.setTextColor(getResources().getColor(R.color.text_light));
-                getVendorbottomtabList("suggestions");
+                ventortab_accepted.setBackgroundResource(R.drawable.bg_pill_button_primary);
+                ventortab_accepted.setTextColor(getResources().getColor(R.color.text_light));
+                getVendorbottomtabList("accepted");
                 break;
-            case "style":
+            case "confirmed":
 
-                vendortab_style.setBackgroundResource(R.drawable.bg_pill_button_primary);
-                vendortab_style.setTextColor(getResources().getColor(R.color.text_light));
-                getVendorbottomtabList("drafts");
+                vendortab_confirmed.setBackgroundResource(R.drawable.bg_pill_button_primary);
+                vendortab_confirmed.setTextColor(getResources().getColor(R.color.text_light));
+                getVendorbottomtabList("confirmed");
                 break;
-            case "related":
-
-                vendortab_related.setBackgroundResource(R.drawable.bg_pill_button_primary);
-                vendortab_related.setTextColor(getResources().getColor(R.color.text_light));
-                getVendorbottomtabList("suggestions");
+            case "delivered":
+                vendortab_delivered.setBackgroundResource(R.drawable.bg_pill_button_primary);
+                vendortab_delivered.setTextColor(getResources().getColor(R.color.text_light));
+                getVendorbottomtabList("delivered");
                 break;
-            case "chat":
+            case "completed":
 
-                vendortab_chat.setBackgroundResource(R.drawable.bg_pill_button_primary);
-                vendortab_chat.setTextColor(getResources().getColor(R.color.text_light));
-                getVendorbottomtabList("drafts");
+                vendortab_completed.setBackgroundResource(R.drawable.bg_pill_button_primary);
+                vendortab_completed.setTextColor(getResources().getColor(R.color.text_light));
+                getVendorbottomtabList("completed");
                 break;
             default:
-                vendortab_vendor_list.setBackgroundResource(R.drawable.bg_pill_button_primary);
-                vendortab_vendor_list.setTextColor(getResources().getColor(R.color.text_light));
+                vendortab_suggestions.setBackgroundResource(R.drawable.bg_pill_button_primary);
+                vendortab_suggestions.setTextColor(getResources().getColor(R.color.text_light));
                 getVendorbottomtabList("action");
                 break;
         }
@@ -676,11 +815,58 @@ public class eventdashboard extends AppCompatActivity implements OnOverviewAlert
 
         servicesselected.setLayoutManager(new LinearLayoutManager(eventdashboard.this, LinearLayoutManager.VERTICAL, false));
 
-        sabaeventsadapter=new vendorlisteventRecyclerAdapter(eventwholearray,context, eventdashboard.this, app);
+        sabaeventsadapter=new vendorlisteventRecyclerAdapter(eventdashboard.this,eventwholearray,context, eventdashboard.this, app);
         servicesselected.setAdapter(sabaeventsadapter);
 
 
 
+    }
+
+
+    private void setupTimelineListRecycler() {
+
+        //base_pricelist = new ArrayList<String>();
+
+
+        timelinerecyclerView = findViewById(R.id.timelineRecycler);
+        timelinerecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        prepareTimelineData();
+
+// Set up the decoration
+// Parameters: Color (Grey), Width (4px), Offset (Calculate based on your XML layout)
+        // 3. Apply the Custom ItemDecoration (The Vertical Line)
+        // We calculate the offset (e.g., 85dp) to align perfectly with the node center
+        int lineOffset = (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, 85, getResources().getDisplayMetrics());
+
+        TimelineItemDecoration lineDecoration = new TimelineItemDecoration(
+                Color.parseColor("#D1D1D1"), // Line Color
+                4,                          // Line Width in pixels
+                lineOffset                  // Horizontal Offset
+        );
+        timelinerecyclerView.addItemDecoration(lineDecoration);
+
+        // 4. Set Adapter
+        adapter = new TimelineAdapter(this, eventList, this);
+        timelinerecyclerView.setAdapter(adapter);
+
+
+
+
+
+
+
+
+    }
+
+
+    private void prepareTimelineData() {
+        eventList = new ArrayList<>();
+        eventList.add(new EventItem("12:00 PM", "Floral Arrangements", "Flora & Bloom", "Booked", true));
+        eventList.add(new EventItem("02:00 PM", "Custom Cake Design", "Sweet Treats Bakery", "In Inquiry", false));
+        eventList.add(new EventItem("06:00 PM", "Dinner Service", "Gourmet Bites", "Booked", true));
+        eventList.add(new EventItem("08:00 PM", "Music & DJ", "None", "Action Required", false));
     }
 
     private void setupBudgetListRecycler() {
@@ -693,6 +879,7 @@ public class eventdashboard extends AppCompatActivity implements OnOverviewAlert
         budget_payment_status = new ArrayList<String>();
         budget_last_payment_date = new ArrayList<String>();
         budget_planner_id = new ArrayList<String>();
+        budgetitemnamelist = new ArrayList<String>();
 
 
         budgetselectedrecycler = findViewById(R.id.budgetoptionsrecycler);
@@ -703,7 +890,7 @@ public class eventdashboard extends AppCompatActivity implements OnOverviewAlert
 
         budgetselectedrecycler.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
 
-        budgetadapter=new budgetlisteditRecyclerAdapter(eventwholearray,context, eventdashboard.this, app);
+        budgetadapter=new budgetlisteditRecyclerAdapter(budgetwholearray,context, eventdashboard.this, app);
         budgetselectedrecycler.setAdapter(budgetadapter);
 
 
@@ -761,7 +948,7 @@ public class eventdashboard extends AppCompatActivity implements OnOverviewAlert
 
         showProgressBar();
 
-        String endpoint = "https://api.sabaapp.co/v0/event_twin?type=" + type;
+        String endpoint = "https://api.getabirio.com/v0/event_twin?type=" + type;
 
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.GET,
@@ -939,7 +1126,7 @@ public class eventdashboard extends AppCompatActivity implements OnOverviewAlert
 
         showProgressBar();
 
-        String endpoint = "https://api.sabaapp.co/v0/event_twin?type=" + type;
+        String endpoint = "https://api.getabirio.com/v0/event_twin?type=" + type;
 
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.GET,
@@ -1146,7 +1333,7 @@ public class eventdashboard extends AppCompatActivity implements OnOverviewAlert
 
 
 
-        String paymentsendpoint="https://api.sabaapp.co/v0/events/overview/"+EventId;
+        String paymentsendpoint="https://api.getabirio.com/v0/events/overview/"+EventId;
 
         Log.d("SENDING MATCH PAYLOAD", String.valueOf(payload));
 
@@ -1190,10 +1377,7 @@ public class eventdashboard extends AppCompatActivity implements OnOverviewAlert
                                     int servicesremaining = numberofservices -numberbookedservices;
 
                                     int remainingvendors = numberofvendors - bookedvendorsnumber;
-                                    vendorstotaltextoverview.setText(numberofvendors+" Pending");
-                                    vendorscontractedctedtotaltextoverview.setText(remainingvendors+"");
 
-                                    servicesbookedoverviewtotaltextoverview.setText(servicesremaining+"");
 
 
                                     JSONObject eventdata = jsonObj.optJSONObject("DETAILS");
@@ -1213,7 +1397,7 @@ public class eventdashboard extends AppCompatActivity implements OnOverviewAlert
                                         String plannerId = eventdata.isNull("PLANNER_ID") ? null : eventdata.optString("PLANNER_ID");
 
 
-                                        if(budget!=null){
+                                        /*if(budget!=null){
 
                                             try{
                                                 budgetamountvaluedouble = Double.parseDouble(budget);
@@ -1256,7 +1440,7 @@ public class eventdashboard extends AppCompatActivity implements OnOverviewAlert
 
 
                                             }
-                                        }
+                                        }*/
 
                                     }
 
@@ -1499,7 +1683,7 @@ public class eventdashboard extends AppCompatActivity implements OnOverviewAlert
 
 
 
-        String paymentsendpoint="https://api.sabaapp.co/v0/events/vendors";
+        String paymentsendpoint="https://api.getabirio.com/v0/events/vendors";
 
         Log.d("SENDING MATCH PAYLOAD", String.valueOf(payload));
 
@@ -1592,12 +1776,12 @@ public class eventdashboard extends AppCompatActivity implements OnOverviewAlert
                                             jsonObj = dataobj.getJSONObject(i);
 
                                             String base_price = jsonObj.optString("base_price", null);
-                                            String capability_id = jsonObj.optString("capability_id", null);
-                                            String service_image_location = jsonObj.optString("service_image_location", null);
+                                            String capability_id = jsonObj.optString("capability_code", null);
+                                            String service_image_location = jsonObj.optString("capability_image_location", null);
                                             String capabilitname = jsonObj.optString("capability_name", null);
                                             String vendorname = jsonObj.optString("vendor_name", null);
                                             String vendorlocation = jsonObj.optString("location", null);
-                                            String vendorserviceimageid = jsonObj.optString("service_image_id", null);
+                                            String vendorserviceimageid = jsonObj.optString("capability_imageid", null);
                                             String vendorid = jsonObj.optString("vendor_id", null);
 
                                             JSONObject capability_details = jsonObj.optJSONObject("capability_details");
@@ -1656,7 +1840,16 @@ public class eventdashboard extends AppCompatActivity implements OnOverviewAlert
 
                                         for ( String singleRecord : capability_idlist)
                                         {
-                                            Log.d("Event Name value--", singleRecord.toString());
+
+
+                                            try{
+                                                Log.d("Event Name value--", singleRecord.toString());
+
+                                            } catch (Exception e) {
+
+                                                Log.e("Exception printing values in vendors", String.valueOf(e));
+
+                                            }
                                         }
 
 
@@ -1792,15 +1985,15 @@ public class eventdashboard extends AppCompatActivity implements OnOverviewAlert
 
 
 
-        String paymentsendpoint="https://api.sabaapp.co/v0/events/"+EventId;
+        String paymentsendpoint="https://api.getabirio.com/v0/events/"+EventId;
 
-        Log.d("SENDING MATCH PAYLOAD", String.valueOf(payload));
+        Log.d("SGETTING BUDGET OVERVIEW", String.valueOf(payload));
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, paymentsendpoint, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.e("response", "GET SINGLE EVENT: "+response.toString());
+                        Log.e("response", "GET SINGLE EVENT AT BUDGET: "+response.toString());
                         hideProgressBar();
                         if (!response.equals(null)) {
                             Log.e("response", "response "+response.toString());
@@ -1817,6 +2010,7 @@ public class eventdashboard extends AppCompatActivity implements OnOverviewAlert
                             budget_payment_status.clear();
                             budget_last_payment_date.clear();
                             budget_planner_id.clear();
+                            budgetitemnamelist.clear();
 
                             try {
                                 jsonObj = new JSONObject(response.toString());
@@ -1876,6 +2070,7 @@ public class eventdashboard extends AppCompatActivity implements OnOverviewAlert
                                             String payment_status = jsonObj.optString("payment_status", null);
                                             String last_payment_date = jsonObj.optString("last_payment_date", null);
                                             String planner_id= jsonObj.optString("planner_id", null);
+                                            String budgetitemName =jsonObj.optString("name", null);
 
                                             //"notes"
 
@@ -1910,16 +2105,17 @@ public class eventdashboard extends AppCompatActivity implements OnOverviewAlert
                                             budget_payment_status.add(payment_status);
                                             budget_last_payment_date.add(last_payment_date);
                                             budget_planner_id.add(planner_id);
+                                            budgetitemnamelist.add(budgetitemName);
 
 
 
-                                            Log.d("Added Capability", capability_id+ " added");
+                                            Log.d("Added BUDGET Capability", capability_id+ " added");
                                         }
 
 
                                         budgetwholearray.clear();
 
-                                        for(Integer i=0; i<budget_event_id.size(); i++)
+                                        for(Integer i=0; i<budget_capability_id.size(); i++)
                                         {
                                             sabaEventItem item=new sabaEventItem();
 
@@ -1931,6 +2127,8 @@ public class eventdashboard extends AppCompatActivity implements OnOverviewAlert
                                             item.setbudget_payment_status(budget_payment_status.get(i));
                                             item.setbudget_last_payment_date(budget_last_payment_date.get(i));
                                             item.setbudget_planner_id(budget_planner_id.get(i));
+                                            item.setbudget_itemname(budgetitemnamelist.get(i));
+                                            item.setbudgetlisttotal_budget(event_budget);
 
 
                                             //setImagebitmap
@@ -2090,7 +2288,7 @@ public class eventdashboard extends AppCompatActivity implements OnOverviewAlert
         paramsotpu.put("username", app.getApiusername());
 
 
-        String paymentsendpoint="https://api.sabaapp.co/v0/vendors/capabilities";
+        String paymentsendpoint="https://api.getabirio.com/v0/vendors/capabilities";
 
 
 
@@ -2312,10 +2510,7 @@ public class eventdashboard extends AppCompatActivity implements OnOverviewAlert
         //timelinehealth status indicators
 
         LinearLayout timelinehealthlayout = findViewById(R.id.timelinehealthvaluelayout);
-        TextView timelinehealth = findViewById(R.id.timelinehealthtext);
 
-        TextView vendorraedinesscountertext = findViewById(R.id.vendorreadinesscardvalue);
-        TextView budgethealthcountertext = findViewById(R.id.budgethealthtextvalue);
 
         if(event_name!=null){
             eventname.setText(event_name);
@@ -2345,7 +2540,8 @@ public class eventdashboard extends AppCompatActivity implements OnOverviewAlert
             }
 
 
-        }else{
+        }
+        else{
 
             if(event_time!=null){
 
@@ -2390,36 +2586,7 @@ public class eventdashboard extends AppCompatActivity implements OnOverviewAlert
         TextView secondscounttext = findViewById(R.id.secondscountlabel);
 
 
-        budgetamountTextoverview = findViewById(R.id.budgetamounttext);
-        servicesbookedoverviewtotaltextoverview = findViewById(R.id.servicesbookedoverviewtotaltext);
-        servicestotaloverviewtextoverview = findViewById(R.id.servicestotaloverviewtext);
-        vendorscontractedctedtotaltextoverview = findViewById(R.id.vendorscontractedctedtotaltext);
-        vendorstotaltextoverview = findViewById(R.id.vendorstotaltext);
-        budgetamountpercentagetextoverview = findViewById(R.id. budgetamountpercentagetext);
 
-
-
-
-        if(event_budget!=null){
-
-
-            if(event_budgetspent!=null){
-
-                budgetamountTextoverview.setText("$"+event_budget+"/ $"+event_budgetspent);
-
-
-            }else{
-
-                budgetamountTextoverview.setText("$"+event_budget+"/ $ 0");
-
-
-            }
-        }else{
-
-            budgetamountTextoverview.setText("$0 / $ 0");
-        }
-
-        //component status
 
 
 
@@ -2542,7 +2709,57 @@ public class eventdashboard extends AppCompatActivity implements OnOverviewAlert
 
     }
 
+    private void initTimelineContainer() {
 
+
+        ProgressBar progresscircle = findViewById(R.id.progressCircle);
+
+        TextView eventtitle = findViewById(R.id.eventTitle);
+        TextView currentspendtext = findViewById(R.id.currentspendtext);
+
+
+
+        //Showing vendors matching: June 12, Budget: $15,000, Style: Elegant, Related: Any
+
+        String valuetext = "";
+
+        if(event_name!=null){
+
+            eventtitle.setText(event_name);
+        }else{
+
+            eventtitle.setText("Event title");
+
+        }
+
+
+        if(event_budget!=null){
+
+            valuetext = "Current Spend: $ 0.00 / $" +event_budget;
+
+
+            if(budget_amount_paid!=null){
+
+                valuetext = "Current Spend: $"+budget_amount_paid+" / $" +event_budget;
+            }
+
+
+            currentspendtext.setText(valuetext);
+        }else{
+
+            currentspendtext.setText("Current Spend: $ 0.00 / $ 0.00");
+        }
+
+
+
+
+
+        // Load default tab
+        //getVendorList();
+
+
+
+    }
     private void sendupdatedbudgetPost()
     {
         //continuetonextbutton.setText("Uploading to your store...");
@@ -2592,7 +2809,7 @@ public class eventdashboard extends AppCompatActivity implements OnOverviewAlert
 
 
 
-        String paymentsendpoint="https://api.sabaapp.co/v0/events/budget/items";
+        String paymentsendpoint="https://api.getabirio.com/v0/events/budget/items";
 
 
 
@@ -2811,6 +3028,711 @@ public class eventdashboard extends AppCompatActivity implements OnOverviewAlert
         return result;
     }
 
+
+    //implementations for timeline tap adapter
+
+    @Override
+    public void onCallVendor(String vendorName) {
+        // Logic to open dialer or start in-app call
+        Toast.makeText(this, "Calling " + vendorName, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onAddVendor(String category) {
+        // Navigate to the Marketplace screen
+        /*Intent intent = new Intent(this, VendorMarketplaceActivity.class);
+        intent.putExtra("CATEGORY_KEY", category);
+        startActivity(intent);*/
+    }
+
+    @Override
+    public void onViewInquiry(String vendorName) {
+        // Navigate to the Chat or Details screen
+        Intent intent = new Intent(this, messagestartactivity.class);
+        intent.putExtra("VENDOR_NAME", vendorName);
+        startActivity(intent);
+    }
+
+
+    //functions for mood board
+
+    private void initMoodboardViews() {
+
+        imageList = new ArrayList<>();
+        vendorList = new ArrayList<>();
+        extractedPalette = new ArrayList<>();
+
+        masonryRecycler = findViewById(R.id.moodBoardMasonry);
+        paletteRecycler = findViewById(R.id.paletteBar);
+        vendorRecycler = findViewById(R.id.vendorProcurementRecycler);
+
+        loadMockData();
+
+        masonryAdapter = new MasonryAdapter(imageList, new MasonryAdapter.OnImageInteractionListener() {
+            @Override
+            public void onImageTouch(ImageView view, MotionEvent event, ImageItem item) {
+                if (isDropperActive) extractColorFromTouch(view, event);
+            }
+
+            @Override
+            public void onImageLocked(ImageItem item) {
+                Toast.makeText(eventdashboard.this, "Design Spec Locked", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // IMPORTANT: Set LayoutManager and Adapter
+        masonryRecycler.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        masonryRecycler.setAdapter(masonryAdapter);
+
+        // 2. Setup Palette Bar
+        paletteAdapter = new PaletteAdapter(extractedPalette, this);
+        paletteRecycler.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+        paletteRecycler.setAdapter(paletteAdapter);
+
+    }
+
+    private void loadMockData() {
+        // Fill Mood Board with initial inspirations
+        imageList.add(new ImageItem(R.drawable.weddingrose));
+        imageList.add(new ImageItem(R.drawable.tableblue));
+        imageList.add(new ImageItem(R.drawable.velvetpallet));
+
+        // Fill Vendor List based on event bookings
+        vendorList.add(new VendorMatch("Flora & Bloom", "90% Match Sample", "#2196F3", "#228B22"));
+        vendorList.add(new VendorMatch("Linens & Drapes", "Exact Match Available", "#1B5E20", "#1B5E20"));
+        vendorList.add(new VendorMatch("Gourmet Bites", "Color Matching Custom Cake", "#E91E63", "#FFC0CB"));
+    }
+
+    private void initMoodContainer() {
+
+
+        setupVendorList();
+
+        //getVendorList();
+
+        // Automatically extract palette from the first placeholder image if it exists
+        if (!imageList.isEmpty()) {
+            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), imageList.get(0).imageRes);
+            extractSmartPalette(bitmap);
+        }
+
+
+        findViewById(R.id.colorDropper).setOnClickListener(v -> {
+            isDropperActive = !isDropperActive;
+            Toast.makeText(this, isDropperActive ? "Dropper Active: Tap an image" : "Dropper Off", Toast.LENGTH_SHORT).show();
+        });
+
+
+        // The "Add" button in your XML
+        findViewById(R.id.btnUpload).setOnClickListener(v -> {
+            checkPermissionsAndSelect();
+        });
+
+        setupPermissionListener();
+        // Load default tab
+
+
+
+
+    }
+
+    private void extractColorFromTouch(ImageView view, MotionEvent event) {
+        Bitmap bitmap = ((BitmapDrawable) view.getDrawable()).getBitmap();
+        // Calculate coordinates relative to bitmap scale
+        int x = (int) (event.getX() * bitmap.getWidth() / view.getWidth());
+        int y = (int) (event.getY() * bitmap.getHeight() / view.getHeight());
+
+        if (x >= 0 && x < bitmap.getWidth() && y >= 0 && y < bitmap.getHeight()) {
+            int pixel = bitmap.getPixel(x, y);
+            showColorDetailDialog(pixel);
+        }
+    }
+
+    private void extractSmartPalette(Bitmap bitmap) {
+        Palette.from(bitmap).generate(palette -> {
+            if (palette != null) {
+                extractedPalette.clear();
+                // Get a wider variety of colors for a better UI
+                extractedPalette.add(palette.getVibrantColor(Color.LTGRAY));
+                extractedPalette.add(palette.getDarkVibrantColor(Color.DKGRAY));
+                extractedPalette.add(palette.getMutedColor(Color.GRAY));
+                extractedPalette.add(palette.getLightMutedColor(Color.WHITE));
+                extractedPalette.add(palette.getDominantColor(Color.BLACK));
+
+                paletteAdapter.notifyDataSetChanged(); // Just refresh the existing adapter
+            }
+        });
+    }
+
+
+    private void showColorDetailDialog(int color) {
+        String hex = String.format("#%06X", (0xFFFFFF & color));
+        String rgb = "RGB: " + Color.red(color) + ", " + Color.green(color) + ", " + Color.blue(color);
+
+        new AlertDialog.Builder(this)
+                .setTitle("Color Captured")
+                .setMessage(hex + "\n" + rgb + "\nPantone: 19-4028 TCX")
+                .setPositiveButton("Add to Palette", (d, w) -> {
+                    extractedPalette.add(0, color);
+                    updatePaletteBar();
+                })
+                .show();
+    }
+
+    private void updatePaletteBar() {
+        // Pass 'this' as the second argument to satisfy the constructor
+        PaletteAdapter adapter = new PaletteAdapter(extractedPalette, this);
+
+        paletteRecycler.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+        paletteRecycler.setAdapter(adapter);
+    }
+
+    private void setupVendorList() {
+        // Clear and fill your list (using the class-level vendorList variable we declared earlier)
+        vendorList = new ArrayList<>();
+        vendorList.add(new VendorMatch("Flora & Bloom", "90% Match Sample", "#2196F3", "#FFC0CB"));
+        vendorList.add(new VendorMatch("Linens & Drapes", "Exact Match Available", "#1B5E20", "#FFC0CB"));
+
+        vendorRecycler.setLayoutManager(new LinearLayoutManager(this));
+
+        // PASS 'this' as the second argument here
+        vendorAdapter = new VendorColorAdapter(vendorList, this);
+        vendorRecycler.setAdapter(vendorAdapter);
+    }
+
+    private void setupPermissionListener() {
+        permissionlistener = new PermissionListener() {
+            @Override
+            public void onPermissionGranted() {
+                showImageSourceOptions();
+            }
+
+            @Override
+            public void onPermissionDenied(List<String> deniedPermissions) {
+                Toast.makeText(eventdashboard.this, "Permission Denied", Toast.LENGTH_SHORT).show();
+            }
+        };
+    }
+
+    private void checkPermissionsAndSelect() {
+        String[] permissions;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            permissions = new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_MEDIA_IMAGES};
+        } else {
+            permissions = new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE};
+        }
+
+        TedPermission.create()
+                .setPermissionListener(permissionlistener)
+                .setDeniedMessage("Enable permissions in Settings > Permissions to upload.")
+                .setPermissions(permissions)
+                .check();
+    }
+
+
+    private void showImageSourceOptions() {
+        final CharSequence[] options = {"Take Photo", "Choose from Gallery", "Cancel"};
+        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(this);
+        builder.setTitle("Add Inspiration to Mood Board");
+        builder.setItems(options, (dialog, item) -> {
+            if (options[item].equals("Take Photo")) {
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                cameraLauncher.launch(intent);
+            } else if (options[item].equals("Choose from Gallery")) {
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                galleryLauncher.launch(intent);
+            } else {
+                dialog.dismiss();
+            }
+        });
+        builder.show();
+    }
+
+    // 📸 CAMERA LAUNCHER
+    private final ActivityResultLauncher<Intent> cameraLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
+                    Bitmap bitmap = (Bitmap) result.getData().getExtras().get("data");
+                    processNewImage(bitmap);
+                }
+            }
+    );
+
+
+    // 🖼️ GALLERY LAUNCHER
+    private final ActivityResultLauncher<Intent> galleryLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
+                    Uri selectedImage = result.getData().getData();
+                    try (InputStream inputStream = getContentResolver().openInputStream(selectedImage)) {
+                        Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                        processNewImage(bitmap);
+                    } catch (Exception e) {
+                        Log.e("MOOD_UPLOAD", "Error loading gallery image", e);
+                    }
+                }
+            }
+    );
+
+
+    private void processNewImage(Bitmap bitmap) {
+        if (bitmap == null) return;
+
+        Bitmap resized = getResizedBitmap(bitmap, 800);
+
+        // 1. Convert to Base64 (using your provided method)
+        encodedImage = BitMapToString(resized);
+
+        // 2. Add to Masonry List
+        ImageItem newItem = new ImageItem(resized); // Updated model to take Bitmap
+        imageList.add(0, newItem); // Add to the top
+        masonryAdapter.notifyItemInserted(0);
+        masonryRecycler.scrollToPosition(0);
+
+        // 3. Trigger Palette Extraction on the new image
+        extractSmartPalette(resized);
+
+        Toast.makeText(this, "Mood Board Updated", Toast.LENGTH_SHORT).show();
+    }
+
+    public String BitMapToString(Bitmap userImage1) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        userImage1.compress(Bitmap.CompressFormat.JPEG, 30, baos);
+        byte[] b = baos.toByteArray();
+        Document_img1 = Base64.encodeToString(b, Base64.DEFAULT);
+        app.setCreateAdImage(Document_img1);
+
+
+
+
+        return Document_img1;
+    }
+
+    public Bitmap getResizedBitmap(Bitmap image, int maxSize) {
+        int width = image.getWidth();
+        int height = image.getHeight();
+
+        float bitmapRatio = (float)width / (float) height;
+        if (bitmapRatio > 1) {
+            width = maxSize;
+            height = (int) (width / bitmapRatio);
+        } else {
+            height = maxSize;
+            width = (int) (height * bitmapRatio);
+        }
+        return Bitmap.createScaledBitmap(image, width, height, true);
+    }
+
+
+    private void showColorSpecs(int color) {
+        // 1. Convert to HEX
+        // The mask 0xFFFFFF removes the Alpha (transparency) channel for a standard Hex code
+        String hexColor = String.format("#%06X", (0xFFFFFF & color));
+
+        // 2. Convert to RGB
+        int r = Color.red(color);
+        int g = Color.green(color);
+        int b = Color.blue(color);
+        String rgbText = String.format("RGB: (%d, %d, %d)", r, g, b);
+
+        // 3. Approximate Pantone
+        // Real Pantone matching usually requires a database;
+        // for this UI, we simulate the spec metadata
+        String pantoneSpec = "19-4028 TCX (Estimated)";
+
+        // 4. Build and Show the Dialog
+        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(this);
+
+        // Create a custom view or a simple colored header for the dialog
+        View titleView = getLayoutInflater().inflate(R.layout.dialog_color_header, null);
+        titleView.setBackgroundColor(color);
+        builder.setCustomTitle(titleView);
+
+        builder.setMessage("DESIGN SPECIFICATIONS\n\n" +
+                        "HEX: " + hexColor + "\n" +
+                        rgbText + "\n" +
+                        "PANTONE: " + pantoneSpec)
+                .setPositiveButton("Lock Design Spec", (dialog, which) -> {
+                    lockCurrentSelection(hexColor);
+                    Toast.makeText(this, "Color Locked for Vendors", Toast.LENGTH_SHORT).show();
+                })
+                .setNegativeButton("Close", null)
+                .show();
+    }
+
+
+    private void lockCurrentSelection(String hex) {
+        // Save to SharedPreferences so it persists when the app closes
+        SharedPreferences pref = getSharedPreferences("DesignSpecs", MODE_PRIVATE);
+        pref.edit().putString("locked_event_color", hex).apply();
+
+        // Update the UI to show a locked state if necessary
+        // You could also trigger a refresh of the Vendor List here
+        //refreshVendorMatches(hex);
+    }
+
+    // --- THE MATH LOGIC ---
+    public int calculateMatchPercentage(int lockedColor, int vendorColor) {
+        int r1 = Color.red(lockedColor);
+        int g1 = Color.green(lockedColor);
+        int b1 = Color.blue(lockedColor);
+
+        int r2 = Color.red(vendorColor);
+        int g2 = Color.green(vendorColor);
+        int b2 = Color.blue(vendorColor);
+
+        double distance = Math.sqrt(
+                Math.pow(r2 - r1, 2) +
+                        Math.pow(g2 - g1, 2) +
+                        Math.pow(b2 - b1, 2)
+        );
+
+        double maxDistance = 441.67;
+        double match = 100 * (1 - (distance / maxDistance));
+
+        return (int) Math.max(0, Math.min(100, match));
+    }
+
+    // --- THE UPDATE LOGIC ---
+    private void refreshVendorMatches(int selectedColor) {
+
+
+
+        for (VendorMatch vendor : vendorList) {
+            // Assuming VendorMatch model has an 'inventoryHex' field
+            if (vendor.inventoryHex == null || vendor.inventoryHex.isEmpty()) {
+                vendor.status = "Not Applicable";
+            } else {
+                // Run calculateMatchPercentage here
+                int vColor = Color.parseColor(vendor.inventoryHex);
+                int percent = calculateMatchPercentage(selectedColor, vColor);
+
+                vendor.status = percent + "% Match Found";
+                // Update badge color based on threshold
+                vendor.badgeColor = (percent > 85) ? "#1B5E20" : "#FBC02D";
+            }
+
+
+        }
+        vendorAdapter.notifyDataSetChanged(); // Refresh the Recycler
+    }
+
+
+    private void getEventoverviewvalues()
+    {
+        //continuetonextbutton.setText("Uploading to your store...");
+        showProgressBar();
+
+
+        String paymentsendpoint="https://api.sabaapp.co/v0/events/budget/overview?eventid="+EventId;
+
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, paymentsendpoint, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.e("response", "GET SINGLE EVENT AT BUDGET: "+response.toString());
+                        hideProgressBar();
+                        if (!response.equals(null)) {
+                            Log.e("response", "response "+response.toString());
+                            JSONObject merchant_profile = null;
+                            JSONObject accountdetails = null;
+                            JSONObject paymentinfo = null;
+                            JSONObject jsonObj = null;
+
+
+                            try {
+                                jsonObj = new JSONObject(response.toString());
+                                String message =jsonObj.getString("STATUS");
+
+                                if(message.equalsIgnoreCase("SUCCESS")) {
+
+                                    JSONObject dataObject = jsonObj.optJSONObject("DATA");
+
+                                    if(dataObject == null){
+                                        return;
+                                    }
+
+                                    JSONObject globalsummaryObj = dataObject.optJSONObject("summary");
+
+                                    if(globalsummaryObj != null){
+                                        total_allocated = globalsummaryObj.optDouble("total_allocated");
+                                        total_spent = globalsummaryObj.optDouble("total_spent");
+
+                                        budget_health = globalsummaryObj.optDouble("budget_health");
+                                        health_score = globalsummaryObj.optDouble("health_score");
+                                        percentage_spent = globalsummaryObj.optDouble("percentage_spent");
+                                        remaining = globalsummaryObj.optDouble("remaining");
+
+                                        total_deposited = globalsummaryObj.optDouble("total_deposited");
+
+                                        vendor_score = globalsummaryObj.optDouble("vendor_score");
+                                        vendors_allocated = globalsummaryObj.optInt("vendors_allocated",0);
+                                        vendors_not_allocated = globalsummaryObj.optInt("vendors_not_allocated",0);
+
+
+                                        double vendorstotal = vendors_allocated + vendors_not_allocated;
+
+
+
+                                        if(total_allocated>=0){
+
+
+                                            if(total_spent>=0){
+
+                                                budgetamountTextoverview.setText("$"+(int)Math.round(total_spent)+"/ $"+(int)Math.round(total_allocated));
+
+
+                                            }else{
+
+                                                budgetamountTextoverview.setText("$ 0/ $"+(int)Math.round(total_allocated));
+
+
+                                            }
+                                        }
+                                        else{
+
+                                            budgetamountTextoverview.setText("$0 / $ 0");
+                                        }
+
+                                        //component status
+
+                                        vendorstotaltextoverview.setText((int)Math.round(vendorstotal)+" Pending");
+                                        vendorscontractedctedtotaltextoverview.setText((int)Math.round(vendors_allocated)+"");
+
+                                        if(health_score>0){
+
+                                            timelinehealth.setText(health_score+"%");
+
+
+                                        }
+
+                                        if(vendors_not_allocated>=0 || vendors_allocated>=0){
+
+
+                                            vendorraedinesscountertext.setText((int)Math.round(vendors_allocated)+" Out Of "+(int)Math.round(vendorstotal));
+
+                                        }else{
+
+                                        }
+
+                                        try{
+                                            double remainingamount = (total_spent/total_allocated)* 100;
+
+                                            budgethealthcountertext.setText((int)Math.round(remainingamount) +"% Budget Used");
+
+
+                                        } catch (Exception e) {
+                                            Log.e("Error converting budget amount", String.valueOf(e));
+
+                                        }
+
+
+                                        try{
+
+                                            if(budget_health>80){
+                                                timelinehealthsecondary.setText("On Schedule");
+                                            }else if(budget_health>30){
+                                                timelinehealthsecondary.setText("At Risk");
+                                            }else if(budget_health>0){
+                                                timelinehealthsecondary.setText("Critical Risk");
+                                            }else{
+
+                                                timelinehealthsecondary.setText("No schedule setup");
+                                            }
+
+                                        } catch (Exception e) {
+
+                                        }
+
+
+
+
+
+                                        if(total_allocated>0){
+
+                                            try{
+                                                budgetamountvaluedouble = total_allocated;
+                                            } catch (Exception e) {
+
+                                                budgetamountvaluedouble = 0.0;
+                                            }
+
+
+                                            if(total_spent>0){
+
+                                                budgetamountTextoverview.setText("$"+total_spent+"/ $"+total_allocated);
+                                                double budgetValue = 0.0;
+                                                double budgetSpentValue = 0.0;
+
+                                                try {
+                                                    budgetValue = total_allocated;
+                                                    budgetSpentValue = total_spent;
+                                                } catch (NumberFormatException e) {
+                                                    e.printStackTrace();
+                                                }
+
+                                                int percentage = 0;
+
+                                                if (budgetValue > 0) {
+                                                    percentage = (int) Math.round((budgetSpentValue / budgetValue) * 100);
+                                                }
+
+
+                                                budgetamountpercentagetextoverview.setText(percentage+"%");
+
+
+
+
+                                            }else{
+
+                                                budgetamountTextoverview.setText("$ 0/ $ "+total_allocated);
+
+                                                budgetamountpercentagetextoverview.setText("0%");
+
+
+                                            }
+                                        }
+
+
+
+
+
+
+
+                                        Log.d("SUMMARY",
+                                                " Total: "+total_allocated+" Vendor allocated: "+vendors_allocated+" Vendor Unallocated: "+vendors_not_allocated);
+                                    }
+
+
+
+                                    JSONArray servicesArray = dataObject.optJSONArray("services_booked");
+
+                                    if(servicesArray != null){
+                                        for(int i = 0; i < servicesArray.length(); i++){
+
+                                            JSONObject serviceObj = servicesArray.getJSONObject(i);
+
+                                            String event_id = serviceObj.optString("event_id");
+                                            String capability_id = serviceObj.optString("capability_id");
+                                            String status = serviceObj.optString("status");
+
+
+                                            total_services +=1;
+
+                                            if(status!=null && (status.equalsIgnoreCase("accepted") || status.equalsIgnoreCase("confirmed")|| status.equalsIgnoreCase("delivered"))){
+                                                total_services_booked +=1;
+                                            }
+
+
+
+                                            servicesbookedoverviewtotaltextoverview.setText((int)Math.round(total_services_booked)+"/");
+
+                                        }
+                                    }
+
+
+
+                                }
+                                else
+                                {
+
+
+                                    String messageerror="There was an Error";
+                                    Log.d("Msg:",messageerror);
+
+                                    AlertDialog ad = new AlertDialog.Builder(eventdashboard.this)
+                                            .create();
+                                    ad.setCancelable(true);
+                                    ad.setTitle("Request Failed");
+                                    ad.setMessage("Could not event overview  items");
+                                    ad.setButton("Ok", new DialogInterface.OnClickListener() {
+
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                        }
+                                    });
+                                    ad.show();
+
+                                }
+
+
+
+
+                            } catch (JSONException e) {
+
+
+                                e.printStackTrace();
+                                Log.e("errorIs", "error"+e.getMessage());
+                            }
+                            hideProgressBar();
+
+                        } else {
+                            hideProgressBar();
+
+
+                            Log.e("Your Array Response", "Data Null");
+                        }
+
+                    }
+
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                hideProgressBar();
+
+
+                //continuetonextbutton.setText("Upload to your store");
+                Log.e("Menu list error is ", "" + error);
+
+                if (error == null || error.networkResponse == null) {
+                    return;
+                }
+
+                String body;
+                //get status code here
+                final String statusCode = String.valueOf(error.networkResponse.statusCode);
+                //Log.e("error st_code ", "" + statusCode);
+                //get response body and parse with appropriate encoding
+                try {
+                    body = new String(error.networkResponse.data,"UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    //Log.e("encoding is ", "" + e.getMessage());
+                    // exception
+                }
+
+            }
+        }) {
+
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+
+
+                String creds = String.format("%s:%s",app.getApiusername(),app.getApipassword());
+                Log.e("Login with API username", "" + app.getApiusername()+" , And API passwrod"+app.getApipassword());
+                String auth = "Basic " + Base64.encodeToString(creds.getBytes(), Base64.DEFAULT);
+
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/json");
+                params.put("Accept", "application/json");
+                params.put("Authorization",auth);
+                return params;
+            }
+
+
+        };
+        RequestQueue queue = Volley.newRequestQueue(context);
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                80000,
+                1,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        queue.add(request);
+
+
+    }
 
 
 

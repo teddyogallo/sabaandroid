@@ -555,7 +555,7 @@ public class availabilitycalender extends AppCompatActivity {
 
 
 
-        String paymentsendpoint="https://api.sabaapp.co/v0/vendor/availability/add";
+        String paymentsendpoint="https://api.getabirio.com/v0/vendor/availability/add";
 
 
 
@@ -729,7 +729,7 @@ public class availabilitycalender extends AppCompatActivity {
 
 
 
-        String paymentsendpoint="https://api.sabaapp.co/v0/vendor/availability/delete";
+        String paymentsendpoint="https://api.getabirio.com/v0/vendor/availability/delete";
 
 
 
@@ -876,7 +876,7 @@ public class availabilitycalender extends AppCompatActivity {
 
 
 
-        String paymentsendpoint="https://api.sabaapp.co/v0/vendor/availability";
+        String paymentsendpoint="https://api.getabirio.com/v0/vendor/availability";
 
 
 

@@ -136,11 +136,21 @@
             android:exported="false" />
 
         <activity
+            android:name=".events.MoodBoardActivity"
+            android:theme="@style/Theme.Saba.EventDashboard"
+            android:exported="false" />
+
+
+        <activity
             android:name=".vendors.addcatalogue"
             android:theme="@style/Theme.Saba"
             android:exported="false" />
         <activity
             android:name=".vendors.availabilitycalender"
+            android:theme="@style/Theme.Saba.EventDashboard"
+            android:exported="false" />
+        <activity
+            android:name=".vendors.vendorproposrequest"
             android:theme="@style/Theme.Saba.EventDashboard"
             android:exported="false" />
 

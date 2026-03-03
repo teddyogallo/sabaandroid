@@ -201,7 +201,7 @@ public class chooseservices extends AppCompatActivity {
         paramsotpu.put("username", app.getApiusername());
 
 
-        String paymentsendpoint="https://api.sabaapp.co/v0/vendors/capabilities";
+        String paymentsendpoint="https://api.getabirio.com/v0/vendors/capabilities";
 
 
 

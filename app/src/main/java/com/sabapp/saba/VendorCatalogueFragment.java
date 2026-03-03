@@ -263,7 +263,7 @@ public class VendorCatalogueFragment extends Fragment {
         paramsotpu.put("username", app.getApiusername());
 
 
-        String paymentsendpoint="https://api.sabaapp.co/v0/vendor/capabilities";
+        String paymentsendpoint="https://api.getabirio.com/v0/vendor/capabilities";
 
 
 

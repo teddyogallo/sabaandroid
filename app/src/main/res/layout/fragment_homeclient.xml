@@ -17,13 +17,36 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/r4vauu1uy32j"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="1dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/r7yahn8j8k8k"
+                    android:textColor="#25131A"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="Upcoming Event"
+                    />
+            </LinearLayout>
+
+            <!-- Countdown Card -->
+            <include layout="@layout/component_countdown_card_details" />
+
+            <LinearLayout
                 android:id="@+id/createeventlayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:background="@drawable/sfb005fsw1cr15bffffff"
                 android:layout_marginTop="25dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="5dp"
                 android:layout_marginHorizontal="18dp"
                 android:orientation="horizontal">
                 <LinearLayout
@@ -66,7 +89,7 @@
                 android:layout_marginEnd="2dp"
                 android:orientation="vertical">
                 <LinearLayout
-                    android:id="@+id/r4vauu1uy32j"
+                    android:id="@+id/r4vauu1uy32j2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="1dp"
@@ -74,7 +97,7 @@
                     android:layout_marginEnd="20dp"
                     android:orientation="vertical">
                     <TextView
-                        android:id="@+id/r7yahn8j8k8k"
+                        android:id="@+id/r7yahn8j8k8k2"
                         android:textColor="#25131A"
                         android:textSize="16sp"
                         android:textStyle="bold"
@@ -98,6 +121,241 @@
             <!-- end of layout for recent events -->
 
             <LinearLayout
+                android:id="@+id/rolxg9dn54z8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="1dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/rqn0oyocf68g"
+                    android:textColor="#25131A"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="Overview"
+                    />
+            </LinearLayout>
+
+            <!-- Metric Cards Row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <!-- Services Booked Card -->
+                <LinearLayout
+                    android:id="@+id/servicesbookedlayoutcard"
+                    android:layout_width="0dp"
+                    android:layout_height="110dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="@dimen/padding_m"
+                    android:background="@drawable/bg_metric_card"
+                    android:layout_margin="@dimen/spacing_s"
+                    android:elevation="@dimen/elevation_card">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="@dimen/icon_l"
+                            android:layout_height="@dimen/icon_l"
+                            android:src="@drawable/ic_clock"
+                            android:contentDescription="@string/timeline_icon"
+                            android:layout_marginBottom="2dp"
+                            app:tint="@color/chart_yellow" />
+
+                        <TextView
+                            android:id="@+id/servicesbookedlabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Timeline Health"
+                            android:textSize="12sp"
+                            android:textColor="@color/text_primary"
+                            android:textStyle="bold"
+                            android:layout_marginBottom="2dp" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/timelinehealthtext"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="0%"
+                            android:textSize="15sp"
+                            android:textAlignment="center"
+                            android:textColor="@color/primary_pink"
+                            android:textStyle="bold"
+                            />
+
+                        />
+
+
+                    </LinearLayout>
+                    <TextView
+                        android:id="@+id/timelinehealthdetailtext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:text="No services scheduled"
+                        android:textSize="12sp"
+                        android:textColor="@color/text_secondary" />
+
+
+
+
+
+                </LinearLayout>
+
+                <!-- Vendor contacted Card -->
+                <LinearLayout
+                    android:id="@+id/vendorcontactedcardlayout"
+                    android:layout_width="0dp"
+                    android:layout_height="110dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="@dimen/padding_m"
+                    android:background="@drawable/bg_metric_card"
+                    android:layout_margin="@dimen/spacing_s"
+                    android:elevation="@dimen/elevation_card">
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="@dimen/icon_l"
+                            android:layout_height="@dimen/icon_l"
+                            android:src="@drawable/ic_vendor"
+                            android:contentDescription="@string/timeline_icon"
+                            android:layout_marginBottom="2dp"
+                            app:tint="@color/chart_yellow" />
+
+                        <TextView
+                            android:id="@+id/vendorscontactedlabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Vendor Readiness"
+                            android:textSize="12sp"
+                            android:textColor="@color/text_primary"
+                            android:textStyle="bold"
+                            android:layout_marginBottom="2dp" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/vendorreadinessvaluetext"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="0%"
+                            android:textSize="15sp"
+                            android:textColor="@color/primary_pink"
+                            android:textAlignment="center"
+                            android:textStyle="bold"
+                            />
+
+                         />
+
+
+                    </LinearLayout>
+                    <TextView
+                        android:id="@+id/vendorstotaltext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:text="0/0 Assigned"
+                        android:textSize="12sp"
+                        android:textColor="@color/text_secondary" />
+
+                </LinearLayout>
+
+                <!-- Budget Amount Card -->
+                <LinearLayout
+                    android:id="@+id/budgetamountcardlayout"
+                    android:layout_width="0dp"
+                    android:layout_height="110dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="@dimen/padding_m"
+                    android:background="@drawable/bg_metric_card"
+                    android:layout_margin="@dimen/spacing_s"
+                    android:elevation="@dimen/elevation_card">
+
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="@dimen/icon_l"
+                            android:layout_height="@dimen/icon_l"
+                            android:src="@drawable/ic_budget"
+                            android:contentDescription="@string/timeline_icon"
+                            android:layout_marginBottom="@dimen/spacing_m"
+                            app:tint="@color/chart_yellow" />
+
+                        <TextView
+                            android:id="@+id/budgetamounttext"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Budget Health"
+                            android:textSize="12sp"
+                            android:textColor="@color/text_primary"
+                            android:textStyle="bold"
+                            android:layout_marginBottom="@dimen/spacing_m" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/budgetamountpercentagetext"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="0%"
+                            android:textAlignment="center"
+                            android:textSize="15sp"
+                            android:textColor="@color/primary_pink"
+                            android:textStyle="bold"
+                            />
+
+
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/rn0b98vj1qzh"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -106,20 +364,22 @@
                 android:layout_marginEnd="2dp"
                 android:orientation="vertical">
                 <LinearLayout
-                    android:id="@+id/rolxg9dn54z8"
+                    android:id="@+id/rolxg9dn54z82"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="1dp"
-                    android:layout_marginBottom="20dp"
+                    android:layout_marginBottom="5dp"
                     android:layout_marginEnd="20dp"
+
                     android:orientation="vertical">
                     <TextView
-                        android:id="@+id/rqn0oyocf68g"
+                        android:id="@+id/rqn0oyocf68g2"
                         android:textColor="#25131A"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
+
                         android:text="Quick Links"
                         />
                 </LinearLayout>
@@ -152,6 +412,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
+
                     android:orientation="horizontal">
                     <LinearLayout
                         android:id="@+id/messagequicklinkbutton"
@@ -168,8 +429,8 @@
 
                         <ImageView
                             android:id="@+id/roj4vfckfjdk"
-                            android:layout_width="76dp"
-                            android:layout_height="76dp"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
                             android:layout_marginTop="17dp"
                             android:scaleType="fitXY"
                             android:src="@drawable/message_iconempty"
@@ -196,8 +457,8 @@
                         android:orientation="vertical">
                         <ImageView
                             android:id="@+id/r7pb2blep1ks"
-                            android:layout_width="76dp"
-                            android:layout_height="76dp"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
                             android:layout_marginTop="17dp"
                             android:layout_marginStart="14dp"
                             android:src="@drawable/paymenticon_plain"
@@ -228,8 +489,8 @@
 
                         <ImageView
                             android:id="@+id/ryj4qb6hvqh8"
-                            android:layout_width="75dp"
-                            android:layout_height="75dp"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
                             android:layout_marginTop="17dp"
                             android:layout_marginBottom="1dp"
                             android:scaleType="fitXY"

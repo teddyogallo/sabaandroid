@@ -11,8 +11,8 @@ android {
         applicationId "com.sabapp.saba"
         minSdk 24
         targetSdk 35
-        versionCode 6
-        versionName "1.5"
+        versionCode 7
+        versionName "1.6"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -40,6 +40,8 @@ dependencies {
     implementation libs.navigation.fragment
     implementation libs.navigation.ui
     implementation libs.firebase.messaging
+    implementation libs.gridlayout
+    implementation libs.palette
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
@@ -88,6 +90,11 @@ dependencies {
     implementation ('com.github.prolificinteractive:material-calendarview:2.0.0') {
         exclude group: 'com.android.support'
     }
+
+    dependencies {
+        implementation 'androidx.palette:palette:1.0.0'
+    }
+
 
 
 

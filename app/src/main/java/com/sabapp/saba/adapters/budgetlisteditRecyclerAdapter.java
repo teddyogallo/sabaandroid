@@ -60,6 +60,8 @@ public class budgetlisteditRecyclerAdapter  extends RecyclerView.Adapter<budgetl
             capabilitybudgettextamountvalue= view.findViewById(R.id.capabilitybudgettextamount);
             budgetamountvalueseek = view.findViewById(R.id.budgetamountvalue);
 
+            budgetamountvalueseek.setMax(100);
+
             spenttrackertextvalue= view.findViewById(R.id.spenttrackertext);
 
 
@@ -131,40 +133,86 @@ public class budgetlisteditRecyclerAdapter  extends RecyclerView.Adapter<budgetl
 
 
 
-        if(sabaItem.getvendorname()==null || sabaItem.getvendorname().equals(""))
+        if(sabaItem.getbudget_itemname()==null || sabaItem.getbudget_itemname().equals(""))
         {
             //holder.eventtitle.setVisibility(View.GONE);
-            holder.title.setText("Not Valid");
+            holder.title.setText("No Value");
         }
         else
         {
-            holder.title.setText(sabaItem.getvendorname());
+            holder.title.setText(sabaItem.getbudget_itemname());
         }
 
 
-        if(sabaItem.getvendorlocation()==null || sabaItem.getvendorlocation().equals(""))
+        if(sabaItem.getbudget_allocated_amount()==null || sabaItem.getbudget_allocated_amount().equals(""))
         {
             //holder.eventtitle.setVisibility(View.GONE);
             holder.capabilitybudgettextamountvalue.setText("$0");
         }
         else
         {
-            holder.capabilitybudgettextamountvalue.setText(sabaItem.getvendorlocation());
+            holder.capabilitybudgettextamountvalue.setText("$"+sabaItem.getbudget_allocated_amount());
+
+
+            double allocationvalue = 0;
+
+
+                try{
+                    allocationvalue = Double.parseDouble(sabaItem.getbudget_allocated_amount());
+
+                } catch (Exception e) {
+
+                }
+
+            if(sabaItem.getbudgetlisttotal_budget()!=null && !sabaItem.getbudgetlisttotal_budget().isEmpty() && allocationvalue>0) {
+
+                double budgettotalvalue = 0;
+
+                try{
+                    budgettotalvalue = Double.parseDouble(sabaItem.getbudgetlisttotal_budget());
+
+                } catch (Exception e) {
+
+                }
+
+                if(budgettotalvalue>0){
+                    //calculate seeker amount
+
+                    double totalvalue = (allocationvalue/budgettotalvalue)*100;
+
+
+                    int totalvalueFinal = (int) Math.round(Math.max(1, Math.min(100, totalvalue)));
+
+                    // Set the SeekBar
+                    holder.budgetamountvalueseek.setProgress(totalvalueFinal);
+
+
+                    //end of calculate seeker amount
+                }
+
+            }
+
+
+
+
+
+
+            if(sabaItem.getbudget_amount_paid()==null || sabaItem.getbudget_amount_paid().equals(""))
+            {
+                //holder.eventtitle.setVisibility(View.GONE);
+                holder.spenttrackertextvalue.setText("Paid $ 0/ Remaining $"+sabaItem.getbudget_allocated_amount());
+
+
+            }
+            else
+            {
+
+                holder.spenttrackertextvalue.setText("Paid $ "+sabaItem.getbudget_amount_paid()+"/ Remaining $"+sabaItem.getbudget_allocated_amount());
+            }
         }
 
 
-        if(sabaItem.getvendorcapabilityname()==null || sabaItem.getvendorcapabilityname().equals(""))
-        {
-            //holder.eventtitle.setVisibility(View.GONE);
-            holder.spenttrackertextvalue.setText("Paid $ 0/ Remaining $ 0");
 
-
-        }
-        else
-        {
-
-            holder.spenttrackertextvalue.setText(sabaItem.getvendorcapabilityname());
-        }
 
 
 

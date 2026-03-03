@@ -535,20 +535,20 @@ public class initiatemessagecontactlist  extends AppCompatActivity {
 
         String logintypevalue = app.getLoginAccounttype();
 
-        String loginuserendpoint="https://api.sabaapp.co/v0/events/contactlist";
+        String loginuserendpoint="https://api.getabirio.com/v0/events/contactlist";
 
         if(logintypevalue!=null && logintypevalue.equalsIgnoreCase("vendor") ){
 
-            loginuserendpoint="https://api.sabaapp.co/v0/vendors/contactlist";
+            loginuserendpoint="https://api.getabirio.com/v0/vendors/contactlist";
 
         }else  if(logintypevalue!=null && logintypevalue.equalsIgnoreCase("planner") ){
 
-            loginuserendpoint="https://api.sabaapp.co/v0/events/contactlist";
+            loginuserendpoint="https://api.getabirio.com/v0/events/contactlist";
 
 
         }else{
 
-            loginuserendpoint="https://api.sabaapp.co/v0/events/contactlist";
+            loginuserendpoint="https://api.getabirio.com/v0/events/contactlist";
         }
 
 

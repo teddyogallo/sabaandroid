@@ -39,6 +39,7 @@ import com.sabapp.saba.MyFirebaseMessagingService;
 import com.sabapp.saba.R;
 import com.sabapp.saba.SharedPrefsXtreme;
 import com.sabapp.saba.application.sabaapp;
+import com.sabapp.saba.events.MoodBoardActivity;
 import com.sabapp.saba.sabaDrawerActivity;
 import com.wang.avi.AVLoadingIndicatorView;
 
@@ -54,7 +55,9 @@ import android.util.Base64;
 public class login extends AppCompatActivity {
 
 
-    LinearLayout loginbutton;
+    LinearLayout loginbutton, forgtopasswordButton;
+
+
     EditText usernameEditText, passwordEditText;
 
     TextView signuptextviewButton, loginbuttontext;
@@ -85,6 +88,7 @@ public class login extends AppCompatActivity {
         progressindicator.setVisibility(View.GONE);
 
         loginbutton  = (LinearLayout) findViewById(R.id.loginlayoutbutton);
+        forgtopasswordButton = (LinearLayout)findViewById(R.id.forgotpasswordlayout);
 
 
         usernameEditText = (EditText) findViewById(R.id.username);
@@ -193,6 +197,22 @@ public class login extends AppCompatActivity {
 
         );
 
+        forgtopasswordButton.setOnClickListener(
+
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        //function for revealing password
+
+
+
+
+
+                    }
+                }
+
+        );
+
         revealpasswordImageButton.setOnClickListener(
 
                 new View.OnClickListener() {
@@ -234,7 +254,7 @@ public class login extends AppCompatActivity {
         paramsotpu.put("sim_number", null);
         paramsotpu.put("notification_token", fcm_token);
 
-        String loginuserendpoint = "https://api.sabaapp.co/v0/account/loginuser";
+        String loginuserendpoint = "https://api.getabirio.com/v0/account/loginuser";
 
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.POST,

@@ -288,7 +288,7 @@ public class alleventsVendorFragment extends Fragment {
         paramsotpu.put("username", app.getApiusername());
 
 
-        String paymentsendpoint="https://api.sabaapp.co/v0/vendor/assignments/all";
+        String paymentsendpoint="https://api.getabirio.com/v0/vendor/assignments/all";
 
 
 

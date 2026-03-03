@@ -413,7 +413,7 @@ public class createevent extends AppCompatActivity {
 
 
 
-        String paymentsendpoint="https://api.sabaapp.co/v0/events";
+        String paymentsendpoint="https://api.getabirio.com/v0/events";
 
 
 

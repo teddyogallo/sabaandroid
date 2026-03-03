@@ -5,13 +5,13 @@
         android:id="@+id/dashboard"
         android:icon="@drawable/nav_home"/>
     <item
-        android:title="Events"
+        android:title="Vendors"
         android:id="@+id/events"
-        android:icon="@drawable/nav_addeventicon"/>
+        android:icon="@drawable/janja_icons_storelocator"/>
     <item
-        android:title=""
+        android:title="Events"
         android:id="@+id/requestpay"
-        android:icon="@android:color/transparent"/>
+        android:icon="@drawable/nav_addeventicon"/>
     <item
         android:id="@+id/messages"
         android:icon="@drawable/nav_janja_icons_conversation"

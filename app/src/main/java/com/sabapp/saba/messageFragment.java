@@ -473,7 +473,7 @@ public class messageFragment extends Fragment {
 
         paramsotpu.put("username", app.getApiusername());
 
-        String loginuserendpoint="https://api.sabaapp.co/v0/messages/retrieveconversations";
+        String loginuserendpoint="https://api.getabirio.com/v0/messages/retrieveconversations";
 
 
         Log.d("GET Favs API User Name", app.getApiusername() + "");

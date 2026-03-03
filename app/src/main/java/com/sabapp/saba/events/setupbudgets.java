@@ -278,7 +278,7 @@ public class setupbudgets extends AppCompatActivity {
 
 
 
-        String paymentsendpoint="https://api.sabaapp.co/v0/events/budget";
+        String paymentsendpoint="https://api.getabirio.com/v0/events/budget";
 
 
 
