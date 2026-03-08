@@ -398,7 +398,10 @@ public class homeclientFragment extends Fragment {
         paymentsquicklink.setOnClickListener(v -> {
             // Action when layout is clicked
             // For example, open a new fragment or show a toast
-            Toast.makeText(getContext(), "Payments quick link clicked", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getActivity(), sabaDrawerActivity.class);
+            intent.putExtra("open_fragment", "payment");
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            startActivity(intent);
 
 
         });
@@ -406,11 +409,13 @@ public class homeclientFragment extends Fragment {
         fevoritesquicklink.setOnClickListener(v -> {
             // Action when layout is clicked
             // For example, open a new fragment or show a toast
-            Toast.makeText(getContext(), "Fevorites quicklink Selected", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getActivity(), sabaDrawerActivity.class);
+            intent.putExtra("open_fragment", "vendor");
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            startActivity(intent);
 
 
         });
-
 
 
 

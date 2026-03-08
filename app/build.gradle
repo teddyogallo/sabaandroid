@@ -11,8 +11,8 @@ android {
         applicationId "com.sabapp.saba"
         minSdk 24
         targetSdk 35
-        versionCode 7
-        versionName "1.6"
+        versionCode 8
+        versionName "1.7"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -94,6 +94,16 @@ dependencies {
     dependencies {
         implementation 'androidx.palette:palette:1.0.0'
     }
+
+    implementation "androidx.credentials:credentials:1.2.2"
+    implementation "androidx.credentials:credentials-play-services-auth:1.2.2"
+    implementation "com.google.android.libraries.identity.googleid:googleid:1.1.0"
+
+    /*dependencies {
+        implementation "androidx.credentials:credentials:1.6.0-rc02"
+        implementation "androidx.credentials:credentials-play-services-auth:1.6.0-rc02"
+        implementation "com.google.android.libraries.identity.googleid:googleid:<latest version>"
+    }*/
 
 
 

@@ -33,12 +33,28 @@ public class sabaplannerDrawerActivity extends AppCompatActivity {
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
-        Fragment firstFragment = new vendorFragment();
+        Fragment firstFragment = new homeclientFragment();
         Fragment secondFragment = new SecondFragment();
         Fragment thirdFragment = new FirstFragment();
         Fragment messageFragment = new messageFragment();
+        Fragment vendorFragment = new vendorlistFragment();
 
         setCurrentFragment(firstFragment);
+
+        String fragmentToOpen = getIntent().getStringExtra("open_fragment");
+
+        if ("messages".equalsIgnoreCase(fragmentToOpen)) {
+            setCurrentFragment(messageFragment);
+            bottomNavigationView.setSelectedItemId(R.id.messages);
+        }else if ("payment".equalsIgnoreCase(fragmentToOpen)) {
+            setCurrentFragment(secondFragment);
+            bottomNavigationView.setSelectedItemId(R.id.businesschatbot);
+        }else if ("vendor".equalsIgnoreCase(fragmentToOpen)) {
+            setCurrentFragment(vendorFragment);
+            bottomNavigationView.setSelectedItemId(R.id.events);
+        }else {
+            setCurrentFragment(firstFragment); // default
+        }
 
         MaterialToolbar toolbar = findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);

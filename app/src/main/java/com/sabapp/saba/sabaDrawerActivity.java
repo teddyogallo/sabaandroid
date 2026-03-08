@@ -46,6 +46,9 @@ public class sabaDrawerActivity extends AppCompatActivity {
         }else if ("payment".equalsIgnoreCase(fragmentToOpen)) {
             setCurrentFragment(secondFragment);
             bottomNavigationView.setSelectedItemId(R.id.businesschatbot);
+        }else if ("vendor".equalsIgnoreCase(fragmentToOpen)) {
+            setCurrentFragment(vendorFragment);
+            bottomNavigationView.setSelectedItemId(R.id.events);
         }else {
             setCurrentFragment(firstFragment); // default
         }

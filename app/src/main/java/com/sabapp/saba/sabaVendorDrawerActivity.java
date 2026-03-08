@@ -40,6 +40,18 @@ public class sabaVendorDrawerActivity extends AppCompatActivity {
 
         setCurrentFragment(firstFragment);
 
+        String fragmentToOpen = getIntent().getStringExtra("open_fragment");
+
+        if ("messages".equalsIgnoreCase(fragmentToOpen)) {
+            setCurrentFragment(messageFragment);
+            bottomNavigationView.setSelectedItemId(R.id.messages);
+        }else if ("payment".equalsIgnoreCase(fragmentToOpen)) {
+            setCurrentFragment(secondFragment);
+            bottomNavigationView.setSelectedItemId(R.id.businesschatbot);
+        }else {
+            setCurrentFragment(firstFragment); // default
+        }
+
         MaterialToolbar toolbar = findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false); // hide default title

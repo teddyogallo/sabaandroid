@@ -163,6 +163,7 @@
                                 android:text="Continue with Email"
                                 />
                         </LinearLayout>
+
                         <LinearLayout
                             android:id="@+id/ririarhaw1qe"
                             android:layout_width="match_parent"
@@ -248,6 +249,7 @@
                                     android:paddingVertical="16dp"
                                     android:clickable="true"
                                     android:focusable="true"
+                                    android:visibility="visible"
                                     android:orientation="horizontal">
                                     <com.google.android.material.imageview.ShapeableImageView
                                         android:id="@+id/rxobgn0t56o7"

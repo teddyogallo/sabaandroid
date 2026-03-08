@@ -411,7 +411,10 @@ public class vendorFragment extends Fragment {
         paymentsquicklink.setOnClickListener(v -> {
             // Action when layout is clicked
             // For example, open a new fragment or show a toast
-            Toast.makeText(getContext(), "Payments quick link clicked", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getActivity(), sabaDrawerActivity.class);
+            intent.putExtra("open_fragment", "payment");
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            startActivity(intent);
 
 
         });
